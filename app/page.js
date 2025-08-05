@@ -4,7 +4,7 @@ import React from "react";
 const page = () => {
   return (
     <div>
-      <Button>Click Me</Button>
+      <h2 className="text-4xl font-circular font-bold">Hello</h2>
     </div>
   );
 };
