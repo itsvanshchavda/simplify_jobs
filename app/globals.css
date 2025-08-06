@@ -3,6 +3,33 @@
 @custom-variant dark (&:is(.dark *));
 
 @theme inline {
+
+    --animate-float: float 3s ease-in-out infinite;
+    --animate-fade-in: fadeIn 0.5s ease-in-out;
+
+    @keyframes fadeIn {
+        0% {
+            opacity: 0;
+        }
+
+        100% {
+            opacity: 1;
+        }
+    }
+
+    @keyframes float {
+
+        0%,
+        100% {
+            transform: translateY(0px);
+        }
+
+        50% {
+            transform: translateY(-10px);
+        }
+    }
+
+    --color-primary-blue: #12A1C0;
     --font-circular: var(--font-circular);
     --radius-sm: calc(var(--radius) - 4px);
     --radius-md: calc(var(--radius) - 2px);
@@ -113,6 +140,11 @@
 @layer base {
     * {
         @apply border-border outline-ring/50;
+
+    }
+
+    button {
+        cursor: pointer;
     }
 
     body {
