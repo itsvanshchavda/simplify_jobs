@@ -36,14 +36,14 @@ const Navbar = () => {
     return (
 
         <div className={`w-full sticky  z-[50] top-0 ${scrolled ? "border-b " : ""} bg-white  py-[1rem]`}>
-            <div className={"mx-auto w-full px-[1rem] sm:px-[3rem] max-w-[1350px]"}>
+            <div className={"mx-auto w-full px-[1rem] sm:px-[3rem] max-w-hero"}>
 
 
                 <div className='flex items-center justify-between gap-5'>
                     <div className='flex items-center gap-9'>
                         <Logo />
 
-                        <div className=' hidden lg:flex items-center gap-9'>
+                        <div className=' hidden xl:flex items-center gap-9'>
                             {links.map((item, index) => (
                                 <div key={index} className='font-medium hover:text-black duration-300 cursor-pointer text-gray-500 font-circular text-base'>
                                     {item?.title}
@@ -69,7 +69,7 @@ const Navbar = () => {
 
                         <Dialog>
                             <DialogTrigger>
-                                <div className='hover:bg-gray-100 block lg:hidden p-1.5 rounded-sm cursor-pointer'>
+                                <div className='hover:bg-gray-100 block xl:hidden p-1.5 rounded-sm cursor-pointer'>
                                     <AlignJustify className='text-gray-600' />
                                 </div>
                             </DialogTrigger>

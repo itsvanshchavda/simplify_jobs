@@ -1,7 +1,9 @@
 import Navbar from "@/components/navbar";
-import { Button } from "@/components/ui/button";
 import Features from "@/sections/hero/features";
+import FeaturesGrid from "@/sections/hero/featuresgrid";
 import Hero from "@/sections/hero/hero";
+import JobList from "@/sections/hero/joblist";
+import Testimonials from "@/sections/hero/testimonials";
 import React from "react";
 
 const page = () => {
@@ -10,6 +12,9 @@ const page = () => {
       <Navbar />
       <Hero />
       <Features />
+      <Testimonials />
+      <FeaturesGrid />
+      <JobList />
     </div>
   );
 };

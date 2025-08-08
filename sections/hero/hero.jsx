@@ -63,7 +63,7 @@ const Hero = () => {
             </div>
 
 
-            <button className='bg-primary-blue font-circular text-lg py-3 px-10 rounded-4xl text-white'>
+            <button className='bg-primary-blue hover:bg-cyan-600 duration-300 font-circular text-lg py-3 px-10 rounded-4xl text-white'>
                 Sign Up - It's Free!
             </button>
 
@@ -120,7 +120,7 @@ const Hero = () => {
                             </div>
 
                             {/* Desktop */}
-                            <div className="hidden sm:flex items-center gap-2">
+                            <div className="hidden sm:flex items-center gap-1">
                                 <Image src={icon} alt={key} width={20} height={20} />
                                 <div
                                     className={`font-circular ${activeTab === key ? "font-bold" : "font-medium"
@@ -143,6 +143,7 @@ const Hero = () => {
                                 alt="jobs"
                                 width={500}
                                 height={500}
+
                                 className="w-full object-cover"
                             />
                         </div>
@@ -239,7 +240,6 @@ const Hero = () => {
 
             </div>
 
-            {/* <Image src={"/images/f1.svg"} width={600} height={600} alt='svg' className='max-w-[614px] h-full border rounded-3xl object-contain' /> */}
 
         </div >
     )

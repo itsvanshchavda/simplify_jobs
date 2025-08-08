@@ -15,9 +15,9 @@ import { Star } from 'lucide-react';
 const Features = () => {
 
     return (
-        <Padding className={"py-[3rem] justify-center items-center flex flex-col gap-20 xl:py-[5rem]"}>
+        <div className={"py-20 justify-center  items-center flex flex-col gap-20"}>
 
-            <div className='w-full flex  gap-5 md:gap-8 flex-col justify-center items-center'>
+            <div className='w-full  px-[1rem]  flex  gap-5 md:gap-8 flex-col justify-center items-center'>
                 <div className=' text-5xl xl:text-6xl font-circular text-black/85 font-black text-center'>
                     We're here for <span className=' block sm:flex gap-2'><Highlight title={"every step"} /> of your search</span>
                 </div>
@@ -27,29 +27,35 @@ const Features = () => {
                 </div>
             </div>
 
+
+
             <div className='w-full flex flex-col gap-20 '>
 
                 {/* feature 1  */}
-                <div className='flex  lg:flex-row-reverse justify-center items-center  flex-col sm:gap-8 gap-7'>
+                <div className='flex  px-[1rem]   lg:flex-row-reverse justify-center items-center  flex-col sm:gap-8 gap-7'>
                     <Image src={"/images/f1.svg"} width={600} height={600} alt='svg' className=' overflow-hidden h-full border border-gray-100 rounded-3xl object-contain' />
 
 
-                    <div className='flex flex-col md:gap-7 gap-5'>
-                        <div className='flex items-center  gap-2'>
-                            <div className='p-2 bg-gray-50 rounded-lg border border-gray-100'>
-                                <Image src={mag} width={20} height={20} alt='mag' />
+                    <div className='flex flex-col gap-10'>
+                        <div className='flex flex-col md:gap-6 gap-5'>
+                            <div className='flex items-center  gap-2'>
+                                <div className='p-2 bg-gray-50 rounded-lg border border-gray-100'>
+                                    <Image src={mag} width={20} height={20} alt='mag' />
+                                </div>
+                                <div className='text-gray-600 text-xl font-circular font-[400]'>
+                                    Job Matches
+                                </div>
                             </div>
-                            <div className='text-gray-600 text-xl font-circular font-[400]'>
-                                Job Matches
+
+                            <div className='font-circular w-full max-w-[600px] font-medium sm:text-5xl text-4xl'>
+                                Get matched to relevent jobs, personalized to you
                             </div>
-                        </div>
 
-                        <div className='font-circular w-full max-w-[600px] font-medium sm:text-5xl text-4xl'>
-                            Get matched to relevent jobs, personalized to you
-                        </div>
+                            <div className='font-circular w-full max-w-[600px] text-lg'>
+                                Forget endlessly scrolling on job boards. Tell us your preferences & dealbreakers and we'll match you with jobs that fit.
+                            </div>
 
-                        <div className='font-circular w-full max-w-[600px] text-lg'>
-                            Forget endlessly scrolling on job boards. Tell us your preferences & dealbreakers and we'll match you with jobs that fit.
+
                         </div>
 
                         <button className='font-circular  font-medium text-base px-4 py-3 w-full max-w-[220px] text-white bg-primary-blue rounded-4xl'>
@@ -61,44 +67,54 @@ const Features = () => {
                 {/* feature 2  */}
 
 
-                <div className='flex bg-[#F0FCFF] lg:flex-row-reverse justify-center items-center py-[4rem] flex-col sm:gap-8 gap-7'>
+                <div className='flex  px-[1rem]  bg-[#F0FCFF] lg:flex-row-reverse justify-center items-center py-[2rem] xl:py-[4rem] flex-col-reverse sm:gap-8 gap-7'>
 
 
-                    <div className='flex flex-col md:gap-8 gap-5'>
-                        <div className='flex items-center  gap-2'>
-                            <div className='p-2 bg-white rounded-lg border border-gray-100'>
-                                <Image src={zap} width={20} height={20} alt='zap' />
+                    <div className='flex  flex-col gap-10 md:gap-6 '>
+
+
+                        <div className='flex flex-col gap-10'>
+                            <div className='flex flex-col gap-5'>
+                                <div className='flex items-center  gap-2'>
+                                    <div className='p-2 bg-white rounded-lg border border-gray-100'>
+                                        <Image src={zap} width={20} height={20} alt='zap' />
+                                    </div>
+                                    <div className='text-gray-600 text-xl font-circular font-[400]'>
+                                        Autofill Applications
+
+
+                                    </div>
+                                </div>
+
+                                <div className='font-circular w-full max-w-[600px] font-medium sm:text-5xl text-4xl'>
+                                    Autofill repetitive job application questions
+
+                                </div>
+
+                                <div className='font-circular w-full max-w-[600px] text-lg'>
+                                    Install the Simplify Copilot extension to autofill your job applications & see keywords missing in your resume.
+
+                                </div>
+
                             </div>
-                            <div className='text-gray-600 text-xl font-circular font-[400]'>
-                                Autofill Applications
 
+                            <div className='flex item-center gap-4'>
+                                <button className='font-circular  font-medium text-base px-4 py-3 w-full max-w-[220px] text-white bg-primary-blue rounded-4xl'>
+                                    Add to Brave
+                                </button>
 
+                                <button className='font-circular  font-medium text-base px-4 py-3 w-full max-w-[220px] border-2 bg-white text-primary-blue border-primary-blue rounded-4xl'>
+                                    Learn More
+                                </button>
                             </div>
-                        </div>
 
-                        <div className='font-circular w-full max-w-[600px] font-medium sm:text-5xl text-4xl'>
-                            Autofill repetitive job application questions
 
-                        </div>
 
-                        <div className='font-circular w-full max-w-[600px] text-lg'>
-                            Install the Simplify Copilot extension to autofill your job applications & see keywords missing in your resume.
 
                         </div>
 
 
-                        <div className='flex item-center gap-4'>
-                            <button className='font-circular  font-medium text-base px-4 py-3 w-full max-w-[220px] text-white bg-primary-blue rounded-4xl'>
-                                Add to Brave
-                            </button>
-
-                            <button className='font-circular  font-medium text-base px-4 py-3 w-full max-w-[220px] border-2 bg-white text-primary-blue border-primary-blue rounded-4xl'>
-                                Learn More
-                            </button>
-                        </div>
-
-
-                        <div className='flex flex-col sm:flex-row items-center gap-2'>
+                        <div className='flex flex-row items-center gap-2'>
 
                             <div className='flex items-center'>
                                 <Star size={18} className='fill-yellow-400' strokeOpacity={0} />
@@ -115,6 +131,11 @@ const Features = () => {
 
 
                         </div>
+
+
+
+
+
                     </div>
 
 
@@ -124,27 +145,82 @@ const Features = () => {
 
 
                 {/* feature 3  */}
+                <div className='flex  px-[1rem]  lg:flex-row-reverse justify-center items-center py-[4rem] flex-col sm:gap-8 gap-7'>
 
-                <div className='flex  lg:flex-row-reverse justify-center items-center  flex-col sm:gap-8 gap-7'>
+                    <Image src={"/images/f3.svg"} width={600} height={600} alt='svg' className=' overflow-hidden h-full object-contain' />
+
+                    <div className='flex flex-col gap-10'>
+                        <div className='flex flex-col md:gap-6 gap-5'>
+                            <div className='flex items-center  gap-2'>
+                                <div className='p-2 bg-gray-50 rounded-lg border border-gray-100'>
+                                    <Image src={memo} width={20} height={20} alt='memo' />
+                                </div>
+                                <div className='text-gray-600 text-xl font-circular font-[400]'>
+                                    AI Resume Builder
 
 
-                    <div className='flex flex-col md:gap-7 gap-5'>
-                        <div className='flex items-center  gap-2'>
-                            <div className='p-2 bg-gray-50 rounded-lg border border-gray-100'>
-                                <Image src={bag} width={20} height={20} alt='bag' />
+
+
+                                </div>
                             </div>
-                            <div className='text-gray-600 text-xl font-circular font-[400]'>
-                                Job Tracker
+
+                            <div className='font-circular w-full max-w-[600px] font-medium sm:text-5xl text-4xl'>
+                                Craft the perfect tailored resume for every job
+
+
                             </div>
+
+                            <div className='font-circular w-full max-w-[600px] text-lg'>
+                                Use AI to tailor your resume to fit the job description, see your resume ATS score, and identify missing keywords, all in a few clicks.
+
+
+                            </div>
+
+
+
+
+
                         </div>
 
-                        <div className='font-circular w-full max-w-[600px] font-medium sm:text-5xl text-4xl'>
-                            Bookmark jobs and track your search
 
-                        </div>
+                        <button className='font-circular  font-medium text-base px-4 py-3 w-full max-w-[220px] text-white bg-primary-blue rounded-4xl'>
+                            Get a Free Resume
+                        </button>
 
-                        <div className='font-circular w-full max-w-[600px] text-lg'>
-                            Goodbye spreadsheets. Bookmark job postings from 50+ job boards and manage your applications within our job tracker.
+
+                    </div>
+
+
+
+                </div>
+
+
+                {/* feature 4  */}
+
+                <div className='flex  px-[1rem]  lg:flex-row-reverse justify-center items-center  flex-col-reverse sm:gap-8 gap-7'>
+
+
+                    <div className='flex flex-col gap-10'>
+                        <div className='flex flex-col md:gap-7 gap-5'>
+                            <div className='flex items-center  gap-2'>
+                                <div className='p-2 bg-gray-50 rounded-lg border border-gray-100'>
+                                    <Image src={bag} width={20} height={20} alt='bag' />
+                                </div>
+                                <div className='text-gray-600 text-xl font-circular font-[400]'>
+                                    Job Tracker
+                                </div>
+                            </div>
+
+                            <div className='font-circular w-full max-w-[600px] font-medium sm:text-5xl text-4xl'>
+                                Bookmark jobs and track your search
+
+                            </div>
+
+                            <div className='font-circular w-full max-w-[600px] text-lg'>
+                                Goodbye spreadsheets. Bookmark job postings from 50+ job boards and manage your applications within our job tracker.
+
+
+                            </div>
 
 
                         </div>
@@ -160,7 +236,7 @@ const Features = () => {
 
                 </div>
             </div>
-        </Padding>
+        </div>
     )
 }
 
