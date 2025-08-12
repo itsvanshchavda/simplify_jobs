@@ -183,7 +183,7 @@ const Testimonials = () => {
 
 
     return (
-        <div className=" overflow-hidden py-10 px-4 bg-[#F0FCFF]">
+        <div className=" overflow-hidden py-10 px-4 bg-white">
             <div className="flex px-[1rem] flex-col justify-center items-center ">
                 <h2 className="mx-auto font-circular max-w-lg text-center text-xl text-gray-700">Join over <b>1,000,000</b> candidates that hear back <b>25% more</b> with Simplify than on other platforms <Image src={"/images/tada.png"} alt="tada" width={20} height={20} className="inline-flex shrink-0" /></h2>
             </div>
@@ -191,10 +191,10 @@ const Testimonials = () => {
             <div className="max-w-[1860px] overflow-hidden mx-auto ">
                 <div className="relative  px-1 xl:px-10 pt-12 pb-10 sm:pt-16">
                     {/* Left Gradient Overlay */}
-                    <div className="absolute inset-y-0 left-0 h-[600px] xl:w-[350px] lg:w-[250px] w-[100px] z-10 hidden md:block pointer-events-none bg-gradient-to-r from-[#F0FCFF] xl:via-[#F0FCFF] via-[#F0FCFF]/70 to-transparent" />
+                    <div className="absolute inset-y-0 left-0 h-[600px] xl:w-[350px] lg:w-[250px] w-[100px] z-10 hidden md:block pointer-events-none bg-gradient-to-r from-white xl:via-white via-white/70 to-transparent" />
 
                     {/* Right Gradient Overlay */}
-                    <div className="absolute inset-y-0 right-0 h-[600px] xl:w-[350px] lg:w-[250px] w-[100px]  z-10 hidden md:block pointer-events-none bg-gradient-to-l from-[#F0FCFF] xl:via-[#F0FCFF] via-[#F0FCFF]/70 to-transparent" />
+                    <div className="absolute inset-y-0 right-0 h-[600px] xl:w-[350px] lg:w-[250px] w-[100px]  z-10 hidden md:block pointer-events-none bg-gradient-to-l from-white xl:via-white via-white/70 to-transparent" />
 
                     {/* Prev button */}
                     <button

@@ -1,5 +1,7 @@
+import ProgressProvider from "@/components/progressbar";
 import "./globals.css";
 import localFont from "next/font/local";
+import LayoutWrapper from "@/components/layoutwrapper";
 
 const circularStd = localFont({
   src: [
@@ -56,7 +58,11 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
-      <body className={`${circularStd.variable}`}>{children}</body>
+      <body className={`${circularStd.variable}`}>
+        <LayoutWrapper>
+          <ProgressProvider>{children}</ProgressProvider>
+        </LayoutWrapper>
+      </body>
     </html>
   );
 }

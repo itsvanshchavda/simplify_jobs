@@ -1,9 +1,8 @@
 import FAQ from "@/components/common/FAQ";
-import Features from "@/sections/hero/features";
-import FeaturesGrid from "@/sections/hero/featuresgrid";
-import Hero from "@/sections/hero/hero";
 import JobList from "@/components/common/joblist";
-import Testimonials from "@/sections/hero/testimonials";
+import Testimonials from "@/components/common/testimonials";
+import CopilotFeatures from "@/sections/copilot/copilotfeatures";
+import CopilotHero from "@/sections/copilot/copilothero";
 import React from "react";
 
 const page = () => {
@@ -30,11 +29,10 @@ const page = () => {
     },
   ];
   return (
-    <div className="w-full h-full">
-      <Hero />
-      <Features />
+    <div>
+      <CopilotHero />
+      <CopilotFeatures />
       <Testimonials />
-      <FeaturesGrid />
       <JobList />
       <FAQ data={data} />
     </div>

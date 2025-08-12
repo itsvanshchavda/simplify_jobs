@@ -1,9 +1,7 @@
 import FAQ from "@/components/common/FAQ";
-import Features from "@/sections/hero/features";
-import FeaturesGrid from "@/sections/hero/featuresgrid";
-import Hero from "@/sections/hero/hero";
 import JobList from "@/components/common/joblist";
-import Testimonials from "@/sections/hero/testimonials";
+import ResumeFeatures from "@/sections/resume-builder/resumefeatures";
+import ResumeHero from "@/sections/resume-builder/resumehero";
 import React from "react";
 
 const page = () => {
@@ -30,11 +28,9 @@ const page = () => {
     },
   ];
   return (
-    <div className="w-full h-full">
-      <Hero />
-      <Features />
-      <Testimonials />
-      <FeaturesGrid />
+    <div>
+      <ResumeHero />
+      <ResumeFeatures />
       <JobList />
       <FAQ data={data} />
     </div>

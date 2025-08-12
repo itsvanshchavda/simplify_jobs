@@ -188,59 +188,27 @@ const Hero = () => {
             </div>
 
 
-            <div className='flex justify-center flex-wrap items-center gap-5 sm:gap-10'>
-
-
-                <div>
-                    <Image src={company1} alt='company1' width={50} height={50} className='w-full h-full object-contain' />
-                </div>
-
-
-                <div>
-                    <Image src={company2} alt='company2' width={50} height={50} className='w-full h-full object-contain' />
-                </div>
-
-
-                <div>
-                    <Image src={company3} alt='company3' width={50} height={50} className='w-full h-full object-contain' />
-                </div>
-
-
-                <div>
-                    <Image src={company4} alt='company4' width={50} height={50} className='w-full h-full object-contain' />
-                </div>
-
-
-                <div>
-                    <Image src={company5} alt='company5' width={50} height={50} className='w-full h-full object-contain' />
-                </div>
-
-
-                <div>
-                    <Image src={company6} alt='company6' width={50} height={50} className='w-full h-full object-contain' />
-                </div>
-
-
-                <div>
-                    <Image src={company7} alt='company7' width={50} height={50} className='w-full h-full object-contain' />
-                </div>
-
-
-                <div>
-                    <Image src={company8} alt='company8' width={50} height={50} className='w-full h-full object-contain' />
-                </div>
-
-
-                <div>
-                    <Image src={company9} alt='company9 ' width={50} height={50} className='w-full h-full object-contain' />
-                </div>
-
-
-
-
+            <div className="flex flex-wrap justify-center items-center sm:gap-10 gap-8">
+                {[
+                    '/images/c1.png',
+                    '/images/c2.png',
+                    '/images/c3.png',
+                    '/images/c4.png',
+                    '/images/c5.png',
+                    '/images/c6.png',
+                    '/images/c7.png',
+                    '/images/c8.png',
+                    '/images/c9.png',
+                ].map((src, i) => (
+                    <img
+                        key={i}
+                        src={src}
+                        alt={`company${i + 1}`}
+                        className={`w-[65px] h-[40px]  object-contain ${i === 8 ? 'sm:block hidden' : ''
+                            }`}
+                    />
+                ))}
             </div>
-
-
         </div >
     )
 }

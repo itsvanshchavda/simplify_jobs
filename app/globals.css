@@ -30,6 +30,7 @@
     }
 
 
+    --breakpoint-xs:430px;
     --spacing-hero : 88rem;
     --color-primary-blue: #12A1C0;
     --font-circular: var(--font-circular);

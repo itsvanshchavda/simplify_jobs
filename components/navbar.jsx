@@ -13,9 +13,11 @@ import {
     DialogTitle,
     DialogTrigger,
 } from "@/components/ui/dialog"
+import Link from 'next/link';
 
 const Navbar = () => {
 
+    const [open, setOpen] = useState(false)
     const [scrolled, setScrolled] = useState(false);
 
     useEffect(() => {
@@ -28,26 +30,29 @@ const Navbar = () => {
     }, []);
 
     const links = [
-        { title: "Copilot" },
-        { title: "Job Application Tracker" },
-        { title: "Resume Builder" },
-        { title: "Employees" }
+        { title: "Copilot", href: "/copilot" },
+        { title: "Job Application Tracker", href: "/job-tracker" },
+        { title: "Resume Builder", href: "/resume-builder" },
+        { title: "Employees", href: "employees" }
     ]
     return (
 
         <div className={`w-full sticky  z-[50] top-0 ${scrolled ? "border-b " : ""} bg-white  py-[1rem]`}>
-            <div className={"mx-auto w-full px-[1rem] sm:px-[3rem] max-w-hero"}>
+            <div className={"mx-auto w-full px-[1rem] sm:px-[3rem] max-w-[91rem]"}>
 
 
                 <div className='flex items-center justify-between gap-5'>
-                    <div className='flex items-center gap-9'>
-                        <Logo />
+                    <div className='flex items-center gap-8'>
 
-                        <div className=' hidden xl:flex items-center gap-9'>
+                        <Link href={"/"}>
+                            <Logo />
+                        </Link>
+
+                        <div className=' hidden xl:flex items-center gap-10'>
                             {links.map((item, index) => (
-                                <div key={index} className='font-medium hover:text-black duration-300 cursor-pointer text-gray-500 font-circular text-base'>
+                                <Link href={item.href} key={index} className='font-medium hover:text-black duration-300 cursor-pointer text-gray-500 font-circular text-base'>
                                     {item?.title}
-                                </div>
+                                </Link>
                             ))}
 
                         </div>
@@ -67,7 +72,7 @@ const Navbar = () => {
 
 
 
-                        <Dialog>
+                        <Dialog open={open} onOpenChange={setOpen}>
                             <DialogTrigger>
                                 <div className='hover:bg-gray-100 block xl:hidden p-1.5 rounded-sm cursor-pointer'>
                                     <AlignJustify className='text-gray-600' />
@@ -77,7 +82,11 @@ const Navbar = () => {
                             <DialogContent
                                 zIndex={100}
                                 showCloseButton={false}
-                                className="fixed left-1/2 top-5 rounded-sm  -translate-x-1/2 translate-y-0 !m-0 !p-0 border-none !max-w-[95%]"
+                                className={`
+    fixed left-1/2 top-5 -translate-x-1/2 rounded-sm !m-0 !p-0 border-none !max-w-[95%]
+    transition-all duration-200 ease-out
+    ${open ? "opacity-100 translate-y-0 scale-100" : "opacity-0 -translate-y-2 scale-95"}
+  `}
                             >
 
                                 <DialogHeader className={"hidden"}>
@@ -100,9 +109,9 @@ const Navbar = () => {
                                 {/* Navigation Links */}
                                 <div className='flex flex-col gap-4 px-[2rem]'>
                                     {links.map((item, index) => (
-                                        <div key={index} className='font-[400] rounded-sm cursor-pointer p-2 hover:bg-gray-100 text-black font-circular text-base'>
+                                        <Link onClick={() => setOpen(!open)} href={item.href} key={index} className='font-[400] rounded-sm cursor-pointer p-2 hover:bg-gray-100 text-black font-circular text-base'>
                                             {item?.title}
-                                        </div>
+                                        </Link>
                                     ))}
                                 </div>
 
