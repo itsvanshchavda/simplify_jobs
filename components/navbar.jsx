@@ -56,7 +56,7 @@ const Navbar = () => {
 
 
                     <div className='flex items-center gap-4'>
-                        <button className='text-primary-blue duration-300 hover:bg-primary-blue hover:text-white  lg:block hidden text-base py-2 px-4  rounded-full border-2 border-primary-blue font-circular'>
+                        <button className='text-primary-blue duration-300 hover:bg-primary-blue hover:text-white  xl:block hidden text-base py-2 px-4  rounded-full border-2 border-primary-blue font-circular'>
                             Log In
                         </button>
 

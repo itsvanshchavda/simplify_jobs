@@ -1,4 +1,5 @@
 import Navbar from "@/components/navbar";
+import FAQ from "@/sections/hero/FAQ";
 import Features from "@/sections/hero/features";
 import FeaturesGrid from "@/sections/hero/featuresgrid";
 import Hero from "@/sections/hero/hero";
@@ -15,6 +16,7 @@ const page = () => {
       <Testimonials />
       <FeaturesGrid />
       <JobList />
+      <FAQ />
     </div>
   );
 };

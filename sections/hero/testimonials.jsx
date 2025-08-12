@@ -190,15 +190,15 @@ const Testimonials = () => {
 
             <div className="relative px-1 xl:px-10 pt-12 sm:pt-16">
                 {/* Left Gradient Overlay */}
-                <div className="absolute inset-y-0 left-0 h-[600px] w-[200px] max-w-[350px] z-10 hidden md:block pointer-events-none bg-gradient-to-r from-[#F0FCFF] xl:via-[#F0FCFF] via-[#F0FCFF]/70 to-transparent" />
+                <div className="absolute inset-y-0 left-0 h-[600px] w-[300px] max-w-[350px] z-10 hidden md:block pointer-events-none bg-gradient-to-r from-[#F0FCFF] xl:via-[#F0FCFF] via-[#F0FCFF]/70 to-transparent" />
 
                 {/* Right Gradient Overlay */}
-                <div className="absolute inset-y-0 right-0 h-[600px] w-[200px] max-w-[350px] z-10 hidden md:block pointer-events-none bg-gradient-to-l from-[#F0FCFF] xl:via-[#F0FCFF] via-[#F0FCFF]/70 to-transparent" />
+                <div className="absolute inset-y-0 right-0 h-[600px] w-[300px] max-w-[350px] z-10 hidden md:block pointer-events-none bg-gradient-to-l from-[#F0FCFF] xl:via-[#F0FCFF] via-[#F0FCFF]/70 to-transparent" />
 
                 {/* Prev button */}
                 <button
                     onClick={scrollPrev}
-                    className=" hidden sm:block sm:absolute left-4 xl:left-[6rem] top-1/2 transform -translate-y-1/2 z-20 bg-white shadow-lg rounded-full p-3 border hover:bg-gray-50 transition-all duration-200 hover:scale-110"
+                    className=" hidden sm:block sm:absolute left-4 xl:left-[9rem] top-1/2 transform -translate-y-1/2 z-20 bg-white shadow-lg rounded-full p-3 border hover:bg-gray-50 transition-all duration-200 hover:scale-110"
                 >
                     <ChevronLeft size={30} className="text-primary-blue" />
                 </button>
@@ -206,7 +206,7 @@ const Testimonials = () => {
                 {/* Next button */}
                 <button
                     onClick={scrollNext}
-                    className="hidden sm:block sm:absolute right-4 xl:right-[6rem] top-1/2 transform -translate-y-1/2 z-20 bg-white shadow-lg rounded-full p-3 hover:bg-gray-50 transition-all duration-200 hover:scale-110"
+                    className="hidden sm:block sm:absolute right-4 xl:right-[9rem] top-1/2 transform -translate-y-1/2 z-20 bg-white shadow-lg rounded-full p-3 hover:bg-gray-50 transition-all duration-200 hover:scale-110"
                 >
                     <ChevronRight size={30} className="text-primary-blue" />
                 </button>
@@ -238,10 +238,11 @@ const Testimonials = () => {
                                 <div className="absolute top-6 right-6">
                                     <Quote />
                                 </div>
-                                <div className="flex flex-col gap-6">
-                                    <div className="font-circular pt-12 text-gray-700 text-base leading-relaxed min-h-[100px]">
+                                <div className="flex flex-col gap-6 justify-between h-full">
+                                    <div className="font-circular pt-12 text-gray-700 text-base leading-relaxed">
                                         {`"${item.review}"`}
                                     </div>
+
                                     <div className="flex justify-between items-end gap-4">
                                         <div className="font-circular text-sm flex-1">
                                             <div className="font-semibold text-gray-800 mb-1 text-sm">
@@ -262,6 +263,8 @@ const Testimonials = () => {
                                         </div>
                                     </div>
                                 </div>
+
+
                             </div>
                         ))}
                     </div>
