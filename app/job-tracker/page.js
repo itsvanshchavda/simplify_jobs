@@ -7,24 +7,21 @@ import React from "react";
 const page = () => {
   const data = [
     {
-      question: "Is Simplify free? How do you make money?",
+      question: "What is a job tracker? Can't I just use a spreadsheet?",
       answer:
-        "We dropped out of college and started Simplify to equip job seekers with the tools they need to put their best foot forward in the job search. The base version of Simplify and Simplify Copilot – including unlimited job tracking and autofill – is and will be free forever. We make money by charging companies to post jobs and promote their openings – we don't sell your data. We also have a premium subscription called Simplify+ that offers an additional suite of AI features to help you supercharge your job search.",
+        "A job tracker is simply a tool used by job seekers to organize and manage job applications and interviews during an ongoing job search. This can be something as basic as a spreadsheet or something as feature-rich as Simplify's free job tracker. The goal of a good job tracker is to help you keep track of upcoming interviews, referrals, notes, and remind you to follow-up with recruiters. A good job tracker can vastly improve the efficiency of your job search and help you get hired faster!",
     },
     {
-      question: "How does Simplify work?",
+      question: "How much does the job tracker cost?",
       answer:
-        "Think of Simplify like a personal Hollywood-agent for your career. When you create a profile, you'll tell us the skills you have, the types jobs you're looking for, and any dealbreakers (minimum salary, location, etc.). Our AI will match you with specific opportunities that fit you from the millions of opportunities in our database. When you apply, we'll help you autofill your application and show you the most important keywords that are missing from your resume. We have an AI resume builder that lets you tailor your resume in seconds. Finally, our tracker helps you stay organized across all the jobs you've applied to. Ready to see Simplify in action? Click the teal “Sign-Up” button to get started!",
+        "Simplify's job tracker is free – and we plan to keep it that way! We started Simplify with a mission to give job seekers the tools they need to succeed in their job search. Our job tracker is designed to help you stay organized throughout your search and stay on top of upcoming interviews/deadlines. Our autofill extension, application tracker, and job matches are all free features we commit to keeping free – forever.",
     },
+
     {
-      question: "How does Simplify handle my data?",
+      question:
+        "What's the best way to track job applications? How should I be using Simplify?",
       answer:
-        "We're internet users too and place a heavy emphasis and commitment to your privacy. First and foremost, we do not sell your data. The data you share with us is used to help match you with relevant jobs and autofill your applications. Simplify also operates as a hiring marketplace, meaning recruiters often use Simplify to post exclusive opportunities and find perfect-fit candidates (like you!). None of your data is shared with anyone off-platform without your consent – that's a promise!",
-    },
-    {
-      question: "How does Simplify get the job posting it recommends me?",
-      answer:
-        "We're internet users too and place a heavy emphasis and commitment to your privacy. First and foremost, we do not sell your data. The data you share with us is used to help match you with relevant jobs and autofill your applications. Simplify also operates as a hiring marketplace, meaning recruiters often use Simplify to post exclusive opportunities and find perfect-fit candidates (like you!). None of your data is shared with anyone off-platform without your consent – that's a promise!",
+        "Our recruiters recommend bookmarking jobs you're excited about and crafting tailored resumes and cover letters before you apply. You can save these documents within Simplify's job tracker and record notes from your interviews. When you move forward in the recruiting process for a given job, you can easily update your status which helps you visualize where you are in your search. Before any interview, you'll be able to see all the notes, referrals, and documents you used in the process and increase your chances of landing that offer!",
     },
   ];
   return (

@@ -7,24 +7,27 @@ import React from "react";
 const page = () => {
   const data = [
     {
-      question: "Is Simplify free? How do you make money?",
+      question:
+        "What exactly is a professional resume and what is its purpose?",
       answer:
-        "We dropped out of college and started Simplify to equip job seekers with the tools they need to put their best foot forward in the job search. The base version of Simplify and Simplify Copilot – including unlimited job tracking and autofill – is and will be free forever. We make money by charging companies to post jobs and promote their openings – we don't sell your data. We also have a premium subscription called Simplify+ that offers an additional suite of AI features to help you supercharge your job search.",
+        "A professional resume is a summary of your work history, skills, and career achievements that showcases why your background makes you a good fit for the job you're applying for. This means that your resume should be changing depending on the specific job requirements and responsibilities. It's crucial that the professional resume you create is tailored to the job requirements and integrates well with the company's ATS or hiring software – your goal is to catch the attention of hiring managers and stand out from other candidates!",
     },
     {
-      question: "How does Simplify work?",
+      question: "What is an AI resume builder?",
       answer:
-        "Think of Simplify like a personal Hollywood-agent for your career. When you create a profile, you'll tell us the skills you have, the types jobs you're looking for, and any dealbreakers (minimum salary, location, etc.). Our AI will match you with specific opportunities that fit you from the millions of opportunities in our database. When you apply, we'll help you autofill your application and show you the most important keywords that are missing from your resume. We have an AI resume builder that lets you tailor your resume in seconds. Finally, our tracker helps you stay organized across all the jobs you've applied to. Ready to see Simplify in action? Click the teal “Sign-Up” button to get started!",
+        "An AI resume builder is simply a tool to help you quickly create a professional resume that leverages AI to help reword and reorganize various aspects of your career history. Most resume builders (including Simplify's!) come with pre-designed templates that are compatible with the hiring softwares and ATS's used by employers to review resumes, and allow you to easily edit the sections of your resume in a few clicks. You'll be able to use AI to quickly generate professional summaries, reword bullet points, and more!",
     },
     {
-      question: "How does Simplify handle my data?",
+      question:
+        "How does Simplify's AI generate my resume bullets, professional summary, and cover letter?",
       answer:
-        "We're internet users too and place a heavy emphasis and commitment to your privacy. First and foremost, we do not sell your data. The data you share with us is used to help match you with relevant jobs and autofill your applications. Simplify also operates as a hiring marketplace, meaning recruiters often use Simplify to post exclusive opportunities and find perfect-fit candidates (like you!). None of your data is shared with anyone off-platform without your consent – that's a promise!",
+        "When you sign up on Simplify, you'll be asked to upload an existing resume or share some short details about your career history and skills. Our AI will analyze this data and compare it with the job description you're applying for to output information that highlights your strengths and why you would be a good fit for that specific opportunity. We trained our AI (which is powered by OpenAI's GPT) on recruiter-approved resumes and cover letters to ensure that the information we generate fit what hiring managers are looking for and help you put your best foot forward.",
     },
     {
-      question: "How does Simplify get the job posting it recommends me?",
+      question:
+        "Can you use ChatGPT to create a resume? What are the advantages to using Simplify?",
       answer:
-        "We're internet users too and place a heavy emphasis and commitment to your privacy. First and foremost, we do not sell your data. The data you share with us is used to help match you with relevant jobs and autofill your applications. Simplify also operates as a hiring marketplace, meaning recruiters often use Simplify to post exclusive opportunities and find perfect-fit candidates (like you!). None of your data is shared with anyone off-platform without your consent – that's a promise!",
+        "More than 50% of job seekers are using AI in their job search – however, using ChatGPT to create your resume is NOT recommended. ChatGPT is a general-purpose LLM that is not designed to help you craft detailed resumes that are tailored to the job you are applying for. Simplify's AI resume builder and cover letter generator is powered by the same foundational AI-model used by ChatGPT but has been trained on specific recruiter-vetted resumes and cover letters. Our AI was designed specifically to help you tailor professional documents and ensures that everything you create follows best practices – a huge step up from using ChatGPT or Claude.",
     },
   ];
   return (

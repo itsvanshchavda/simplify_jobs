@@ -44,7 +44,7 @@ const ResumeFeatures = () => {
 
                     </span>
                     <span className="block">
-                        with Simplify's <Highlight title="Simplify Copilot." />
+                        with <Highlight title="Simplify Copilot." />
                     </span>
                 </div>
                 <div className="text-center font-circular w-[99%] max-w-3xl font-normal text-base sm:text-xl">

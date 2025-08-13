@@ -9,24 +9,6 @@ import mag from '@/public/images/mag.png'
 import zap from '@/public/images/zap.png'
 import memo from '@/public/images/memo.png'
 import bag from '@/public/images/briefcase.png'
-import company1 from '@/public/images/c1.png'
-import company2 from '@/public/images/c2.png'
-
-import company3 from '@/public/images/c3.png'
-
-import company4 from '@/public/images/c4.png'
-
-import company5 from '@/public/images/c5.png'
-
-import company6 from '@/public/images/c6.png'
-
-import company7 from '@/public/images/c7.png'
-
-import company8 from '@/public/images/c8.png'
-
-import company9 from '@/public/images/c9.png'
-
-
 const Hero = () => {
 
     const [activeTab, setActiveTab] = useState("jobmatch");
@@ -135,10 +117,10 @@ const Hero = () => {
 
 
                 {/* Tab Content */}
-                <div className="w-[752px] px-1.5  max-w-full pt-4">
+                <div className="w-[752px] px-1.5  max-h-[562px] max-w-full pt-4">
                     {activeTab === "jobmatch" && (
                         <div className="animate-fade-in">
-                            <Image
+                            <img
                                 src={"/images/job_matches.webp"}
                                 alt="jobs"
                                 width={500}
@@ -151,7 +133,7 @@ const Hero = () => {
 
                     {activeTab === "copilot" && (
                         <div className="animate-fade-in">
-                            <Image
+                            <img
                                 src={"/images/copilot.webp"}
                                 alt="copilot"
                                 width={500}
@@ -163,7 +145,7 @@ const Hero = () => {
 
                     {activeTab === "resume" && (
                         <div className="animate-fade-in">
-                            <Image
+                            <img
                                 src={"/images/resume_builder.webp"}
                                 alt="resume"
                                 width={500}
@@ -175,12 +157,12 @@ const Hero = () => {
 
                     {activeTab === "jobtracker" && (
                         <div className="animate-fade-in">
-                            <Image
+                            <img
                                 src={"/images/job_tracker.webp"}
                                 alt="tracker"
                                 width={500}
                                 height={500}
-                                className="w-full object-cover"
+                                className="w-full max-h-[562px]  object-contain"
                             />
                         </div>
                     )}
