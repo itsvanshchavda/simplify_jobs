@@ -13,7 +13,8 @@ export default function LayoutWrapper({ children }) {
         "/copilot",
         "/job-tracker",
         "/resume-builder",
-        "/employees"
+        "/auth/forgot-password",
+
     ];
 
     const showLayout = routes.includes(pathname);

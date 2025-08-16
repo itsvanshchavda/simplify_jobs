@@ -2,6 +2,7 @@ import ProgressProvider from "@/components/progressbar";
 import "./globals.css";
 import localFont from "next/font/local";
 import LayoutWrapper from "@/components/layoutwrapper";
+import { Toaster } from "react-hot-toast";
 
 const circularStd = localFont({
   src: [
@@ -61,6 +62,12 @@ export default function RootLayout({ children }) {
       <body className={`${circularStd.variable}`}>
         <LayoutWrapper>
           <ProgressProvider>{children}</ProgressProvider>
+          <Toaster
+            toastOptions={{
+              className: "font-circular  !max-w-[500px] tracking-wide",
+            }}
+            position="bottom-right"
+          />
         </LayoutWrapper>
       </body>
     </html>

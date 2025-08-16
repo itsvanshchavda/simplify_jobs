@@ -35,7 +35,6 @@ const Navbar = () => {
         { title: "Copilot", href: "/copilot" },
         { title: "Job Application Tracker", href: "/job-tracker" },
         { title: "Resume Builder", href: "/resume-builder" },
-        { title: "Employees", href: "employees" }
     ]
     return (
 
@@ -63,14 +62,14 @@ const Navbar = () => {
 
 
                     <div className='flex items-center gap-4'>
-                        <button className='text-primary-blue duration-300 hover:bg-primary-blue hover:text-white  xl:block hidden text-base py-2 px-4  rounded-full border-2 border-primary-blue font-circular'>
+                        <Link href={"/auth/login"} className='text-primary-blue duration-300 hover:bg-primary-blue hover:text-white  xl:block hidden text-base py-2 px-4  rounded-full border-2 border-primary-blue font-circular'>
                             Log In
-                        </button>
+                        </Link>
 
 
-                        <button className='text-white text-base py-2 px-4 duration-300  rounded-full hover:bg-cyan-600 bg-primary-blue font-circular'>
+                        <Link href={"/auth/register"} className='text-white text-base py-2 px-4 duration-300  rounded-full hover:bg-cyan-600 bg-primary-blue font-circular'>
                             Sign Up
-                        </button>
+                        </Link>
 
 
 
@@ -116,11 +115,11 @@ const Navbar = () => {
                                         </div>
 
                                         {/* Footer */}
-                                        <div className="border-t px-5 py-4">
+                                        <Link href={"/auth/login"} className="border-t px-5 py-4">
                                             <button className="w-full font-circular hover:bg-cyan-600 bg-primary-blue text-white py-2 rounded-sm">
                                                 Log In
                                             </button>
-                                        </div>
+                                        </Link>
                                     </motion.div>
                                 )}
                             </AnimatePresence>

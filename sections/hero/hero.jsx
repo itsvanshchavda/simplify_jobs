@@ -9,6 +9,7 @@ import mag from '@/public/images/mag.png'
 import zap from '@/public/images/zap.png'
 import memo from '@/public/images/memo.png'
 import bag from '@/public/images/briefcase.png'
+import Link from 'next/link';
 const Hero = () => {
 
     const [activeTab, setActiveTab] = useState("jobmatch");
@@ -45,9 +46,9 @@ const Hero = () => {
             </div>
 
 
-            <button className='bg-primary-blue hover:bg-cyan-600 duration-300 font-circular text-lg py-3 px-10 rounded-4xl text-white'>
+            <Link href={"/auth/register"} className='bg-primary-blue hover:bg-cyan-600 duration-300 font-circular text-lg py-3 px-10 rounded-4xl text-white'>
                 Sign Up - It's Free!
-            </button>
+            </Link>
 
             <div className='flex flex-col sm:flex-row items-center gap-2'>
 

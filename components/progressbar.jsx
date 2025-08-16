@@ -9,6 +9,7 @@ NProgress.configure({
     showSpinner: true,
     trickleSpeed: 200,
     minimum: 0.2,
+
 });
 
 export default function ProgressProvider({ children }) {
