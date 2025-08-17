@@ -119,6 +119,13 @@ const Register = () => {
         "/images/openai.png",
     ];
 
+    const googleAuth = async () => {
+        window.location.href = "http://localhost:5000/api/v1/auth/google";
+
+    }
+
+
+
     return (
         <div className='w-full grid grid-cols-1 lg:grid-cols-6  min-h-screen'>
             {/* Left Panel */}
@@ -325,7 +332,7 @@ const Register = () => {
                     </div>
 
                     {/* Social Buttons */}
-                    <div>
+                    <div onClick={googleAuth}>
                         <button
                             type='button'
                             className="h-12 px-6 flex flex-col justify-center items-center w-full border border-gray-300 rounded-full transition duration-300"

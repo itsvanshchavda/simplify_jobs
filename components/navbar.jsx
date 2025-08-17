@@ -15,12 +15,16 @@ import {
 } from "@/components/ui/dialog"
 import Link from 'next/link';
 import { AnimatePresence, motion } from "motion/react"
+import { useUser } from '@/context/userContext';
 
 
 const Navbar = () => {
 
     const [open, setOpen] = useState(false)
     const [scrolled, setScrolled] = useState(false);
+    const { state } = useUser();
+
+    const user = state?.user;
 
     useEffect(() => {
         const handleScroll = () => {
@@ -62,16 +66,29 @@ const Navbar = () => {
 
 
                     <div className='flex items-center gap-4'>
-                        <Link href={"/auth/login"} className='text-primary-blue duration-300 hover:bg-primary-blue hover:text-white  xl:block hidden text-base py-2 px-4  rounded-full border-2 border-primary-blue font-circular'>
-                            Log In
-                        </Link>
+
+                        {!user && (
+                            <Link href={"/auth/login"} className='text-primary-blue duration-300 hover:bg-primary-blue hover:text-white  xl:block hidden text-base py-2 px-4  rounded-full border-2 border-primary-blue font-circular'>
+                                Log In
+                            </Link>
+                        )}
 
 
-                        <Link href={"/auth/register"} className='text-white text-base py-2 px-4 duration-300  rounded-full hover:bg-cyan-600 bg-primary-blue font-circular'>
-                            Sign Up
-                        </Link>
+                        {user ? (
+
+                            <Link href={"/dashboard"} className='text-white text-base py-2 px-4 duration-300  rounded-full hover:bg-cyan-600 bg-primary-blue font-circular'>
+                                Dashboard
+                            </Link>
 
 
+
+                        ) : (
+                            <Link href={"/auth/register"} className='text-white text-base py-2 px-4 duration-300  rounded-full hover:bg-cyan-600 bg-primary-blue font-circular'>
+                                Sign Up
+                            </Link>
+
+
+                        )}
 
                         <Dialog open={open} onOpenChange={setOpen}>
                             <DialogTrigger asChild>
@@ -115,11 +132,27 @@ const Navbar = () => {
                                         </div>
 
                                         {/* Footer */}
-                                        <Link href={"/auth/login"} className="border-t px-5 py-4">
-                                            <button className="w-full font-circular hover:bg-cyan-600 bg-primary-blue text-white py-2 rounded-sm">
-                                                Log In
-                                            </button>
-                                        </Link>
+
+
+                                        {user ? (
+                                            <Link href={"/dashboard"} onClick={() => setOpen(false)}>
+
+                                                <div className="border-t px-5 py-4">
+                                                    <button className="w-full font-circular hover:bg-cyan-600 bg-primary-blue text-white py-2 rounded-sm">
+                                                        Go to Dashboard
+                                                    </button>
+                                                </div>
+                                            </Link>
+                                        ) : (
+                                            <Link href={"/auth/login"} onClick={() => setOpen(false)}>
+
+                                                <div className="border-t px-5 py-4">
+                                                    <button className="w-full font-circular hover:bg-cyan-600 bg-primary-blue text-white py-2 rounded-sm">
+                                                        Log In
+                                                    </button>
+                                                </div>
+                                            </Link>
+                                        )}
                                     </motion.div>
                                 )}
                             </AnimatePresence>

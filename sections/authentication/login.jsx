@@ -71,6 +71,10 @@ const Login = () => {
         "/images/openai.png",
     ];
 
+    const googleAuth = async () => {
+        window.location.href = "http://localhost:5000/api/v1/auth/google";
+
+    }
 
 
 
@@ -281,7 +285,7 @@ const Login = () => {
                             <hr className="flex-1 border-gray-400" />
                         </div>
 
-                        <div>
+                        <div onClick={googleAuth}>
                             <button
                                 type='button'
                                 className="h-12 px-6 flex flex-col justify-center items-center w-full border border-gray-300 rounded-full transition duration-300 ">

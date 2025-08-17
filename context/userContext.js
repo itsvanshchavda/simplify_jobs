@@ -1,5 +1,6 @@
 "use client";
 import GetUserApi from "@/apis/user/GetUserApi";
+import Logo from "@/public/icons/logo";
 import { usePathname, useRouter } from "next/navigation";
 import React, {
   createContext,
@@ -20,7 +21,7 @@ const initialState = {
 const userReducer = (state, action) => {
   switch (action.type) {
     case "SET_USER":
-      //console.log("Setting user:", action.payload);
+      console.log("Setting user:", action.payload);
       return { ...state, user: action.payload };
     default:
       return state;
@@ -33,24 +34,36 @@ export const UserProvider = ({ children }) => {
   const [ready, setReady] = useState(false);
   const pathname = usePathname();
   const router = useRouter();
-  const isPublicPage = [
+
+  const publicPages = [
     "/",
     "/copilot",
     "/job-tracker",
     "/resume-builder",
-  ].includes(pathname);
+    "/auth/login",
+    "/auth/register",
+    "/auth/success",
+    "/auth/fallure",
+  ];
+
+  const isPublicPage =
+    publicPages.includes(pathname) || pathname.startsWith("/success");
 
   useEffect(() => {
-    const token = localStorage.getItem("token");
-
     const fetchUserData = async () => {
+      // For public pages, just check if we have a token and try to fetch user data
       if (isPublicPage) {
+        const token = localStorage.getItem("token");
         if (token) {
           try {
             const data = await GetUserApi(token);
-            dispatch({ type: "SET_USER", payload: data });
+            if (data) {
+              dispatch({ type: "SET_USER", payload: data });
+            }
           } catch (error) {
-            //console.log("Error fetching user data:", error);
+            console.log("Error fetching user data:", error);
+            // If token is invalid, remove it
+            localStorage.removeItem("token");
           }
         }
         setReady(true);
@@ -58,70 +71,46 @@ export const UserProvider = ({ children }) => {
         return;
       }
 
+      // For protected pages, handle authentication
       setLoading(true);
+      const token = localStorage.getItem("token");
 
-      // If there's a token, fetch user data and handle redirects
       if (token) {
         try {
           const data = await GetUserApi(token);
           if (!data) {
-            //console.log("User not found. Redirecting to login.");
-            router.push("/auth/sign-in");
+            console.log("User not found. Redirecting to login.");
+            localStorage.removeItem("token"); // Remove invalid token
+            router.push("/auth/login");
             setReady(true);
             setLoading(false);
             return;
           }
-          //console.log(data, "User data fetched");
+
+          console.log("User data fetched:", data);
           dispatch({ type: "SET_USER", payload: data });
 
-          // Handle verification check and redirect
-          if (data.verified) {
-            if (
-              data.onboarding_step === 1 &&
-              !pathname.startsWith("/dashboard")
-            ) {
-              router.push("/dashboard/autoapply");
-              return;
-            }
-          } else {
-            router.push("/auth/otp");
-            setReady(true);
-            setLoading(false);
-            return;
-          }
-
-          if (
-            data.onboarding_step === 0 &&
-            !pathname.startsWith("/onboarding/uploadresume")
-          ) {
-            router.push("/onboarding/uploadresume");
-            return;
-          }
+          // Handle onboarding redirect if needed
+          // if (
+          //   data.onboarding_step === 0 &&
+          //   !pathname.startsWith("/onboarding/uploadresume")
+          // ) {
+          //   router.push("/onboarding/uploadresume");
+          //   return;
+          // }
         } catch (error) {
-          //console.log("Error fetching user data:", error);
+          console.log("Error fetching user data:", error);
+          localStorage.removeItem("token"); // Remove invalid token
+          router.push("/auth/login");
+          setReady(true);
+          setLoading(false);
+          return;
         }
-      }
-      // If no token and not on public routes, redirect to sign-in
-      else if (
-        ![
-          "/",
-          "/aboutus",
-          "/search",
-          "/auth/sign-in",
-          "/auth/sign-up",
-          "/auth/reset-password",
-          "/auth/forgot-password",
-          "/features",
-          "/features/mockinterview",
-          "/features/atsanalysis",
-          "/features/autoapply",
-          "/features/jobsearch",
-          "/legal/terms",
-          "/legal/privacy",
-          "/jobinfo",
-        ].includes(pathname)
-      ) {
-        router.push("/auth/sign-in");
+      } else {
+        // No token and trying to access protected route
+        router.push("/auth/login");
+        setReady(true);
+        setLoading(false);
         return;
       }
 
@@ -130,7 +119,7 @@ export const UserProvider = ({ children }) => {
     };
 
     fetchUserData();
-  }, [dispatch, pathname, router]);
+  }, [dispatch, pathname, router, isPublicPage]);
 
   if (loading || !ready) {
     return (
