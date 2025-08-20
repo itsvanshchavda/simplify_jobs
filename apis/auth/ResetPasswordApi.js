@@ -6,7 +6,8 @@ const ResetPasswordApi = async (body) => {
   } catch (error) {
     return {
       error:
-        error?.response?.data?.error || "Failed to Sign in. Please try again",
+        error?.response?.data?.error ||
+        "Failed to reset password. Please try again",
     };
   }
 };

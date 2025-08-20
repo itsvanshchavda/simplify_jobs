@@ -90,13 +90,24 @@ export const UserProvider = ({ children }) => {
           console.log("User data fetched:", data);
           dispatch({ type: "SET_USER", payload: data });
 
-          // Handle onboarding redirect if needed
-          // if (
-          //   data.onboarding_step === 0 &&
-          //   !pathname.startsWith("/onboarding/uploadresume")
-          // ) {
-          //   router.push("/onboarding/uploadresume");
-          //   return;
+          // if (!data.onboardingCompleted) {
+          //   switch (data.onboardingStep) {
+          //     case 0:
+          //       if (!pathname.startsWith("/onboarding/uploadresume")) {
+          //         router.push("/onboarding/uploadresume");
+          //       }
+          //       break;
+
+          //     case 1:
+          //       if (!pathname.startsWith("/onboarding/job-resume")) {
+          //         router.push("/onboarding/job-resume");
+          //       }
+          //       break;
+
+          //     // Add more steps as needed
+          //     default:
+          //       break;
+          //   }
           // }
         } catch (error) {
           console.log("Error fetching user data:", error);
