@@ -86,7 +86,10 @@ const ApplicationKit = () => {
             toast.error(res.error)
         } else {
             toast.success("Onboarding completed successfully!")
-            window.location.href = "/dashboard"
+
+            setTimeout(() => {
+                window.location.href = "/dashboard"
+            }, 1000) // Redirect after 1 second
         }
     }
 
@@ -159,7 +162,7 @@ const ApplicationKit = () => {
                                 <h3 className="font-circular text-lg font-medium text-gray-800">
                                     Customized Resume
                                 </h3>
-                                <div className="flex-1  shadow-inner bg-gray-50 rounded-lg flex items-center justify-center">
+                                <div className="flex-1 shadow-inner bg-gray-50 rounded-lg flex items-center justify-center">
                                     {imgUrl ? (
                                         <img
                                             src={imgUrl}
@@ -184,17 +187,17 @@ const ApplicationKit = () => {
                                     Cover Letter
                                 </h3>
                                 <ScrollArea
-                                    className="flex-1 rounded-lg overflow-hidden relative"
+                                    className="flex-1  overflow-hidden relative"
                                     style={{
                                         backgroundImage:
                                             "url(https://www.toptal.com/designers/subtlepatterns/uploads/handmadepaper.png)",
                                     }}
                                 >
-                                    <div className="absolute inset-0 bg-[repeating-linear-gradient(45deg,white,oklch(0_0_0/0.1))] opacity-50"
+                                    <div className="absolute inset-0 bg-[repeating-linear-gradient(45deg,white,oklch(0_0_0/0.1))] opacity-60"
                                         style={{ backgroundSize: '50% 50%' }} />
                                     <div className="relative h-full p-4 overflow-y-auto">
                                         {coverletter ? (
-                                            <p className="whitespace-pre-line font-circular text-black/80 text-xs leading-relaxed">
+                                            <p className="whitespace-pre-line font-circular text-black/85 text-[12px] leading-relaxed">
                                                 {coverletter}
                                             </p>
                                         ) : (
