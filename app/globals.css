@@ -54,6 +54,7 @@
     --spacing-hero : 88rem;
     --color-primary-blue: #12A1C0;
     --font-circular: var(--font-circular);
+    --font-tinos:var(--font-tinos);
     --radius-sm: calc(var(--radius) - 4px);
     --radius-md: calc(var(--radius) - 2px);
     --radius-lg: var(--radius);

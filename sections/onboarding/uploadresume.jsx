@@ -91,7 +91,7 @@ const UploadResume = () => {
 
             dispatch({ type: "SET_USER", payload: userRes })
 
-            router.push("/onboarding/job-preferences");
+            router.push("/onboarding/job-resume");
 
         } catch (err) {
             toast.error(err);
@@ -176,6 +176,7 @@ const UploadResume = () => {
                             <div className='flex font-circular flex-col gap-2'>
                                 <Label>First Name</Label>
                                 <input
+                                    disabled={loading}
                                     placeholder="First Name"
                                     type="text"
                                     value={firstName}
@@ -193,6 +194,7 @@ const UploadResume = () => {
                             <div className='flex font-circular flex-col gap-2'>
                                 <Label>Last Name</Label>
                                 <input
+                                    disabled={loading}
                                     placeholder="Last Name"
                                     type="text"
                                     value={lastName}

@@ -1,6 +1,6 @@
 
 const PlaceholderJobCard = () => (
-    <div className="relative bg-white border border-gray-200 rounded-lg p-6 w-full max-w-4xl mx-auto">
+    <div className="relative bg-white border border-gray-200 rounded-lg p-4 sm:p-6 w-full max-w-4xl mx-auto">
         {/* Blur overlay */}
         <div className="absolute inset-0 bg-white/85 backdrop-blur-sm rounded-lg flex flex-col items-center justify-center z-10">
             <div className="text-center p-8">
@@ -13,7 +13,7 @@ const PlaceholderJobCard = () => (
         </div>
 
         {/* Background placeholder content */}
-        <div className="flex items-start gap-4 mb-4">
+        <div className="flex items-start gap-4 sm:pb-4">
             <div className="w-16 h-16 bg-gray-400 rounded-lg animate-pulse"></div>
             <div className="flex-1">
                 <div className="w-3/4 h-6 bg-gray-400 rounded mb-2 animate-pulse"></div>
@@ -29,7 +29,7 @@ const PlaceholderJobCard = () => (
             </div>
         </div>
 
-        <div className="pb-6">
+        <div className="sm:pb-6 pb-2">
             <div className="space-y-2">
                 <div className="w-full h-4 bg-gray-400 rounded animate-pulse"></div>
                 <div className="w-5/6 h-4 bg-gray-400 rounded animate-pulse"></div>
@@ -37,7 +37,7 @@ const PlaceholderJobCard = () => (
             </div>
         </div>
 
-        <div className="mb-4">
+        <div className="hidden sm:block pb-4">
             <div className="w-32 h-5 bg-gray-400 rounded mb-2 animate-pulse"></div>
             <div className="flex flex-wrap gap-2">
                 <div className="w-16 h-6 bg-gray-400 rounded-full animate-pulse"></div>
@@ -46,7 +46,7 @@ const PlaceholderJobCard = () => (
             </div>
         </div>
 
-        <div className="flex items-center justify-between pt-4 border-t border-gray-300">
+        <div className=" hidden sm:flex items-center justify-between pt-4 border-t border-gray-300">
             <div className="w-32 h-4 bg-gray-400 rounded animate-pulse"></div>
             <div className="w-24 h-8 bg-gray-400 rounded animate-pulse"></div>
         </div>

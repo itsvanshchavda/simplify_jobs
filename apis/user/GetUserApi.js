@@ -9,6 +9,7 @@ const GetUserApi = async () => {
     });
     return res.data;
   } catch (error) {
+    localStorage.removeItem("token");
     return {
       error:
         error?.response?.data?.error || "Failed to get user. Please try again",

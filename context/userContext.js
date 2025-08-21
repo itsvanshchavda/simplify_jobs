@@ -78,7 +78,7 @@ export const UserProvider = ({ children }) => {
       if (token) {
         try {
           const data = await GetUserApi(token);
-          if (!data) {
+          if (!data || data.error) {
             console.log("User not found. Redirecting to login.");
             localStorage.removeItem("token"); // Remove invalid token
             router.push("/auth/login");
@@ -90,25 +90,29 @@ export const UserProvider = ({ children }) => {
           console.log("User data fetched:", data);
           dispatch({ type: "SET_USER", payload: data });
 
-          // if (!data.onboardingCompleted) {
-          //   switch (data.onboardingStep) {
-          //     case 0:
-          //       if (!pathname.startsWith("/onboarding/uploadresume")) {
-          //         router.push("/onboarding/uploadresume");
-          //       }
-          //       break;
+          if (!data.onboardingCompleted) {
+            switch (data.onboardingStep) {
+              case 0:
+                if (!pathname.startsWith("/onboarding/uploadresume")) {
+                  router.push("/onboarding/uploadresume");
+                }
+                break;
 
-          //     case 1:
-          //       if (!pathname.startsWith("/onboarding/job-resume")) {
-          //         router.push("/onboarding/job-resume");
-          //       }
-          //       break;
-
-          //     // Add more steps as needed
-          //     default:
-          //       break;
-          //   }
-          // }
+              case 1:
+                if (!pathname.startsWith("/onboarding/job-resume")) {
+                  router.push("/onboarding/job-resume");
+                }
+                break;
+              case 2:
+                if (!pathname.startsWith("/onboarding/application-kit")) {
+                  router.push("/onboarding/application-kit");
+                }
+                break;
+              // Add more steps as needed
+              default:
+                break;
+            }
+          }
         } catch (error) {
           console.log("Error fetching user data:", error);
           localStorage.removeItem("token"); // Remove invalid token

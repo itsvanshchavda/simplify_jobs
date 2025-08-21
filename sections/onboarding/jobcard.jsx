@@ -5,6 +5,8 @@ import { MapPin, Clock, Building2, Users, CheckCircle, ExternalLink, Plus, X, Br
 import { useState } from "react"
 
 const JobCard = ({ job, selectedJob, handleSelectJob }) => {
+    console.log("🚀 ~ JobCard ~ selectedJob:", selectedJob)
+    console.log("🚀 ~ JobCard ~ job:", job)
 
 
 
@@ -35,7 +37,7 @@ const JobCard = ({ job, selectedJob, handleSelectJob }) => {
                                 onClick={() => setIsSheetOpen(true)}
                                 className="text-left w-full group"
                             >
-                                <h3 className="font-circular max-w-[200px] truncate font-semibold text-xl text-gray-900 pb-2 leading-tight group-hover:text-primary-blue transition-colors duration-200 cursor-pointer">
+                                <h3 className="font-circular md:max-w-[400px] max-w-[200px] truncate font-semibold text-xl text-gray-900 pb-2 leading-tight group-hover:text-primary-blue transition-colors duration-200 cursor-pointer">
                                     {job.job_title}
                                 </h3>
                             </button>
@@ -43,15 +45,22 @@ const JobCard = ({ job, selectedJob, handleSelectJob }) => {
 
                             <div className="flex items-center gap-2">
 
+                                {!selectedJob && (
+                                    <button onClick={handleSelectJob}>
+                                        <Bookmark
+                                            size={22}
+                                            className={`
+                                            ${selectedJob && selectedJob._id === job._id ? "text-green-600" : "text-gray-500 hover:text-primary-blue transition-colors duration-200"}
+                                            hover:scale-105 transition-transform duration-200`}
+                                        />
+                                    </button>
+                                )}
 
-                                <button disabled={selectedJob?._id === job?._id} onClick={handleSelectJob}>
-                                    <Bookmark size={26} strokeWidth={1} className={`${selectedJob?._id === job?._id ? "fill-primary-blue stroke-white border border-white" : ""}`} />
-                                </button>
 
 
 
                                 <a href={job.job_url} target="_blank" rel="noopener noreferrer" className="text-gray-500 hover:text-primary-blue transition-colors duration-200">
-                                    <ExternalLink size={16} />
+                                    <ExternalLink size={22} />
 
                                 </a>
                             </div>
@@ -98,16 +107,24 @@ const JobCard = ({ job, selectedJob, handleSelectJob }) => {
                                     <Clock size={16} className="text-gray-400" />
                                     <span className="font-circular">{job.experience}</span>
                                 </div>
-                                <div className="flex items-center gap-1 hover:text-gray-800 transition-colors">
-                                    <Building2 size={16} className="text-gray-400" />
-                                    <span className="font-circular">{job.company_name}</span>
-                                </div>
-                                {job.job_type && job.job_type.length > 0 && (
+
+                                {job.company_name && (
                                     <div className="flex items-center gap-1 hover:text-gray-800 transition-colors">
-                                        <Users size={16} className="text-gray-400" />
-                                        <span className="font-circular">{job.job_type.join(", ")}</span>
+                                        <Building2 size={16} className="text-gray-400" />
+                                        <span className="font-circular">{job.company_name}</span>
                                     </div>
                                 )}
+                                {job.job_type && (
+                                    <div className="flex items-center gap-1 hover:text-gray-800 transition-colors">
+                                        <Users size={16} className="text-gray-400" />
+                                        <span className="font-circular">
+                                            {Array.isArray(job.job_type)
+                                                ? job.job_type.join(", ")
+                                                : String(job.job_type)}
+                                        </span>
+                                    </div>
+                                )}
+
                             </div>
                             <div className="flex items-center gap-2 text-sm text-gray-500 font-circular">
                                 <div className="flex items-center gap-2">

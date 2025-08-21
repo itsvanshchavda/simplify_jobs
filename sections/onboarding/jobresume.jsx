@@ -1,82 +1,119 @@
 "use client"
 import Logo from "@/public/icons/logo"
 import clsx from "clsx"
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { Button } from "@/components/ui/button"
 import { ArrowLeft, Loader2, MapPin, Clock, Building2, Users, CheckCircle, ExternalLink, Eye, EyeOff } from "lucide-react"
 import { useUser } from "@/context/userContext"
 import toast from "react-hot-toast"
-import AddResumeApi from "@/apis/resume/AddResumeApi"
 import UpdateUserApi from "@/apis/user/UpdateUser"
 import { useRouter } from "next/navigation"
 import GetJobDataApi from "@/apis/job/GetJobDataApi"
 import PlaceholderJobCard from "./placeholder"
 import JobCard from "./jobcard"
+import CustomizeResumeApi from "@/apis/resume/CustomizeResumeApi"
+import SaveJobDataApi from "@/apis/job/SaveJobDataApi"
+import UpdateDefaultResumeApi from "@/apis/resume/UpdateDefaultResumeApi"
+import Image from "next/image"
+import SaveResumeApi from "@/apis/resume/SaveResumeApi"
 
 const JobResume = () => {
-    const { state, dispatch } = useUser()
-    const user = state.user
+    const { state, dispatch } = useUser();
+    const user = state?.user
 
-    const [firstName, setFirstName] = useState(user?.firstName || "")
-    const [lastName, setLastName] = useState(user?.lastName || "")
     const [error, setError] = useState("")
     const [loading, setLoading] = useState(false)
     const [fetchingJob, setFetchingJob] = useState(false)
     const [currentJob, setCurrentJob] = useState(null)
     const [selectedJob, setSelectedJob] = useState(null)
-    const [showFullDescription, setShowFullDescription] = useState(false)
-    const router = useRouter()
     const [url, setUrl] = useState("")
-    const [file, setFile] = useState(null)
-    const [uploadComplete, setUploadComplete] = useState(false)
+    const [loadingStep, setLoadingStep] = useState(0)
+    const router = useRouter()
 
-    const getJobDetails = async () => {
+    const loadingSteps = [
+        "Uploading your resume…",
+        "Analyzing your experience…",
+        "Highlighting key skills…",
+        "Tailoring to the job…",
+        "Optimizing for ATS…",
+        "Formatting your resume…",
+        "Finalizing your resume…",
+    ];
 
 
-        if (!url.trim()) {
-            toast.error("Please enter a valid job URL")
-            return
+    useEffect(() => {
+        if (loading) {
+            let i = 0;
+            const interval = setInterval(() => {
+                i++;
+                if (i < loadingSteps.length) {
+                    setLoadingStep(i);
+                }
+            }, 4000); // move to next step every 4 seconds
+
+            return () => clearInterval(interval);
+        } else {
+            setLoadingStep(0); // reset for next upload
         }
-
-        const webTest = /^(https?:\/\/)?(www\.)?[a-zA-Z0-9\-]+(\.[a-zA-Z]{2,})+([\/\w\-.?=&%]*)*\/?$/;
-
-        if (!webTest.test(url.trim())) {
-            toast.error("Please enter a valid job URL");
-            return;
-        }
+    }, [loading]);
 
 
+
+
+
+
+    const getJobDetails = async (e) => {
+        e.preventDefault();
+        if (!url.trim()) return toast.error("Please enter a valid job URL");
 
         try {
-            setFetchingJob(true)
-            setError("")
-            // Clear previous selections when fetching new job
-            setCurrentJob(null)
-            setSelectedJob(null)
+            setFetchingJob(true);
+            const res = await GetJobDataApi({ url: url.trim() });
+            if (res.error) return toast.error(res.error);
 
-            const res = await GetJobDataApi({ url: url.trim() })
+            setCurrentJob(res.job);
 
+            toast.success("Job details fetched successfully!");
+        } catch (err) {
+            toast.error("Failed to fetch job details.");
+        } finally {
+            setFetchingJob(false);
+        }
+    };
+
+
+
+    const handleSelectJob = async () => {
+        try {
+            const res = await SaveJobDataApi({ jobData: currentJob, isDefaultJob: true })
             if (res.error) {
                 toast.error(res.error)
-                setError(res.error)
                 return
             }
 
-            setCurrentJob(res?.job)
-            toast.success("Job details fetched successfully!")
+            setCurrentJob(res.job)      // update current job with _id
+            setSelectedJob(res.job)     // mark it as selected
+
+            console.log("Job data saved successfully:", res.job)
+
+            const userRes = await UpdateUserApi({
+                default_job: res.job._id,
+            })
+
+            if (userRes.error) {
+                toast.error(userRes.error)
+                return
+            }
+
+            dispatch({ type: "SET_USER", payload: userRes })
+            console.log("User updated with default job:", userRes)
+            toast.success("Job selected! Ready to customize your resume.")
         } catch (err) {
-            console.error("Error fetching job details:", err)
-            toast.error("Failed to fetch job details. Please try again.")
-        } finally {
-            setFetchingJob(false)
+            toast.error("Something went wrong while selecting job.")
+            console.error(err)
         }
     }
 
-    const handleSelectJob = async () => {
-        setSelectedJob(currentJob)
-
-        toast.success("Job selected! Ready to customize your resume.")
-    }
 
     const handleSubmit = async (e) => {
         e.preventDefault()
@@ -86,25 +123,60 @@ const JobResume = () => {
             return
         }
 
-
-
-        const res = await UpdateUserApi({
-            application_kit: {
-                default_job: selectedJob,
-            }
-        })
-
-        if (res.error) {
-            toast.error(res.error)
-            return
-        }
-
-        console.log("User updated with default job:", res.user)
-
-
         try {
             setLoading(true)
 
+            const body = {
+                job_title: selectedJob?.job_title,
+                description: selectedJob?.description,
+                job_skills: selectedJob?.skills,
+            }
+
+            const res = await CustomizeResumeApi(body)
+
+            if (res.error) {
+                toast.error(res.error)
+                return
+            }
+
+            console.log("Resume customized successfully:", res)
+
+
+            const saveRes = await SaveResumeApi({
+                filename: `${user?.firstName}-${user?.lastName}-customized-resume`,
+                json: res.parsedResume,
+                resume_type: 1,
+                job_id: selectedJob?._id,
+
+            })
+
+            if (saveRes.error) {
+                toast.error(saveRes.error)
+                return
+            }
+            console.log("Resume saved successfully:", saveRes)
+
+
+            const resumeRes = await UpdateDefaultResumeApi({ resumeId: saveRes.resume._id })
+
+            if (resumeRes.error) {
+                toast.error(resumeRes.error)
+                return
+            }
+
+            toast.success("Resume customized and default resume updated successfully!")
+
+            const userRes = await UpdateUserApi({
+                onboardingStep: 2,
+            });
+
+            if (userRes.error) {
+                toast.error(userRes.error);
+                return;
+            }
+
+
+            router.push("/onboarding/application-kit");
 
         } catch (err) {
             toast.error(err)
@@ -165,55 +237,80 @@ const JobResume = () => {
                     </div>
 
                     <div className="max-w-3xl flex flex-col gap-4 mx-auto w-full">
-                        <div className="flex flex-col gap-6">
+                        {!selectedJob ? (
+                            <form onSubmit={getJobDetails} className="flex flex-col gap-6">
 
-                            <div className="flex md:flex-row flex-col justify-center items-center gap-4">
-                                <div className="flex w-full flex-col gap-2 font-circular">
-                                    <input
-                                        type="url"
-                                        value={url}
-                                        onChange={(e) => setUrl(e.target.value)}
-                                        placeholder="https://www.example.com/job-posting"
-                                        className={clsx(
-                                            "p-3 font-circular border text-base border-gray-200 focus:border-[#3EC0DD] focus:ring-[#3EC0DD]/10 h-12 block w-full rounded-sm leading-5 text-secondary-400 shadow-sm transition-all duration-200 placeholder:text-gray-400 focus:outline-none focus:ring-4 focus:shadow-md disabled:bg-[#F2F2F2] disabled:opacity-90",
-                                            error && "border-red-300 focus:border-red-500 focus:ring-red-500/10",
+                                <div className="flex md:flex-row flex-col justify-center items-center gap-4">
+                                    <div className="flex w-full flex-col gap-2 font-circular">
+                                        <input
+                                            type="url"
+                                            value={url}
+                                            onChange={(e) => setUrl(e.target.value)}
+                                            placeholder="https://www.example.com/job-posting"
+                                            className={clsx(
+                                                "p-3 font-circular border text-base border-gray-200 focus:border-[#3EC0DD] focus:ring-[#3EC0DD]/10 h-12 block w-full rounded-sm leading-5 text-secondary-400 shadow-sm transition-all duration-200 placeholder:text-gray-400 focus:outline-none focus:ring-4 focus:shadow-md disabled:bg-[#F2F2F2] disabled:opacity-90",
+                                                error && "border-red-300 focus:border-red-500 focus:ring-red-500/10",
+                                            )}
+                                            disabled={fetchingJob}
+                                        />
+                                    </div>
+
+                                    <Button
+
+                                        type="submit"
+                                        disabled={fetchingJob || !url.trim()}
+                                        className="h-12  sm:w-[200px] w-full text-sm rounded-sm bg-white border-2 text-primary-blue duration-300 hover:bg-primary-blue hover:text-white font-circular font-medium border-primary-blue/60 disabled:opacity-50 hover:shadow-md hover:scale-105 active:scale-95 transition-all"
+                                    >
+                                        {fetchingJob ? (
+                                            <div className="flex items-center gap-2">
+                                                <Loader2 size={16} className="animate-spin" />
+                                                Fetching...
+                                            </div>
+                                        ) : (
+                                            "Fetch Job Post"
                                         )}
-                                        disabled={fetchingJob}
-                                    />
+                                    </Button>
                                 </div>
-
-                                <Button
-                                    onClick={getJobDetails}
-                                    disabled={fetchingJob || !url.trim()}
-                                    className="h-12  sm:w-[200px] w-full text-sm rounded-sm bg-white border-2 text-primary-blue duration-300 hover:bg-primary-blue hover:text-white font-circular font-medium border-primary-blue/60 disabled:opacity-50 hover:shadow-md hover:scale-105 active:scale-95 transition-all"
-                                >
-                                    {fetchingJob ? (
-                                        <div className="flex items-center gap-2">
-                                            <Loader2 size={16} className="animate-spin" />
-                                            Fetching...
-                                        </div>
-                                    ) : (
-                                        "Fetch Job Post"
-                                    )}
-                                </Button>
+                            </form>
+                        ) : loading ? (
+                            <div className=" font-circular inline-flex sm:items-center items-start justify-center gap-2 font-medium text-xl xl:text-2xl text-center  ">
+                                <img
+                                    src="/images/memo.png"
+                                    alt="File"
+                                    width={27}
+                                    height={27}
+                                    className=""
+                                    loading="lazy"
+                                />
+                                <span className="text-center">
+                                    {loadingSteps[loadingStep]}
+                                </span>
                             </div>
-                        </div>
+                        ) : (
+                            <div className=" font-circular inline-flex sm:items-center items-start justify-center gap-2 font-medium text-xl xl:text-2xl text-center  ">
+                                <img
+                                    src="/images/party-popper.png"
+                                    alt="Party popper celebration icon"
+                                    width={27}
+                                    height={27}
+                                    className=""
+                                    loading="lazy"
+                                />
+                                <span className="text-center">
+                                    Done! Just press <strong>Customize Resume</strong>.
+                                </span>
+                            </div>
+
+                        )}
 
                         {/* Job Card or Placeholder */}
-                        <div className="">
+                        <div className="grid gap-4">
                             {currentJob ? (
                                 <JobCard
                                     job={currentJob}
-                                    setShowFullDescription={setShowFullDescription}
-                                    showFullDescription={showFullDescription}
                                     selectedJob={selectedJob}
                                     handleSelectJob={handleSelectJob}
-                                />
-                            ) : (
-                                <PlaceholderJobCard />
-                            )}
-
-
+                                />) : (<PlaceholderJobCard />)}
                         </div>
                     </div>
 
