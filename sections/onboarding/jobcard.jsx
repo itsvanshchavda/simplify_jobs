@@ -5,14 +5,11 @@ import { MapPin, Clock, Building2, Users, CheckCircle, ExternalLink, Plus, X, Br
 import { useState } from "react"
 
 const JobCard = ({ job, selectedJob, handleSelectJob }) => {
-    console.log("🚀 ~ JobCard ~ selectedJob:", selectedJob)
-    console.log("🚀 ~ JobCard ~ job:", job)
 
-
+    const [showFullDescription, setShowFullDescription] = useState(false)
 
 
     const [isSheetOpen, setIsSheetOpen] = useState(false)
-    const maxDescriptionLength = 200
     const maxSkillsToShow = 4
     const shouldShowMoreSkills = job.skills && job.skills.length > maxSkillsToShow
     const visibleSkills = job.skills ? job.skills.slice(0, maxSkillsToShow) : []
@@ -212,10 +209,10 @@ const JobCard = ({ job, selectedJob, handleSelectJob }) => {
 
             {/* Job Details Sheet */}
             <Sheet open={isSheetOpen} onOpenChange={setIsSheetOpen}>
-                <SheetContent className="!w-full rounded-4xl rounded-r-none !max-w-[70rem] p-6  overflow-y-auto">
+                <SheetContent className="!w-full rounded-4xl flex flex-col justify-between rounded-r-none !max-w-[70rem] p-4 sm:p-6  overflow-y-auto">
 
-                    <SheetHeader className="">
-                        <div className="flex items-start gap-4">
+                    <SheetHeader className="py-[1rem] !px-0">
+                        <div className="flex md:flex-row flex-col items-start gap-4">
                             {job.company_logo && (
                                 <img
                                     src={job.company_logo || "/images/placeholder.svg"}
@@ -231,7 +228,7 @@ const JobCard = ({ job, selectedJob, handleSelectJob }) => {
                                         {job.job_title}
                                     </SheetTitle>
 
-                                    <div className="flex items-center gap-3">
+                                    <div className=" hidden md:flex items-center gap-3">
                                         <span className="text-sm text-gray-500">
                                             •
                                         </span>
@@ -251,12 +248,25 @@ const JobCard = ({ job, selectedJob, handleSelectJob }) => {
 
                                 <div className="flex flex-wrap items-center gap-2">
                                     {/* Job basic info */}
+
+
+                                    <span className="bg-gray-100 text-gray-600 text-sm px-3 py-1 rounded-full font-circular">
+                                        {job.location
+                                            && `${job.location}`
+                                        }
+                                    </span>
+
+
                                     <span className="bg-gray-100 text-gray-600 text-sm px-3 py-1 rounded-full font-circular">
                                         {job.experience}
                                     </span>
-                                    <span className="bg-gray-100 text-gray-600 text-sm px-3 py-1 rounded-full font-circular">
-                                        {job.salary}
-                                    </span>
+
+
+                                    {job?.salary && (
+                                        <span className="bg-gray-100 text-gray-600 text-sm px-3 py-1 rounded-full font-circular">
+                                            {job.salary}
+                                        </span>
+                                    )}
                                     <span className="bg-gray-100 text-gray-600 text-sm px-3 py-1 rounded-full font-circular">
                                         {job.applications} applications
                                     </span>
@@ -303,43 +313,41 @@ const JobCard = ({ job, selectedJob, handleSelectJob }) => {
                     </SheetHeader>
 
 
-                    <div className="bg-white">
-                        <div className="flex flex-col gap-2">
+                    <div className="flex flex-col gap-2">
 
-                            <h4 className="font-circular font-medium text-gray-900 text-xl">
-                                Job Details
-                            </h4>
+                        <h4 className="font-circular font-medium text-gray-900 text-xl">
+                            Job Details
+                        </h4>
 
-                            <div className="grid gap-4">
-                                {/* Platform */}
-                                <div className="flex flex-col sm:flex-row sm:items-center gap-1 sm:gap-2">
-                                    <span className="font-circular font-medium text-gray-700 min-w-[100px]">
-                                        Platform:
-                                    </span>
-                                    <span className="text-gray-600 font-circular bg-gray-100 px-3 py-1 rounded-md text-sm">
-                                        {job.platform}
-                                    </span>
-                                </div>
+                        <div className="grid gap-4">
+                            {/* Platform */}
+                            <div className="flex flex-col sm:flex-row sm:items-center gap-1 sm:gap-2">
+                                <span className="font-circular font-medium text-gray-700 min-w-[100px]">
+                                    Platform:
+                                </span>
+                                <span className="text-gray-500 font-circular">
+                                    {job.platform}
+                                </span>
+                            </div>
 
-                                {/* Company Name */}
-                                <div className="flex flex-col sm:flex-row sm:items-center gap-1 sm:gap-3">
-                                    <span className="font-circular font-medium text-gray-700 min-w-[100px]">
-                                        Company:
-                                    </span>
-                                    <span className="text-gray-500 font-circular">
-                                        {job.company_name}
-                                    </span>
-                                </div>
+                            {/* Company Name */}
+                            <div className="flex flex-col sm:flex-row sm:items-center gap-1 sm:gap-3">
+                                <span className="font-circular font-medium text-gray-700 min-w-[100px]">
+                                    Company:
+                                </span>
+                                <span className="text-gray-500 font-circular">
+                                    {job.company_name}
+                                </span>
+                            </div>
 
-                                {/* Industry */}
-                                <div className="flex flex-col sm:flex-row sm:items-center gap-1 sm:gap-3">
-                                    <span className="font-circular font-medium text-gray-700 min-w-[100px]">
-                                        Industry:
-                                    </span>
-                                    <span className="text-gray-500 font-circular">
-                                        {job.industry}
-                                    </span>
-                                </div>
+                            {/* Industry */}
+                            <div className="flex flex-col sm:flex-row sm:items-center gap-1 sm:gap-3">
+                                <span className="font-circular font-medium text-gray-700 min-w-[100px]">
+                                    Industry:
+                                </span>
+                                <span className="text-gray-500 font-circular">
+                                    {job.industry}
+                                </span>
                             </div>
                         </div>
                     </div>
@@ -373,36 +381,38 @@ const JobCard = ({ job, selectedJob, handleSelectJob }) => {
                             </div>
                         )}
 
-                        <div className="grid grid-cols-2 gap-3">
-                            <a
-                                href={job.job_url}
-                                target="_blank"
-                                rel="noopener noreferrer"
-                                className="flex h-10 items-center justify-center gap-2 text-primary-blue hover:text-cyan-600 font-circular font-medium text-sm transition-colors duration-200 hover:underline border border-primary-blue/30 hover:border-primary-blue/60 rounded-lg py-3 px-4 hover:bg-primary-blue/5"
+
+                    </div>
+
+                    <div className="grid grid-cols-2 gap-3">
+                        <a
+                            href={job.job_url}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="flex h-10 items-center justify-center gap-2 text-primary-blue hover:text-cyan-600 font-circular font-medium text-sm transition-colors duration-200 hover:underline border border-primary-blue/30 hover:border-primary-blue/60 rounded-lg py-3 px-4 hover:bg-primary-blue/5"
+                        >
+                            <ExternalLink size={16} />
+                            View Original Post
+                        </a>
+
+                        {!selectedJob && (
+                            <Button
+                                onClick={() => {
+                                    handleSelectJob()
+                                    setIsSheetOpen(false)
+                                }}
+                                className="w-full h-10 bg-primary-blue hover:bg-cyan-600 text-white font-circular font-medium py-3 px-4 rounded-lg transition-all duration-300 hover:shadow-md"
                             >
-                                <ExternalLink size={16} />
-                                View Original Post
-                            </a>
+                                Select This Job
+                            </Button>
+                        )}
 
-                            {!selectedJob && (
-                                <Button
-                                    onClick={() => {
-                                        handleSelectJob()
-                                        setIsSheetOpen(false)
-                                    }}
-                                    className="w-full h-10 bg-primary-blue hover:bg-cyan-600 text-white font-circular font-medium py-3 px-4 rounded-lg transition-all duration-300 hover:shadow-md"
-                                >
-                                    Select This Job
-                                </Button>
-                            )}
-
-                            {selectedJob && selectedJob._id === job._id && (
-                                <div className="flex items-center justify-center gap-2 text-green-600 font-circular font-medium py-3 px-4 border border-green-200 bg-green-50 rounded-lg">
-                                    <CheckCircle size={18} />
-                                    Job Selected
-                                </div>
-                            )}
-                        </div>
+                        {selectedJob && selectedJob._id === job._id && (
+                            <div className="flex items-center justify-center gap-2 text-green-600 font-circular font-medium py-3 px-4 border border-green-200 bg-green-50 rounded-lg">
+                                <CheckCircle size={18} />
+                                Job Selected
+                            </div>
+                        )}
                     </div>
                 </SheetContent>
             </Sheet>

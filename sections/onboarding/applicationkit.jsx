@@ -1,6 +1,6 @@
 "use client"
 import React, { useEffect, useRef, useState } from "react"
-import { ArrowLeft } from "lucide-react"
+import { ArrowLeft, Download } from "lucide-react"
 import Logo from "@/public/icons/logo"
 import Confetti from "react-confetti"
 import { Button } from "@/components/ui/button"
@@ -16,13 +16,14 @@ import UpdateUserApi from "@/apis/user/UpdateUser"
 
 const ApplicationKit = () => {
     const [showConfetti, setShowConfetti] = useState(true)
-    const { state } = useUser()
+    const { state, dispatch } = useUser()
     const user = state.user
     const [imgUrl, setImgUrl] = useState("")
     const [loading, setLoading] = useState(true)
     const [coverletter, setCoverLetter] = useState("")
     const [followupMail, setFollowupMail] = useState("")
-    const hasInitialized = useRef(false)
+    const hasInitialized = useRef(false);
+    const [url, setUrl] = useState("")
 
     useEffect(() => {
         const timer = setTimeout(() => setShowConfetti(false), 5000)
@@ -30,54 +31,63 @@ const ApplicationKit = () => {
     }, [])
 
     // Single initialization effect to prevent multiple API calls
+
     useEffect(() => {
-        if (hasInitialized.current) return
-        hasInitialized.current = true
+        if (!user || hasInitialized.current) return;
+        hasInitialized.current = true;
 
         const initializeData = async () => {
-            setLoading(true)
+            setLoading(true);
 
             try {
-                // Get screenshot
+                // Screenshot
                 if (user?.default_resume?.url) {
-                    const imageUrl = await takeScreenshot(user.default_resume.url)
-                    setImgUrl(imageUrl)
+                    const imageUrl = await takeScreenshot(user.default_resume.url);
+                    setImgUrl(imageUrl);
                 }
 
-                // Get cover letter and follow-up mail in parallel
+                // Parallel calls
                 const [coverLetterRes, followupRes] = await Promise.all([
                     GetCoverletterApi().catch(err => ({ error: err.message })),
                     GetFollowupMailApi().catch(err => ({ error: err.message }))
-                ])
+                ]);
 
-                // Handle cover letter response
+                // Cover letter
                 if (coverLetterRes.error) {
-                    toast.error(coverLetterRes.error)
+                    toast.error(coverLetterRes.error);
                 } else {
-                    setCoverLetter(coverLetterRes.body)
-                    // Save cover letter as default
-                    SaveCoverletterApi({
+                    setCoverLetter(coverLetterRes.body);
+                    const saveRes = await SaveCoverletterApi({
                         coverletter: coverLetterRes.body,
                         isDefaultCoverLetter: true,
-                    }).catch(err => console.error('Failed to save cover letter:', err))
+                    })
+
+
+                    if (saveRes.error) {
+                        toast.error(saveRes.error)
+                        return
+                    }
+
+                    setUrl(saveRes?.coverLetter?.url)
                 }
 
-                // Handle follow-up mail response
+                // Follow-up mail
                 if (followupRes.error) {
-                    toast.error(followupRes.error)
+                    toast.error(followupRes.error);
                 } else {
-                    setFollowupMail(followupRes.rawJson?.body || "")
+                    setFollowupMail(followupRes.rawJson?.body || "");
                 }
-            } catch (err) {
-                toast.error("Failed to load data")
-                console.error('Initialization error:', err)
-            } finally {
-                setLoading(false)
-            }
-        }
 
-        initializeData()
-    }, [user])
+            } catch (err) {
+                toast.error("Failed to load data");
+                console.error("Initialization error:", err);
+            } finally {
+                setLoading(false);
+            }
+        };
+
+        initializeData();
+    }, []);
 
 
     const handleComplete = async () => {
@@ -89,7 +99,24 @@ const ApplicationKit = () => {
 
             setTimeout(() => {
                 window.location.href = "/dashboard"
-            }, 1000) // Redirect after 1 second
+            }, 1500) // Redirect after 1 second
+        }
+    }
+
+    const downloadResume = () => {
+        if (user) {
+            window.open(url, '_blank');
+        } else {
+            toast.error("User data not available");
+        }
+    }
+
+
+    const downloadLetter = () => {
+        if (user) {
+            window.open(user?.application_kit.default_coverletter?.url, '_blank');
+        } else {
+            toast.error("User data not available");
         }
     }
 
@@ -112,18 +139,10 @@ const ApplicationKit = () => {
 
             {/* Main Content */}
             <div className="flex-1 px-4 xl:px-0 flex items-center justify-center py-6">
-                <div className="bg-white px-4 flex flex-col items-center justify-center w-full max-w-6xl rounded-2xl py-6 xl:py-10">
+                <div className="bg-white px-4 flex flex-col items-center justify-center w-full max-w-6xl rounded-2xl p-4">
                     {/* Top Bar */}
                     <div className="flex items-center w-full xl:pb-6 pb-3 max-w-xl">
-                        <button
-                            onClick={() => window.history.back()}
-                            className="flex items-center gap-1 text-gray-700 mr-4"
-                        >
-                            <ArrowLeft size={18} />
-                            <span className="text-sm uppercase font-circular text-gray-600 font-medium">
-                                Back
-                            </span>
-                        </button>
+
 
                         {/* Progress Bar */}
                         <div className="flex-1 h-2 bg-gray-200 rounded-full overflow-hidden mr-4">
@@ -159,9 +178,17 @@ const ApplicationKit = () => {
                             <CardSkeleton />
                         ) : (
                             <div className="bg-white shadow-md border border-gray-200 rounded-xl p-4 flex flex-col overflow-hidden h-[300px] xl:h-[400px]">
-                                <h3 className="font-circular text-lg font-medium text-gray-800">
-                                    Customized Resume
-                                </h3>
+
+                                <div onClick={downloadResume} className="flex justify-between items-center gap-2">
+                                    <h3 className="font-circular text-lg font-medium text-gray-800">
+                                        Customized Resume
+                                    </h3>
+
+
+                                    {!loading && (
+                                        <Download className="cursor-pointer" size={20} />
+                                    )}
+                                </div>
                                 <div className="flex-1 shadow-inner bg-gray-50 rounded-lg flex items-center justify-center">
                                     {imgUrl ? (
                                         <img
@@ -183,9 +210,16 @@ const ApplicationKit = () => {
                             <CardSkeleton />
                         ) : (
                             <div className="bg-white shadow-md border border-gray-200 rounded-xl p-4 flex flex-col h-[300px] xl:h-[400px]">
-                                <h3 className="font-circular text-lg font-medium text-gray-800 xl:pb-4 pb-2">
-                                    Cover Letter
-                                </h3>
+                                <div className="flex pb-4 justify-between items-center gap-2">
+                                    <h3 className="font-circular text-lg font-medium text-gray-800">
+                                        Cover Letter
+                                    </h3>
+
+
+                                    {!loading && (
+                                        <Download onClick={downloadLetter} className="cursor-pointer" size={20} />
+                                    )}
+                                </div>
                                 <ScrollArea
                                     className="flex-1  overflow-hidden relative"
                                     style={{

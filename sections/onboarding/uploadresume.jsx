@@ -131,22 +131,23 @@ const UploadResume = () => {
             {/* Header */}
             <div className="mx-auto pt-[1rem] w-full px-[1rem]  max-w-7xl flex justify-between items-center">
                 <Logo />
-                <div onClick={handleLogout} className="font-circular cursor-pointer uppercase text-base text-gray-500 font-normal">
+                <button disabled={loading} onClick={handleLogout} className="font-circular cursor-pointer uppercase text-base text-gray-500 font-normal">
                     SIGN OUT
-                </div>
+                </button>
             </div>
 
             {/* Centered box */}
-            <div className="flex-1 xl:px-0  px-[1rem] flex gap-5 items-center md:items-start md:py-10 xl:items-center xl:py-0 justify-center ">
+            <div className="flex-1 xl:px-0  px-[1rem] flex gap-5 py-5 xl:py-0 items-center justify-center ">
 
 
 
-                <div className="bg-white  px-[1rem] flex flex-col items-center justify-center h-full gap-6 py-5 xl:py-10 max-w-6xl w-full  rounded-2xl" >
+                <div className="bg-white  px-[1rem] flex flex-col items-center justify-center h-full gap-6 p-4  max-w-6xl w-full  rounded-2xl" >
 
 
                     <div className="flex items-center gap-4 w-full md:w-[400px] xl:w-[520px]">
                         {/* Back Button */}
                         <button
+                            disabled={loading}
                             onClick={() => window.history.back()}
                             className="flex items-center gap-1 text-gray-700 "
                         >
@@ -209,13 +210,13 @@ const UploadResume = () => {
                         </div>
 
 
-                        <div className='flex flex-col gap-6'>
+                        <div className='flex flex-col gap-4'>
                             <div className='font-circular text-lg font-medium'>
                                 Upload Resume
                             </div>
 
 
-                            <div className=' hidden xl:flex bg-gray-50 p-4 rounded-lg  items-center gap-4'>
+                            <div className=' hidden 2xl:flex bg-gray-50 p-4 rounded-lg  items-center gap-4'>
 
                                 <Image src={mag} alt={"search"} width={20} height={20} />
 
@@ -249,13 +250,13 @@ const UploadResume = () => {
                                         ) : uploadComplete ? (
                                             <Image alt='tick' src="/images/tick.png" width={35} height={35} />
                                         ) : (
-                                            <UploadIcon className='w-8 h-8 text-gray-500' />
+                                            <UploadIcon className='size-12 sm:w-full sm:h-full ' />
                                         )}
                                     </div>
 
                                     {/* Upload text */}
                                     <div className='flex items-center gap-2'>
-                                        <div className='font-medium max-w-[600px] truncate text-center font-circular text-primary-blue'>
+                                        <div className='font-medium max-w-[600px] truncate text-xs sm:text-base text-center font-circular text-primary-blue'>
                                             {uploadProgress && uploadProgress !== "Upload Completed"
                                                 ? uploadProgress // show "Uploading..." or progress
                                                 : loading && loadingSteps[loadingStep]
@@ -268,7 +269,7 @@ const UploadResume = () => {
                                     </div>
 
                                     {/* Helper text */}
-                                    <div className='font-circular text-center text-sm text-gray-400 tracking-wide'>
+                                    <div className='font-circular text-center text-xs sm:text-sm text-gray-400 tracking-wide'>
                                         {error ? (
                                             <span className='text-red-500'>{error}</span>
                                         ) : uploadProgress === "Upload Completed" ? (

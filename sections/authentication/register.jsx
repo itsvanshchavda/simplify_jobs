@@ -129,7 +129,7 @@ const Register = () => {
     return (
         <div className='w-full grid grid-cols-1 lg:grid-cols-6  min-h-screen'>
             {/* Left Panel */}
-            <div className='hidden pt-[1rem] lg:flex col-span-3 bg-[#F0FCFF] flex-col justify-center items-center'>
+            <div className='hidden  lg:flex col-span-3 bg-[#F0FCFF] flex-col justify-center items-center'>
                 <div className='flex px-[2.5rem] xl:p-12 flex-col gap-8 xl:gap-20 items-start'>
                     <Link href={"/"}>
                         <Logo />
@@ -191,7 +191,7 @@ const Register = () => {
 
                 {/* Form */}
                 <form onSubmit={handleSubmit} className='flex flex-col gap-4 '>
-                    <div className='flex flex-col gap-6'>
+                    <div className='flex flex-col gap-4'>
                         <div className='grid grid-cols-2 gap-4'>
                             {/* First Name */}
                             <div className='flex font-circular flex-col gap-2'>
@@ -243,63 +243,65 @@ const Register = () => {
                         </div>
 
                         {/* Email */}
-                        <div className='flex font-circular flex-col gap-2'>
-                            <Label>Email Address</Label>
-                            <input
-                                placeholder="Email Address"
-                                type="email"
-                                value={email}
-                                onChange={(e) => setEmail(e.target.value)}
-                                className={clsx(
-                                    "p-3 font-circular h-12 block w-full rounded-sm text-sm leading-5 text-secondary-400 shadow transition placeholder:text-gray-400 focus:outline-none focus:ring-4 disabled:bg-[#F2F2F2] disabled:opacity-90",
-                                    {
-                                        "border border-gray-200 focus:border-[#3EC0DD] focus:ring-[#3EC0DD]/10": !errors.email,
-                                        "border border-red-500 focus:border-red-500 focus:ring-red-200": errors.email,
-                                    }
-                                )}
-                            />
-
-                            {errors.email && (
-                                <p>
-                                    <span className='text-red-500 font-circular text-sm'>{errors.email}</span>
-                                </p>
-                            )}
-                        </div>
-
-                        <div className="flex relative font-circular flex-col gap-2">
-                            <Label>Password</Label>
-
-
-
-                            {/* Input wrapper */}
-                            <div className="relative">
+                        <div className='grid xl:grid-cols-1 grid-cols-2 gap-4'>
+                            <div className='flex font-circular flex-col gap-2'>
+                                <Label>Email Address</Label>
                                 <input
-                                    placeholder="Password"
-                                    type={showPassword ? "text" : "password"}
-                                    value={password}
-                                    onChange={(e) => setPassword(e.target.value)}
+                                    placeholder="Email Address"
+                                    type="email"
+                                    value={email}
+                                    onChange={(e) => setEmail(e.target.value)}
                                     className={clsx(
                                         "p-3 font-circular h-12 block w-full rounded-sm text-sm leading-5 text-secondary-400 shadow transition placeholder:text-gray-400 focus:outline-none focus:ring-4 disabled:bg-[#F2F2F2] disabled:opacity-90",
                                         {
-                                            "border border-gray-200 focus:border-[#3EC0DD] focus:ring-[#3EC0DD]/10": !errors.password,
-                                            "border border-red-500 focus:border-red-500 focus:ring-red-200": errors.password,
+                                            "border border-gray-200 focus:border-[#3EC0DD] focus:ring-[#3EC0DD]/10": !errors.email,
+                                            "border border-red-500 focus:border-red-500 focus:ring-red-200": errors.email,
                                         }
                                     )}
                                 />
 
-                                <div
-                                    onClick={() => setShowPassword(!showPassword)}
-                                    className="absolute right-3 top-1/2 -translate-y-1/2 cursor-pointer"
-                                >
-                                    {showPassword ? <Eye size={17} /> : <EyeOff size={17} />}
-                                </div>
+                                {errors.email && (
+                                    <p>
+                                        <span className='text-red-500 font-circular text-sm'>{errors.email}</span>
+                                    </p>
+                                )}
                             </div>
 
-                            {errors.password && (
-                                <p>
-                                    <span className="text-red-500 font-circular text-sm">{errors.password}</span>
-                                </p>
-                            )}
+                            <div className="flex relative font-circular flex-col gap-2">
+                                <Label>Password</Label>
+
+
+
+                                {/* Input wrapper */}
+                                <div className="relative">
+                                    <input
+                                        placeholder="Password"
+                                        type={showPassword ? "text" : "password"}
+                                        value={password}
+                                        onChange={(e) => setPassword(e.target.value)}
+                                        className={clsx(
+                                            "p-3 font-circular h-12 block w-full rounded-sm text-sm leading-5 text-secondary-400 shadow transition placeholder:text-gray-400 focus:outline-none focus:ring-4 disabled:bg-[#F2F2F2] disabled:opacity-90",
+                                            {
+                                                "border border-gray-200 focus:border-[#3EC0DD] focus:ring-[#3EC0DD]/10": !errors.password,
+                                                "border border-red-500 focus:border-red-500 focus:ring-red-200": errors.password,
+                                            }
+                                        )}
+                                    />
+
+                                    <div
+                                        onClick={() => setShowPassword(!showPassword)}
+                                        className="absolute right-3 top-1/2 -translate-y-1/2 cursor-pointer"
+                                    >
+                                        {showPassword ? <Eye size={17} /> : <EyeOff size={17} />}
+                                    </div>
+                                </div>
+
+                                {errors.password && (
+                                    <p>
+                                        <span className="text-red-500 font-circular text-sm">{errors.password}</span>
+                                    </p>
+                                )}
+                            </div>
                         </div>
 
                     </div>

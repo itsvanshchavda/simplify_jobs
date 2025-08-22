@@ -3,7 +3,7 @@ import Logo from "@/public/icons/logo"
 import clsx from "clsx"
 import { useEffect, useState } from "react"
 import { Button } from "@/components/ui/button"
-import { ArrowLeft, Loader2, MapPin, Clock, Building2, Users, CheckCircle, ExternalLink, Eye, EyeOff } from "lucide-react"
+import { ArrowLeft, Loader2, MapPin, Clock, Building2, Users, CheckCircle, ExternalLink, Eye, EyeOff, Check } from "lucide-react"
 import { useUser } from "@/context/userContext"
 import toast from "react-hot-toast"
 import UpdateUserApi from "@/apis/user/UpdateUser"
@@ -199,26 +199,21 @@ const JobResume = () => {
             {/* Header */}
             <div className="mx-auto pt-4 w-full px-4 max-w-7xl flex justify-between items-center">
                 <Logo />
-                <div
+                <button
+                    disabled={loading}
                     onClick={handleLogout}
                     className="font-circular cursor-pointer uppercase text-base text-gray-500 font-normal hover:text-gray-700 transition-colors duration-200"
                 >
                     SIGN OUT
-                </div>
+                </button>
             </div>
 
             {/* Centered box */}
-            <div className="flex-1 xl:px-0 px-4 flex gap-5 items-center md:items-start md:py-10 xl:items-center xl:py-0 justify-center">
-                <div className="bg-white  px-4 flex flex-col items-center justify-center h-full gap-6 py-5 xl:py-10 max-w-6xl w-full rounded-2xl ">
+            <div className="flex-1 xl:px-0 px-4 flex gap-5 items-center  justify-center">
+                <div className="bg-white  px-4 flex flex-col items-center justify-center h-full gap-6 p-4 max-w-6xl w-full rounded-2xl ">
                     <div className="flex items-center gap-4 w-full md:w-[400px] xl:w-[520px]">
                         {/* Back Button */}
-                        <button
-                            onClick={() => window.history.back()}
-                            className="flex items-center gap-1 text-gray-700 hover:text-gray-900 transition-colors duration-200 group"
-                        >
-                            <ArrowLeft size={18} className="group-hover:-translate-x-1 transition-transform duration-200" />
-                            <span className="text-sm uppercase font-circular text-gray-600 font-medium group-hover:text-gray-800">Back</span>
-                        </button>
+
 
                         {/* Progress bar */}
                         <div className="flex-1 h-2 bg-gray-200 rounded-full overflow-hidden">

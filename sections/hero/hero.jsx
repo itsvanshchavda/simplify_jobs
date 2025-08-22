@@ -10,8 +10,10 @@ import zap from '@/public/images/zap.png'
 import memo from '@/public/images/memo.png'
 import bag from '@/public/images/briefcase.png'
 import Link from 'next/link';
+import { useUser } from '@/context/userContext';
 const Hero = () => {
-
+    const { state } = useUser();
+    const { user } = state;
     const [activeTab, setActiveTab] = useState("jobmatch");
 
 
@@ -46,9 +48,15 @@ const Hero = () => {
             </div>
 
 
-            <Link href={"/auth/register"} className='bg-primary-blue hover:bg-cyan-600 duration-300 font-circular text-lg py-3 px-10 rounded-4xl text-white'>
-                Sign Up - It's Free!
-            </Link>
+            {user ? (
+                <Link href={"/dashboard"} className='bg-primary-blue hover:bg-cyan-600 duration-300 font-circular text-lg py-3 px-10 rounded-4xl text-white'>
+                    Go to Dashboard
+                </Link>
+            ) : (
+                <Link href={"/auth/register"} className='bg-primary-blue hover:bg-cyan-600 duration-300 font-circular text-lg py-3 px-10 rounded-4xl text-white'>
+                    Sign Up - It's Free!
+                </Link>
+            )}
 
             <div className='flex flex-col sm:flex-row items-center gap-2'>
 

@@ -37,7 +37,7 @@ const PlaceholderJobCard = () => (
             </div>
         </div>
 
-        <div className="hidden sm:block pb-4">
+        <div className="hidden xl:block pb-4">
             <div className="w-32 h-5 bg-gray-400 rounded mb-2 animate-pulse"></div>
             <div className="flex flex-wrap gap-2">
                 <div className="w-16 h-6 bg-gray-400 rounded-full animate-pulse"></div>
@@ -46,7 +46,7 @@ const PlaceholderJobCard = () => (
             </div>
         </div>
 
-        <div className=" hidden sm:flex items-center justify-between pt-4 border-t border-gray-300">
+        <div className=" hidden xl:flex items-center justify-between pt-4 border-t border-gray-300">
             <div className="w-32 h-4 bg-gray-400 rounded animate-pulse"></div>
             <div className="w-24 h-8 bg-gray-400 rounded animate-pulse"></div>
         </div>
