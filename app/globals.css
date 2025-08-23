@@ -1,4 +1,7 @@
 @import "tailwindcss";
+@import "tw-animate-css";
+
+
 
 @custom-variant dark (&:is(.dark *));
 
@@ -31,7 +34,6 @@
         }
     }
 
-
     @keyframes loader-bar {
         0% {
             width: 0%;
@@ -49,10 +51,10 @@
         }
     }
 
-
-    --breakpoint-xs:430px;
     --spacing-hero : 88rem;
     --color-primary-blue: #12A1C0;
+    --color-primary-light : #3EC0DD;
+    --color-primary-lighter : #DFF9FF;
     --font-circular: var(--font-circular);
     --font-tinos:var(--font-tinos);
     --radius-sm: calc(var(--radius) - 4px);
@@ -174,6 +176,5 @@
     body {
         @apply bg-background text-foreground;
     }
-
 
 }

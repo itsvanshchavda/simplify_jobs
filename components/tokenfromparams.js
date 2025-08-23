@@ -2,6 +2,7 @@
 import { useUser } from "@/context/userContext";
 import { useSearchParams, useRouter } from "next/navigation";
 import React, { useEffect } from "react";
+import Loader from "./loader";
 
 const TokenfromParams = () => {
   const params = useSearchParams();
@@ -21,11 +22,7 @@ const TokenfromParams = () => {
     }
   }, [token, user, router]);
 
-  return (
-    <div className="flex justify-center items-center min-h-screen">
-      <p>Signing you in...</p>
-    </div>
-  );
+  return <Loader />;
 };
 
 export default TokenfromParams;

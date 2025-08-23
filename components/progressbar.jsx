@@ -6,7 +6,7 @@ import { usePathname } from 'next/navigation';
 import 'nprogress/nprogress.css';
 
 NProgress.configure({
-    showSpinner: true,
+    showSpinner: false,
     trickleSpeed: 200,
     minimum: 0.2,
 

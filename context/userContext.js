@@ -1,5 +1,6 @@
 "use client";
 import GetUserApi from "@/apis/user/GetUserApi";
+import Loader from "@/components/loader";
 import Logo from "@/public/icons/logo";
 import { usePathname, useRouter } from "next/navigation";
 import React, {
@@ -137,11 +138,7 @@ export const UserProvider = ({ children }) => {
   }, [dispatch, pathname, router, isPublicPage]);
 
   if (loading || !ready) {
-    return (
-      <div className="flex justify-center items-center w-full min-h-[100vh]">
-        <Logo />
-      </div>
-    );
+    return <Loader />;
   }
 
   return (
