@@ -1,11 +1,12 @@
 "use client";
 
 import Header from "@/components/header";
+import Loader from "@/components/loader";
 import React, { Suspense } from "react";
 
 const Layout = ({ children }) => {
   return (
-    <Suspense fallback={<div>Loading...</div>}>
+    <Suspense fallback={<Loader />}>
       <div className="flex flex-col h-screen w-full overflow-hidden">
         <Header title={"Documents"} />
 

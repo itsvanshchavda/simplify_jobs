@@ -28,7 +28,7 @@ function DialogOverlay({ className, zIndex, ...props }) {
       data-slot="dialog-overlay"
 
       className={cn(
-        "data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 fixed inset-0 bg-black/50",
+        "data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 fixed inset-0 bg-gray-700/50",
         className
       )}
       style={zIndex ? { zIndex } : undefined}
@@ -63,9 +63,9 @@ function DialogContent({
           <DialogPrimitive.Close
             style={{ outline: "none", boxShadow: "none" }}
             data-slot="dialog-close"
-            className="ring-offset-background bg-black rounded-full p-1 text-white cursor-pointer focus:ring-ring data-[state=open]:bg-accent data-[state=open]:text-muted-foreground absolute top-4 right-4 opacity-100 transition-opacity hover:opacity-100 focus:ring-2 focus:ring-offset-2 focus:outline-hidden disabled:pointer-events-none [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4"
+            className="ring-offset-background sm:block hidden rounded-full p-1 text-black cursor-pointer focus:ring-ring data-[state=open]:bg-accent data-[state=open]:text-muted-foreground absolute top-4 right-4 opacity-100 transition-opacity hover:opacity-100 focus:ring-2 focus:ring-offset-2 focus:outline-hidden disabled:pointer-events-none [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4"
           >
-            <XIcon size={26} strokeWidth={3} />
+            <XIcon className="size-6" strokeWidth={1.5} />
             <span className="sr-only">Close</span>
           </DialogPrimitive.Close>
         )}

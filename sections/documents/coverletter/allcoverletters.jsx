@@ -4,15 +4,16 @@ import LetterIcon from '@/public/icons/lettericon'
 import QuestionIcon from '@/public/icons/questionicon'
 import React, { useEffect, useState } from 'react'
 
-import { Upload } from 'lucide-react';
 import { usePathname } from 'next/navigation';
-import UploadResume from './resume/uploadresume';
+import CoverletterList from './coverletterlist';
 import Link from 'next/link';
-import ResumeList from './resume/resumelist';
+import { Upload } from 'lucide-react';
+import { BsStars } from "react-icons/bs";
 
 
 
-const AllDocuments = () => {
+
+const AllCoverletters = () => {
 
     const pathname = usePathname()
     const [open, setOpen] = useState(false);
@@ -20,9 +21,8 @@ const AllDocuments = () => {
 
 
     return (
-        <div className='w-full  max-w-container mx-auto flex flex-col gap-6 px-[1.5rem] pb-10 sm:py-10'>
+        <div className='w-full max-w-container mx-auto flex flex-col gap-6 px-[1.5rem] py-5 sm:py-10'>
 
-            <UploadResume open={open} setOpen={setOpen} />
 
             <div className='flex md:flex-row items-start sm:items-center gap-4 flex-col justify-between '>
                 <div className='flex flex-col gap-2'>
@@ -37,9 +37,11 @@ const AllDocuments = () => {
 
                     </div>
                 </div>
+
+
                 <button onClick={() => setOpen(!open)} className='font-circular w-fit text-sm flex items-center gap-2 text-white h-10 bg-primary-blue px-4 rounded-md'>
-                    <Upload size={17} className='text-white' />
-                    Upload a resume
+                    <BsStars size={17} className='text-white' />
+                    Generate Cover Letter
                 </button>
 
 
@@ -56,7 +58,7 @@ const AllDocuments = () => {
 
 
                 <div className='grid gap-4  grid-cols-1 lg:grid-cols-3'>
-                    <div className={`flex border ${pathname === "/dashboard/documents/resume" ? "bg-gray-50" : ""} border-gray-100 hover:bg-gray-50 duration-300 cursor-pointer p-4 rounded-md gap-2 items-center justify-start`}>
+                    <Link href={"/dashboard/documents/resume"} className={`flex border ${pathname === "/dashboard/documents/resume" ? "bg-gray-100" : ""} border-gray-100 hover:bg-gray-50 duration-300 cursor-pointer p-4 rounded-md gap-2 items-center justify-start`}>
                         <div className="w-14 aspect-square flex justify-center items-center rounded-full bg-primary-blue/10">
                             <FileUser />
                         </div>
@@ -73,11 +75,11 @@ const AllDocuments = () => {
                             </div>
                         </div>
 
-                    </div>
+                    </Link>
 
 
 
-                    <Link href={"/dashboard/documents/coverletter"} className='flex border border-gray-100 hover:bg-gray-50 duration-300 cursor-pointer p-4 rounded-md gap-2 items-center justify-start'>
+                    <div className={`flex border ${pathname === "/dashboard/documents/coverletter" ? "bg-gray-50" : ""} border-gray-100 hover:bg-gray-50 duration-300 cursor-pointer p-4 rounded-md gap-2 items-center justify-start`}>
                         <div className='w-14 aspect-square flex justify-center items-center rounded-full bg-primary-blue/10'>
                             <LetterIcon />
 
@@ -94,7 +96,7 @@ const AllDocuments = () => {
                             </div>
                         </div>
 
-                    </Link>
+                    </div>
 
 
                     <div className='flex border border-gray-100 hover:bg-gray-50 duration-300 cursor-pointer p-4 rounded-md gap-2 items-center justify-start'>
@@ -122,11 +124,11 @@ const AllDocuments = () => {
             </div>
 
 
-            <ResumeList />
+            <CoverletterList />
 
 
         </div >
     )
 }
 
-export default AllDocuments
+export default AllCoverletters

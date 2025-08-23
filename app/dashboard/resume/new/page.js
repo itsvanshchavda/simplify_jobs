@@ -1,11 +1,10 @@
-import Header from "@/components/header";
-import AllDocuments from "@/sections/documents/alldocuments";
+import ChooseOption from "@/sections/resume/chooseoption";
 import React from "react";
 
 const page = () => {
   return (
     <div className="w-full h-full">
-      <AllDocuments />
+      <ChooseOption />
     </div>
   );
 };

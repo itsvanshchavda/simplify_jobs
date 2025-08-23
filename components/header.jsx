@@ -47,13 +47,13 @@ const Header = ({ title }) => {
     const links = [
         { name: "Dashboard", href: "/dashboard", icon: Home },
         { name: "Job Tracker", href: "/dashboard/job-tracker", icon: BriefcaseBusiness },
-        { name: "Documents", href: "/dashboard/documents", icon: ClockFading },
+        { name: "Documents", href: "/dashboard/documents/resume", icon: ClockFading },
         { name: "Saved Jobs", href: "/dashboard/saved-jobs", icon: BookmarkCheck },
         { name: "Profile", href: "/dashboard/profile", icon: User },
     ]
 
     return (
-        <div className='w-full flex px-[1rem] sm:px-[2.5rem] justify-between items-center z-50 sticky top-0 bg-white shadow-sm '>
+        <div className='w-full flex px-[1rem] xl:px-[2.5rem] justify-between items-center z-50 sticky top-0 bg-white shadow-sm '>
             <div className='flex gap-9 items-center'>
                 <div className='flex h-[60px]  items-center gap-3'>
                     <Logo size='115' />
