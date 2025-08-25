@@ -1,22 +1,19 @@
 import instance from "../axiosinstance";
 
-const SaveResumeApi = async (body) => {
+const GeAllJobsApi = async () => {
   const headers = {
     Authorization: `Bearer ${localStorage.getItem("token")}`,
   };
   try {
-    const res = await instance.post("/api/v1/resume/saveresume", body, {
-      headers,
-    });
-
+    const res = await instance.get("/api/v1/job/getallsavedjobs", { headers });
     return res.data;
   } catch (error) {
     return {
       error:
         error?.response?.data?.error ||
-        "Failed to save resume. Please try again",
+        "Failed to fetch jobs. Please try again",
     };
   }
 };
 
-export default SaveResumeApi;
+export default GeAllJobsApi;

@@ -10,7 +10,8 @@ const GetAllResume = async () => {
   } catch (error) {
     return {
       error:
-        error?.response?.data?.error || "Failed to get user. Please try again",
+        error?.response?.data?.error ||
+        "Failed to get resumes. Please try again",
     };
   }
 };

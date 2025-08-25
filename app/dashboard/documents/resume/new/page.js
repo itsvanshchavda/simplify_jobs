@@ -1,11 +1,9 @@
-import BasicHeader from "@/components/basicheader";
 import ChooseOption from "@/sections/documents/resume/chooseoption";
 import React from "react";
 
 const page = () => {
   return (
-    <div className="w-full h-full">
-      <BasicHeader />
+    <div>
       <ChooseOption />
     </div>
   );

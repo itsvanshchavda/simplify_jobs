@@ -62,6 +62,7 @@ const UploadResume = ({ open, setOpen, setResumes, resumes }) => {
         setUploadComplete(true);
 
         setOpen(false);
+        window.location.reload();
 
 
 

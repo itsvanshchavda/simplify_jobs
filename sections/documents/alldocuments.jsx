@@ -3,20 +3,18 @@ import FileUser from '@/public/icons/fileuser'
 import LetterIcon from '@/public/icons/lettericon'
 import QuestionIcon from '@/public/icons/questionicon'
 import React, { useEffect, useState } from 'react'
-
 import { Upload } from 'lucide-react';
-import { usePathname } from 'next/navigation';
 import UploadResume from './resume/uploadresume';
-import Link from 'next/link';
 import ResumeList from './resume/resumelist';
+import CoverletterList from './coverletter/coverletterlist';
+import Link from 'next/link';
 
 
 
 const AllDocuments = () => {
 
-    const pathname = usePathname()
     const [open, setOpen] = useState(false);
-
+    const [tab, setTab] = useState("resume")
 
 
     return (
@@ -55,8 +53,12 @@ const AllDocuments = () => {
                 </div>
 
 
+
+
+
+
                 <div className='grid gap-4  grid-cols-1 lg:grid-cols-3'>
-                    <div className={`flex border ${pathname === "/dashboard/documents/resume" ? "bg-gray-50" : ""} border-gray-100 hover:bg-gray-50 duration-300 cursor-pointer p-4 rounded-md gap-2 items-center justify-start`}>
+                    <Link href={"/dashboard/documents/resume/new"} className={`flex border  border-gray-100 hover:bg-gray-50 duration-300 cursor-pointer p-4 rounded-md gap-2 items-center justify-start`}>
                         <div className="w-14 aspect-square flex justify-center items-center rounded-full bg-primary-blue/10">
                             <FileUser />
                         </div>
@@ -73,11 +75,11 @@ const AllDocuments = () => {
                             </div>
                         </div>
 
-                    </div>
+                    </Link>
 
 
 
-                    <Link href={"/dashboard/documents/coverletter"} className='flex border border-gray-100 hover:bg-gray-50 duration-300 cursor-pointer p-4 rounded-md gap-2 items-center justify-start'>
+                    <div className={`flex border  border-gray-100 hover:bg-gray-50 duration-300 cursor-pointer p-4 rounded-md gap-2 items-center justify-start`}>
                         <div className='w-14 aspect-square flex justify-center items-center rounded-full bg-primary-blue/10'>
                             <LetterIcon />
 
@@ -94,7 +96,7 @@ const AllDocuments = () => {
                             </div>
                         </div>
 
-                    </Link>
+                    </div>
 
 
                     <div className='flex border border-gray-100 hover:bg-gray-50 duration-300 cursor-pointer p-4 rounded-md gap-2 items-center justify-start'>
@@ -122,7 +124,13 @@ const AllDocuments = () => {
             </div>
 
 
-            <ResumeList />
+
+
+
+
+            {tab === "resume" && <ResumeList tab={tab} setTab={setTab} />}
+
+            {tab === "coverletter" && <CoverletterList tab={tab} setTab={setTab} />}
 
 
         </div >

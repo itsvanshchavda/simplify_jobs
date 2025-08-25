@@ -1,7 +1,6 @@
 "use client";
 import GetUserApi from "@/apis/user/GetUserApi";
 import Loader from "@/components/loader";
-import Logo from "@/public/icons/logo";
 import { usePathname, useRouter } from "next/navigation";
 import React, {
   createContext,
@@ -9,20 +8,17 @@ import React, {
   useEffect,
   useReducer,
   useState,
+  useMemo,
 } from "react";
 
 const UserContext = createContext();
-
 export const useUser = () => useContext(UserContext);
 
-const initialState = {
-  user: null,
-};
+const initialState = { user: null };
 
 const userReducer = (state, action) => {
   switch (action.type) {
     case "SET_USER":
-      console.log("Setting user:", action.payload);
       return { ...state, user: action.payload };
     default:
       return state;
@@ -32,7 +28,6 @@ const userReducer = (state, action) => {
 export const UserProvider = ({ children }) => {
   const [state, dispatch] = useReducer(userReducer, initialState);
   const [loading, setLoading] = useState(true);
-  const [ready, setReady] = useState(false);
   const pathname = usePathname();
   const router = useRouter();
 
@@ -47,99 +42,68 @@ export const UserProvider = ({ children }) => {
     "/auth/fallure",
   ];
 
-  const isPublicPage =
-    publicPages.includes(pathname) || pathname.startsWith("/success");
+  const isPublicPage = useMemo(
+    () => publicPages.includes(pathname) || pathname.startsWith("/success"),
+    [pathname]
+  );
 
   useEffect(() => {
-    const fetchUserData = async () => {
-      // For public pages, just check if we have a token and try to fetch user data
-      if (isPublicPage) {
-        const token = localStorage.getItem("token");
-        if (token) {
-          try {
-            const data = await GetUserApi(token);
-            if (data) {
-              dispatch({ type: "SET_USER", payload: data });
-            }
-          } catch (error) {
-            console.log("Error fetching user data:", error);
-            // If token is invalid, remove it
-            localStorage.removeItem("token");
-          }
-        }
-        setReady(true);
-        setLoading(false);
-        return;
-      }
-
-      // For protected pages, handle authentication
-      setLoading(true);
+    const fetchUser = async () => {
       const token = localStorage.getItem("token");
 
-      if (token) {
-        try {
-          const data = await GetUserApi(token);
-          if (!data || data.error) {
-            console.log("User not found. Redirecting to login.");
-            localStorage.removeItem("token"); // Remove invalid token
-            router.push("/auth/login");
-            setReady(true);
-            setLoading(false);
-            return;
-          }
-
-          console.log("User data fetched:", data);
-          dispatch({ type: "SET_USER", payload: data });
-
-          if (!data.onboardingCompleted) {
-            switch (data.onboardingStep) {
-              case 0:
-                if (!pathname.startsWith("/onboarding/uploadresume")) {
-                  router.push("/onboarding/uploadresume");
-                }
-                break;
-
-              case 1:
-                if (!pathname.startsWith("/onboarding/job-resume")) {
-                  router.push("/onboarding/job-resume");
-                }
-                break;
-              case 2:
-                if (!pathname.startsWith("/onboarding/application-kit")) {
-                  router.push("/onboarding/application-kit");
-                }
-                break;
-              // Add more steps as needed
-              default:
-                break;
+      try {
+        // ✅ Public pages
+        if (isPublicPage) {
+          if (token) {
+            const data = await GetUserApi(token).catch(() => null);
+            if (data) {
+              dispatch({ type: "SET_USER", payload: data });
+            } else {
+              localStorage.removeItem("token");
             }
           }
-        } catch (error) {
-          console.log("Error fetching user data:", error);
-          localStorage.removeItem("token"); // Remove invalid token
-          router.push("/auth/login");
-          setReady(true);
           setLoading(false);
           return;
         }
-      } else {
-        // No token and trying to access protected route
-        router.push("/auth/login");
-        setReady(true);
-        setLoading(false);
-        return;
-      }
 
-      setReady(true);
-      setLoading(false);
+        // ✅ Protected pages
+        if (!token) {
+          setLoading(false);
+          router.push("/auth/login");
+          return;
+        }
+
+        const data = await GetUserApi(token).catch(() => null);
+        if (!data || data.error) {
+          localStorage.removeItem("token");
+          setLoading(false);
+          router.push("/auth/login");
+          return;
+        }
+
+        dispatch({ type: "SET_USER", payload: data });
+
+        // Onboarding redirect
+        if (!data.onboardingCompleted) {
+          const steps = [
+            "/onboarding/uploadresume",
+            "/onboarding/job-resume",
+            "/onboarding/application-kit",
+          ];
+          const stepPath = steps[data.onboardingStep];
+          if (stepPath && !pathname.startsWith(stepPath)) {
+            router.push(stepPath);
+          }
+        }
+      } finally {
+        setLoading(false);
+      }
     };
 
-    fetchUserData();
-  }, [dispatch, pathname, router, isPublicPage]);
+    fetchUser();
+  }, [pathname, router, isPublicPage]);
 
-  if (loading || !ready) {
-    return <Loader />;
-  }
+  if (loading) return <Loader />;
 
   return (
     <UserContext.Provider value={{ state, dispatch }}>

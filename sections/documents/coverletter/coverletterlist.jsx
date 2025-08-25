@@ -1,5 +1,5 @@
 import GetAllCoverlettersApi from '@/apis/coverletter/GetAllCoverlettersApi'
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 
 import {
     Select,
@@ -38,7 +38,8 @@ import { AiOutlineLoading } from 'react-icons/ai';
 import downloadPdf from '@/utils/downloadpdf';
 
 
-const CoverletterList = () => {
+const CoverletterList = ({ setTab, tab }) => {
+    console.log("🚀 ~ CoverletterList ~ tab:", tab)
 
     const [allCoverletters, setAllCoverletters] = useState([]); // for sorting 
     const [coverletters, setCoverletters] = useState(null)
@@ -49,6 +50,8 @@ const CoverletterList = () => {
     const [open, setOpen] = useState(false)
     const [deleteLoading, setDeleteLoading] = useState(false)
     const [loading, setLoading] = useState(false)
+    const effectRun = useRef(false)
+
 
     const handleOpenPreview = (coverletter) => {
         setSelectedCoverletter(coverletter)
@@ -56,19 +59,31 @@ const CoverletterList = () => {
     };
 
     const getCoverletters = async () => {
+        setLoading(true)
         const res = await GetAllCoverlettersApi();
 
         if (res.error) {
             toast.error(res.error)
+            setLoading(false)
             return;
         }
 
+        setLoading(false)
         setAllCoverletters(res?.letters)
         setCoverletters(res?.letters)
     }
 
     useEffect(() => {
-        getCoverletters();
+
+        if (effectRun.current === false) {
+            getCoverletters();
+        }
+
+
+        return () => {
+            effectRun.current = true;
+        }
+
     }, [])
 
 
@@ -172,8 +187,8 @@ const CoverletterList = () => {
                             <div className='font-circular tracking-wide text-sm sm:text-xl font-medium'>
                                 Cover Letter Preview
                             </div>
-                            <div className='font-circular text-xs text-gray-600 sm:text-sm '>
-                                If the preview doesn't appear, close and reopen the popup. If the issue persists <span className='text-primary-blue'>click here.</span>
+                            <div className='font-circular flex items-center gap-2 text-xs font-medium text-gray-600 sm:text-sm '>
+                                {selectedCoverletter?.filename} <span className='text-[11px] text-gray-300'>•</span> <span className='font-normal text-xs'>Modified : {getTimeAgo(selectedCoverletter?.updatedAt)}</span>
                             </div>
                         </div>
                     </div>
@@ -189,8 +204,21 @@ const CoverletterList = () => {
 
             <div className='bg-white flex flex-col gap-4 py-5 p-4'>
                 <div className='flex sm:flex-row flex-col items-start sm:items-center justify-between'>
-                    <div className='font-circular text-xl tracking-wide font-medium'>
-                        Cover Letters
+                    <div className="flex gap-6">
+                        <button
+                            onClick={() => setTab("resume")}
+                            className={` pb-1 font-circular text-lg tracking-wide font-medium ${tab === "resume" ? "border-b-2 border-primary-light  text-black" : "text-gray-500"
+                                }`}
+                        >
+                            Resumes
+                        </button>
+                        <button
+                            onClick={() => setTab("coverletter")}
+                            className={`font-medium pb-1 font-circular text-lg tracking-wide text-black ${tab === "coverletter" ? "border-b-2 border-primary-light " : "text-gray-500"
+                                }`}
+                        >
+                            Cover Letters
+                        </button>
                     </div>
 
                     <div className='flex pt-2.5 flex-col sm:flex-row  gap-4'>
@@ -240,11 +268,13 @@ const CoverletterList = () => {
 
                         <tbody className='border'>
                             {loading ? (
-                                <td colSpan="4" className='py-10'>
-                                    <div className="flex justify-center items-center">
-                                        <AiOutlineLoading className="animate-spin text-primary-light w-6 h-6" />
-                                    </div>
-                                </td>
+                                <tr>
+                                    <td colSpan="4" className='py-10'>
+                                        <div className="flex justify-center items-center">
+                                            <AiOutlineLoading className="animate-spin text-primary-light w-6 h-6" />
+                                        </div>
+                                    </td>
+                                </tr>
                             ) : coverletters?.length > 0 ? (
                                 <>
                                     {coverletters.map((item, index) => (

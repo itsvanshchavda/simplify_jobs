@@ -1,6 +1,6 @@
 import GetAllResume from '@/apis/resume/GetAllResume'
 import MakeResumePrimaryApi from '@/apis/resume/MakeResumePrimary'
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 
 import {
     Select,
@@ -43,10 +43,11 @@ import DeleteResumeApi from '@/apis/resume/DeleteResumeApi';
 import DeletePopup from './deletepopup';
 import { AiOutlineLoading } from "react-icons/ai";
 import downloadPdf from '@/utils/downloadpdf';
+import { useRouter } from 'next/navigation';
 
 
 
-const ResumeList = () => {
+const ResumeList = ({ setTab, tab }) => {
 
     const [allResumes, setAllResumes] = useState([]); // for sorting 
 
@@ -58,9 +59,8 @@ const ResumeList = () => {
     const [open, setOpen] = useState(false)
     const [deleteLoading, setDeleteLoading] = useState(false)
     const [loading, setLoading] = useState(false)
-
-
-
+    const effectRun = useRef(false)
+    const router = useRouter()
 
     const handleOpenPreview = (resume) => {
         setSelectedResume(resume)
@@ -83,7 +83,14 @@ const ResumeList = () => {
     }
 
     useEffect(() => {
-        getResumes();
+        if (effectRun.current === false) {
+            getResumes();
+        }
+
+
+        return () => {
+            effectRun.current = true;
+        }
     }, [])
 
     const makeResumePrimary = async (resumeId) => {
@@ -189,6 +196,11 @@ const ResumeList = () => {
     }
 
 
+    const handleEdit = (id) => {
+        router.push(`/dashboard/resume/editor?id=${id}`)
+    }
+
+
 
 
     return (
@@ -221,10 +233,8 @@ const ResumeList = () => {
                                 Resume Preview
                             </div>
 
-
-                            <div className='font-circular text-xs text-gray-600 sm:text-sm '>
-                                If the preview doesn't appear, close and reopen the popup. If the issue persists <span className='text-primary-blue'>click here.</span>
-
+                            <div className='font-circular flex items-center gap-2 text-xs font-medium text-gray-600 sm:text-sm '>
+                                {selectedResume?.filename} <span className='text-[11px] text-gray-300'>•</span> <span className='font-normal text-xs'>Modified : {getTimeAgo(selectedResume?.updatedAt)}</span>
                             </div>
                         </div>
                     </div>
@@ -244,10 +254,25 @@ const ResumeList = () => {
             <div className='bg-white flex flex-col    gap-4 py-5 p-4'>
 
                 <div className='flex sm:flex-row flex-col items-start sm:items-center justify-between'>
-                    <div className='font-circular text-xl tracking-wide font-medium'>
-                        Resumes
 
+
+                    <div className="flex gap-6">
+                        <button
+                            onClick={() => setTab("resume")}
+                            className={` pb-1 font-circular text-lg tracking-wide font-medium ${tab === "resume" ? "border-b-2 border-primary-light  text-black" : "text-gray-500"
+                                }`}
+                        >
+                            Resumes
+                        </button>
+                        <button
+                            onClick={() => setTab("coverletter")}
+                            className={`font-medium pb-1 font-circular text-lg tracking-wide text-black ${tab === "coveletter" ? "border-b-2 border-primary-light " : "text-gray-500"
+                                }`}
+                        >
+                            Cover Letters
+                        </button>
                     </div>
+
 
                     <div className='flex pt-2.5 flex-col sm:flex-row  gap-4'>
 
@@ -356,7 +381,7 @@ const ResumeList = () => {
 
                                                                 Preview
                                                             </DropdownMenuItem>
-                                                            <DropdownMenuItem className={"hover:bg-primary-lighter duration-300 py-2"}>
+                                                            <DropdownMenuItem onClick={() => handleEdit(item?._id)} className={"hover:bg-primary-lighter duration-300 py-2"}>
 
                                                                 <HiPencil size={14} color='gray' />
 
@@ -367,10 +392,19 @@ const ResumeList = () => {
 
                                                                 Download
                                                             </DropdownMenuItem>
-                                                            <DropdownMenuItem onClick={() => handleOpen(item)} className={"hover:bg-primary-lighter duration-300 py-2"}>
-                                                                <IoMdTrash />
-                                                                Delete
-                                                            </DropdownMenuItem>
+
+
+                                                            {item?.primary ? (
+                                                                <DropdownMenuItem disabled onClick={() => handleOpen(item)} className={"hover:bg-primary-lighter duration-300 py-2"}>
+                                                                    <IoMdTrash />
+                                                                    Delete
+                                                                </DropdownMenuItem>
+                                                            ) : (
+                                                                <DropdownMenuItem onClick={() => handleOpen(item)} className={"hover:bg-primary-lighter duration-300 py-2"}>
+                                                                    <IoMdTrash />
+                                                                    Delete
+                                                                </DropdownMenuItem>
+                                                            )}
                                                         </DropdownMenuContent>
                                                     </DropdownMenu>
 

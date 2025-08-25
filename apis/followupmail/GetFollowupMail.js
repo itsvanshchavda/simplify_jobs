@@ -11,7 +11,8 @@ const GetFollowupMailApi = async () => {
     console.error("Error in GetCoverletterApi:", err);
     return {
       error:
-        error?.response?.data?.error || "Failed to get user. Please try again",
+        error?.response?.data?.error ||
+        "Failed to get folloup mail. Please try again",
     };
   }
 };
