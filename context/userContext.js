@@ -40,6 +40,8 @@ export const UserProvider = ({ children }) => {
     "/auth/register",
     "/auth/success",
     "/auth/fallure",
+    "/auth/reset-password",
+    "/auth/forgot-password",
   ];
 
   const isPublicPage = useMemo(
@@ -55,7 +57,7 @@ export const UserProvider = ({ children }) => {
         // ✅ Public pages
         if (isPublicPage) {
           if (token) {
-            const data = await GetUserApi(token).catch(() => null);
+            const data = await GetUserApi(token);
             if (data) {
               dispatch({ type: "SET_USER", payload: data });
             } else {
@@ -73,7 +75,7 @@ export const UserProvider = ({ children }) => {
           return;
         }
 
-        const data = await GetUserApi(token).catch(() => null);
+        const data = await GetUserApi(token);
         if (!data || data.error) {
           localStorage.removeItem("token");
           setLoading(false);

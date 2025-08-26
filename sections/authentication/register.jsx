@@ -15,13 +15,14 @@ import toast from 'react-hot-toast';
 import clsx from 'clsx';
 import LoginApi from '@/apis/auth/LoginApi';
 import RegisterApi from '@/apis/auth/RegisterApi';
+import { useRouter } from 'next/navigation';
 
 const Register = () => {
     const [firstName, setFirstName] = useState("");
     const [lastName, setLastName] = useState("");
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
-
+    const router = useRouter();
     const [errors, setErrors] = useState({
         firstName: false,
         lastName: false,
@@ -95,11 +96,12 @@ const Register = () => {
                 return;
             }
 
-            toast.success("Login successful");
+            toast.success("Register successful");
             setFirstName("");
             setLastName("");
             setEmail("");
             setPassword("");
+            router.push("/auth/login");
         } catch (err) {
             console.error(err);
             toast.error("Something went wrong. Please try again.");

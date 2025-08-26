@@ -53,6 +53,7 @@
 
     --spacing-container : 96rem;
     --spacing-hero : 88rem;
+    --breakpoint-3xl:1920px;
     --color-primary-blue: #12A1C0;
     --color-primary-light : #3EC0DD;
     --color-primary-lighter : #DFF9FF;

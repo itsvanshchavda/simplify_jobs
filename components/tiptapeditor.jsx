@@ -15,6 +15,15 @@ import {
     TooltipTrigger,
 } from "@/components/ui/tooltip"
 
+import {
+    Dialog,
+    DialogContent,
+    DialogDescription,
+    DialogHeader,
+    DialogTitle,
+    DialogTrigger,
+} from "@/components/ui/dialog"
+import { GoLink } from 'react-icons/go';
 
 const TipTapEditor = ({ content, onChange, label, className }) => {
     const [showLinkDialog, setShowLinkDialog] = useState(false);
@@ -44,7 +53,7 @@ const TipTapEditor = ({ content, onChange, label, className }) => {
         content: content || '',
         editorProps: {
             attributes: {
-                class: 'prose prose-sm sm:prose lg:prose-lg xl:prose-2xl focus:outline-none min-h-[150px]',
+                class: 'prose prose-sm sm:prose lg:prose-lg xl:prose-2xl focus:outline-none min-h-[200px]',
             },
             handleKeyDown: (view, event) => {
                 // Handle Ctrl+Z (Undo)
@@ -108,18 +117,16 @@ const TipTapEditor = ({ content, onChange, label, className }) => {
     };
 
     const addLink = () => {
-        if (linkUrl) {
-            if (linkText && !editor.state.selection.empty) {
-                // Replace selected text with link
-                editor.chain().focus().setLink({ href: linkUrl }).run();
-            } else if (linkText) {
-                // Insert new link with text
-                editor.chain().focus().insertContent(`<a href="${linkUrl}">${linkText}</a>`).run();
-            } else {
-                // Just add link to selected text or insert URL as text
-                editor.chain().focus().setLink({ href: linkUrl }).run();
-            }
+        if (!linkUrl) return;
+
+        if (!editor.state.selection.empty) {
+            // If some text is selected → turn it into a link
+            editor.chain().focus().setLink({ href: linkUrl }).run();
+        } else {
+            // If no text is selected → insert the URL itself as link text
+            editor.chain().focus().insertContent(`<a href="${linkUrl}">${linkUrl}</a>`).run();
         }
+
         setShowLinkDialog(false);
         setLinkUrl('');
         setLinkText('');
@@ -265,70 +272,76 @@ const TipTapEditor = ({ content, onChange, label, className }) => {
 
                 {/* Editor Content */}
                 <div className="">
-                    <ScrollArea className="h-[140px]">
+                    <ScrollArea className="max-h-[500px]">
                         <EditorContent
                             editor={editor}
-                            className="min-h-[140px] p-3 overflow-auto focus:outline-none"
+                            className="w-full p-3 min-h-[100px] max-h-[500px] overflow-y-auto focus:outline-none"
                         />
                     </ScrollArea>
                 </div>
             </div>
 
-            {/* Link Dialog */}
-            {showLinkDialog && (
-                <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-                    <div className="bg-white p-6 rounded-lg shadow-lg w-96">
-                        <h3 className="text-lg font-semibold mb-4">Add Link</h3>
-                        <div className="space-y-4">
-                            <div>
-                                <label className="block text-sm font-medium text-gray-700 mb-1">
-                                    Link Text (optional)
-                                </label>
-                                <input
-                                    type="text"
-                                    value={linkText}
-                                    onChange={(e) => setLinkText(e.target.value)}
-                                    className="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-                                    placeholder="Link text"
-                                />
-                            </div>
-                            <div>
-                                <label className="block text-sm font-medium text-gray-700 mb-1">
-                                    URL
-                                </label>
-                                <input
-                                    type="url"
-                                    value={linkUrl}
-                                    onChange={(e) => setLinkUrl(e.target.value)}
-                                    className="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-                                    placeholder="https://example.com"
-                                    autoFocus
-                                />
-                            </div>
+            <Dialog open={showLinkDialog} onOpenChange={setShowLinkDialog}>
+                <DialogTrigger className="hidden">
+                    <span />
+                </DialogTrigger>
+                <DialogContent zIndex={100} className={"font-circular"}>
+                    <DialogHeader className={"hidden"}>
+                        <DialogTitle>Are you absolutely sure?</DialogTitle>
+
+                    </DialogHeader>
+
+
+                    <div className='flex items-center gap-4'>
+
+                        <div className='p-1.5 bg-primary-lighter text-primary-blue rounded-full'>
+                            <GoLink className='size-6' />
+
                         </div>
-                        <div className="flex justify-end space-x-2 mt-6">
-                            <Button
-                                type="button"
-                                variant="outline"
-                                onClick={() => {
-                                    setShowLinkDialog(false);
-                                    setLinkUrl('');
-                                    setLinkText('');
-                                }}
-                            >
-                                Cancel
-                            </Button>
-                            <Button
-                                type="button"
-                                onClick={addLink}
-                                disabled={!linkUrl}
-                            >
-                                Add Link
-                            </Button>
+                        <h3 className="text-lg font-medium">
+                            Edit Link
+                        </h3>
+                    </div>
+                    <div className="flex flex-col gap-4">
+
+                        <div>
+                            <label className="block text-sm font-medium text-gray-700 mb-1">
+                                URL
+                            </label>
+                            <input
+                                type="url"
+                                value={linkUrl}
+                                onChange={(e) => setLinkUrl(e.target.value)}
+                                className="p-3 font-circular h-10 block w-full rounded-sm text-sm leading-5 text-secondary-400 shadow transition placeholder:text-gray-400 focus:outline-none focus:ring-4 disabled:bg-[#F2F2F2] disabled:opacity-90 border border-gray-200 focus:border-[#3EC0DD] focus:ring-[#3EC0DD]/10"
+                                placeholder="https://example.com"
+                                autoFocus
+                            />
                         </div>
                     </div>
-                </div>
-            )}
+                    <div className="flex justify-center space-x-2 mt-6">
+                        <button
+                            className={"font-circular bg-primary-blue rounded-md text-white p-1.5 w-full"}
+                            type="button"
+                            onClick={() => {
+                                setShowLinkDialog(false);
+                                setLinkUrl('');
+                                setLinkText('');
+                            }}
+                        >
+                            Cancel
+                        </button>
+                        <button
+                            className={"font-circular border rounded-md p-1.5 w-full"}
+                            type="submit"
+                            onClick={addLink}
+                            disabled={!linkUrl}
+                        >
+                            Add Link
+                        </button>
+                    </div>
+                </DialogContent>
+            </Dialog>
+
 
             <style jsx global>{`
                 .ProseMirror {

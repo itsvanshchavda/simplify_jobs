@@ -15,15 +15,19 @@ import Link from 'next/link';
 import toast from 'react-hot-toast';
 import clsx from 'clsx';
 import LoginApi from '@/apis/auth/LoginApi';
+import { useRouter } from 'next/navigation';
+import { useUser } from '@/context/userContext';
 
 const Login = () => {
 
+    const { dispatch } = useUser();
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState('');
     const [emailError, setEmailError] = useState(false);
     const [passwordError, setPasswordError] = useState(false);
     const [loading, setLoading] = useState(false);
     const [showPassword, setShowPassword] = useState(false);
+    const router = useRouter();
     const handleSubmit = async (e) => {
         e.preventDefault();
 
@@ -53,6 +57,7 @@ const Login = () => {
             toast.success("Login successful");
             setEmail("");
             setPassword("");
+            router.push("/dashboard");
         }
 
         setLoading(false);

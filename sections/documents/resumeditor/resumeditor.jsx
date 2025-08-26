@@ -7,7 +7,6 @@ import ResumeForm from './resumeform'
 import { HiArrowLongLeft, HiOutlinePaintBrush } from "react-icons/hi2";
 import EditorHeader from './editorheader'
 
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { TbEdit } from "react-icons/tb";
 import { HiPencil } from "react-icons/hi";
 
@@ -28,9 +27,13 @@ import {
 } from "@/components/ui/dialog"
 import { FcIdea } from "react-icons/fc";
 import UpdateResumeApi from '@/apis/resume/UpdateResumeApi'
-import { IoCheckmarkCircle } from "react-icons/io5";
+import { IoCheckmarkCircle, IoEye } from "react-icons/io5";
 
 import { AiOutlineLoading } from "react-icons/ai";
+import { ResumeTemplate1 } from './templates/resumetemplate1'
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
+import { IoPencil } from "react-icons/io5";
+import { MdModeEdit } from 'react-icons/md'
 
 
 const ResumeEditor = () => {
@@ -97,159 +100,193 @@ const ResumeEditor = () => {
 
 
     return (
-        <div>
+        <div className="min-h-screen">
             <EditorHeader savedtime={fullResume?.updatedAt} />
 
             <Dialog open={openDialog} onOpenChange={setOpenDialog}>
                 <span />
-                <DialogContent className={"w-[90%] flex flex-col gap-5 sm:max-w-[400px]"} zIndex={100}>
+                <DialogContent className="w-[90%] max-w-sm flex flex-col gap-5" zIndex={100}>
                     <DialogHeader>
-                        <DialogTitle className={"font-circular font-semibold"}>
+                        <DialogTitle className="font-circular font-semibold">
                             Edit Title
-
                         </DialogTitle>
-
                     </DialogHeader>
 
-
-                    <div className='flex bg-gray-50 p-4 border rounded-md border-gray-100 items-center gap-2'>
-                        <FcIdea className='size-8' />
-
-                        <div className='font-circular text-gray-500 text-sm '>
+                    <div className="flex bg-gray-50 p-4 border rounded-md border-gray-100 items-center gap-2">
+                        <FcIdea className="w-8 h-8" />
+                        <div className="font-circular text-gray-500 text-sm">
                             You can name your resume anything you like. It will automatically be saved as first name_last name_resume for autofill
-
                         </div>
                     </div>
 
-                    <div>
-                        <input
-                            placeholder="File Name"
-                            type="text"
-                            value={filename}
-                            onChange={(e) => setFileName(e.target.value)}
-                            className=
-                            "p-3 font-circular h-10 block w-full rounded-sm text-sm leading-5 text-secondary-400 shadow transition placeholder:text-gray-400 focus:outline-none focus:ring-4 disabled:bg-[#F2F2F2] disabled:opacity-90 border border-gray-200 focus:border-[#3EC0DD] focus:ring-[#3EC0DD]/10"
+                    <input
+                        placeholder="File Name"
+                        type="text"
+                        value={filename}
+                        onChange={(e) => setFileName(e.target.value)}
+                        className="p-3 font-circular h-10 w-full rounded-sm text-sm border border-gray-200 focus:border-blue-500 focus:outline-none"
+                    />
 
-
-                        />
-                    </div>
-
-
-                    <div className='flex font-circular  w-full items-center gap-2 '>
-                        <button onClick={() => setOpenDialog(!openDialog)} className='border w-full py-2 rounded-md px-4'>
+                    <div className="flex gap-2">
+                        <button
+                            onClick={() => setOpenDialog(!openDialog)}
+                            className="flex-1 border py-2 rounded-md px-4 font-circular"
+                        >
                             Cancel
                         </button>
-
-                        <button onClick={handleUpdateFilename} className='w-full bg-primary-blue text-white  py-2 px-4 rounded-md '>
-                            {updateLoading && <AiOutlineLoading className='animate-spin size-5 mx-auto' />}
+                        <button
+                            onClick={handleUpdateFilename}
+                            className="flex-1 bg-blue-600 text-white py-2 px-4 rounded-md font-circular"
+                        >
+                            {updateLoading && <AiOutlineLoading className="animate-spin w-5 h-5 mx-auto" />}
                             {updateLoading ? "Saving..." : "Save"}
                         </button>
                     </div>
                 </DialogContent>
             </Dialog>
-            <div className="flex items-start justify-between gap-6">
 
-
-
-                {/* Left Content */}
-                <div className="w-full h-full overflow-y-auto flex flex-col gap-4 p-6 px-10">
-                    <div className='flex items-center justify-between'>
-                        <div className='flex font-circular text-gray-500 font-medium items-center gap-2'>
-                            <HiArrowLongLeft size={20} />
-
-                            Documents
-
-
-                        </div>
-
-                        <Tabs defaultValue="editcontent" className="">
-                            <TabsList className={"border py-5 bg-white font-circular"}>
-                                <TabsTrigger
-                                    className="data-[state=active]:border-primary-blue py-4 text-gray-600 data-[state=active]:text-primary-blue "
-                                    value="editcontent"
-                                >
-                                    <TbEdit />
-                                    Edit Content
-                                </TabsTrigger>
-
-                                <TabsTrigger
-                                    className="data-[state=active]:border-primary-blue py-4 text-gray-600 data-[state=active]:text-primary-blue"
-                                    value="editdesign"
-                                >
-                                    <HiOutlinePaintBrush />
-                                    Edit Design
-                                </TabsTrigger>
-
-                            </TabsList>
-
-                        </Tabs>
-
-
-
+            {/* Mobile Tabs (show only on small screens) */}
+            <div className="lg:hidden">
+                <Tabs defaultValue="edit" className="w-full">
+                    <div className="sticky top-0 bg-white z-10 px-4 py-2 border-b">
+                        <TabsList className="w-full bg-gray-100 rounded-lg h-12 grid grid-cols-2">
+                            <TabsTrigger className="flex items-center gap-2 rounded-lg" value="edit">
+                                <MdModeEdit />
+                                Edit
+                            </TabsTrigger>
+                            <TabsTrigger className="flex items-center gap-2 rounded-lg" value="preview">
+                                <IoEye />
+                                Preview
+                            </TabsTrigger>
+                        </TabsList>
                     </div>
 
-
-
-                    <div className='flex items-center gap-3'>
-                        <div className='font-circular font-medium text-2xl text-gray-700'>
-                            {fullResume?.filename?.replace(/\.(pdf|docx)$/i, "")}
-                        </div>
-
-
-                        <div className='flex items-center gap-1'>
-                            <HiPencil onClick={() => setOpenDialog(!openDialog)} color='gray' className='size-6 cursor-pointer  ' />
-
-                            <Tooltip>
-                                <TooltipTrigger><IoMdInformationCircle className='size-5' color='gray' /></TooltipTrigger>
-                                <TooltipContent variant='gray'>
-                                    <div className='font-circular  text-sm max-w-[300px]  pl-4 pr-4 py-2'>
-                                        You can name your resume anything you like, for example: firstname_lastname.pdf or firstname_lastname.docx.
-
-                                    </div>
-                                </TooltipContent>
-                            </Tooltip>
-                        </div>
-                    </div>
-
-                    <div className='p-5   bg-white border rounded-md'>
-                        <div className='flex justify-between items-center'>
-                            <div className='flex flex-col gap-1'>
-                                <div className='flex items-center gap-2'>
-                                    <IoCheckmarkCircle color='gray' className='size-4' />
-                                    <div className='font-circular text-gray-500 text-sm'>
-                                        Tailor your resume to a job
-                                    </div>
+                    <TabsContent value="edit" className="p-4 overflow-y-auto max-h-[calc(100vh-120px)]">
+                        <div className="space-y-4">
+                            <div className="flex items-center gap-3">
+                                <div className="font-circular font-medium text-xl text-gray-700">
+                                    {fullResume?.filename?.replace(/\.(pdf|docx)$/i, "")}
                                 </div>
-
-                                <div className='font-circular text-black font-medium'>
-                                    No job added
-
-
-
+                                <div className="flex items-center gap-1">
+                                    <HiPencil
+                                        onClick={() => setOpenDialog(!openDialog)}
+                                        className="w-5 h-5 text-gray-500 cursor-pointer"
+                                    />
+                                    <Tooltip>
+                                        <TooltipTrigger>
+                                            <IoMdInformationCircle className="w-5 h-5 text-gray-500" />
+                                        </TooltipTrigger>
+                                        <TooltipContent variant="gray">
+                                            <div className="font-circular text-sm max-w-xs p-2">
+                                                You can name your resume anything you like, for example: firstname_lastname.pdf
+                                            </div>
+                                        </TooltipContent>
+                                    </Tooltip>
                                 </div>
                             </div>
 
-                            <button className='border-primary-blue text-primary-blue font-circular border px-4 py-1.5 rounded-md text-sm'>
-                                Tailor to Job
-                            </button>
-                        </div>
-                    </div>
+                            <div className="p-4 bg-white border rounded-md">
+                                <div className="flex flex-col gap-2">
+                                    <div className="flex items-center gap-2">
+                                        <IoCheckmarkCircle className="w-4 h-4 text-gray-500" />
+                                        <div className="font-circular text-gray-500 text-sm">
+                                            Tailor your resume to a job
+                                        </div>
+                                    </div>
+                                    <div className="font-circular text-black font-medium">
+                                        No job added
+                                    </div>
+                                    <button className="mt-2 border border-primary-blue text-primary-blue font-circular px-4 py-2 rounded-md text-sm w-fit">
+                                        Tailor to Job
+                                    </button>
+                                </div>
+                            </div>
 
-                    <ResumeForm setResume={setResume} resume={resume} />
+                            <ResumeForm setResume={setResume} resume={resume} />
+                        </div>
+                    </TabsContent>
+
+                    <TabsContent value="preview" className="p-4 overflow-y-auto max-h-[calc(100vh-120px)]">
+                        <div className="bg-white border-8 border-blue-100 w-full">
+                            <div className="relative">
+                                <div className="absolute top-0 right-0 bg-blue-500 text-white px-3 py-1 text-xs font-bold transform rotate-12 translate-x-2 -translate-y-1">
+                                    Preview
+                                </div>
+                                <ResumeTemplate1 userResume={resume} />
+                            </div>
+                        </div>
+                    </TabsContent>
+                </Tabs>
+            </div>
+
+            {/* Desktop Layout (show only on large screens) */}
+            <div className="hidden lg:flex h-[calc(100vh-80px)]">
+                {/* Left Side - Edit Form */}
+                <div className="w-1/2 overflow-y-auto border-r">
+                    <div className="p-6 space-y-6">
+                        <div className="flex items-center gap-2 text-gray-500 font-circular">
+                            <HiArrowLongLeft className="w-5 h-5" />
+                            Documents
+                        </div>
+
+                        <div className="flex items-center gap-3">
+                            <div className="font-circular font-medium text-2xl text-gray-700">
+                                {fullResume?.filename?.replace(/\.(pdf|docx)$/i, "")}
+                            </div>
+                            <div className="flex items-center gap-1">
+                                <HiPencil
+                                    onClick={() => setOpenDialog(!openDialog)}
+                                    className="w-6 h-6 text-gray-500 cursor-pointer"
+                                />
+                                <Tooltip>
+                                    <TooltipTrigger>
+                                        <IoMdInformationCircle className="w-5 h-5 text-gray-500" />
+                                    </TooltipTrigger>
+                                    <TooltipContent variant="gray">
+                                        <div className="font-circular text-sm max-w-xs p-4">
+                                            You can name your resume anything you like, for example: firstname_lastname.pdf or firstname_lastname.docx.
+                                        </div>
+                                    </TooltipContent>
+                                </Tooltip>
+                            </div>
+                        </div>
+
+                        <div className="p-5 bg-white border rounded-md">
+                            <div className="flex items-center justify-between">
+                                <div className="flex flex-col gap-1">
+                                    <div className="flex items-center gap-2">
+                                        <IoCheckmarkCircle className="w-4 h-4 text-gray-500" />
+                                        <div className="font-circular text-gray-500 text-sm">
+                                            Tailor your resume to a job
+                                        </div>
+                                    </div>
+                                    <div className="font-circular text-black font-medium">
+                                        No job added
+                                    </div>
+                                </div>
+                                <button className="mt-2 border border-primary-blue text-primary-blue font-circular px-4 py-2 rounded-md text-sm w-fit">
+                                    Tailor to Job
+                                </button>
+                            </div>
+                        </div>
+
+                        <ResumeForm setResume={setResume} resume={resume} />
+                    </div>
                 </div>
 
+                {/* Right Side - Preview */}
+                <div className="w-1/2 overflow-y-auto bg-gray-50">
+                    <div className="p-6 pt-8 flex justify-center">
+                        <div className="w-full max-w-[45rem]">
+                            <div className="relative bg-white border-[20px] border-primary-lighter">
 
-                {/* Preview Box */}
-                <div className="sticky top-[7rem] shrink-0 mx-[8rem] overflow-hidden w-[40rem]">
-                    {/* Inner Box with Border */}
-                    <div className="relative bg-white border-[24px] border-primary-lighter h-[800px] w-full">
-                        {/* Ribbon */}
-                        <div className="absolute top-0 -right-16 z-10 w-[170px] rotate-45  py-1 text-center font-bold text-white bg-primary-light">
-                            Preview
+                                <div className="overflow-hidden">
+                                    <ResumeTemplate1 userResume={resume} />
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
-
             </div>
         </div>
 

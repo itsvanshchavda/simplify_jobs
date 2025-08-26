@@ -1,14 +1,16 @@
 "use client"
+import RewriteSummaryApi from '@/apis/resume/RewriteSummaryApi';
 import TipTapEditor from '@/components/tiptapeditor';
 import { Label } from '@/components/ui/label';
 import { ChevronUp } from 'lucide-react';
 import React, { useEffect, useState } from 'react';
+import toast from 'react-hot-toast';
 import { BsStars } from 'react-icons/bs';
 import { FaRegEyeSlash } from 'react-icons/fa';
 import { GoEye } from "react-icons/go";
 
 
-const UpdatePersonalInfo = ({ resum, setResume }) => {
+const UpdatePersonalInfo = ({ setResume, resum }) => {
     const [errors, setErrors] = useState({});
     const [isOpen, setIsOpen] = useState({
         personalInfo: true,
@@ -16,7 +18,7 @@ const UpdatePersonalInfo = ({ resum, setResume }) => {
     });
 
     const [hideSummary, setHideSummary] = useState(false);
-
+    const [summaryLoading, setSummaryLoading] = useState(false);
 
     const handleInputChange = (e) => {
         const { name, value } = e.target;
@@ -90,6 +92,33 @@ const UpdatePersonalInfo = ({ resum, setResume }) => {
     };
 
 
+
+    const handleRewrite = async () => {
+
+        setSummaryLoading(true);
+
+        const summary = resum?.parsedPersonalInfo?.summary || ""
+        if (!summary) return;
+
+        const res = await RewriteSummaryApi({ userSummary: summary });
+        if (res?.error) {
+            setSummaryLoading(false);
+            toast.error(res.error);
+            return;
+        }
+
+        if (res?.summary) {
+            setResume((prev) => ({
+                ...prev,
+                parsedPersonalInfo: {
+                    ...prev.parsedPersonalInfo,
+                    summary: res.summary,
+                },
+            }));
+        }
+
+        setSummaryLoading(false);
+    }
 
     return (
         <div className='flex flex-col gap-4'>
@@ -179,11 +208,21 @@ const UpdatePersonalInfo = ({ resum, setResume }) => {
                     </div>
                     <div className='flex items-center gap-4'>
 
-                        <div onClick={toggleSummary} className='flex items-center gap-2 font-circular text-sm'>
-                            {hideSummary ? <FaRegEyeSlash /> : <GoEye />}
-                            {hideSummary ? "Show Summary" : "Hide Summary"}
-                        </div>
-                        <div className={`p-1 border border-gray-100 rounded-md bg-gray-50 transition-transform ${isOpen.professionalSummary ? "rotate-0" : "-rotate-180"}`}>
+                        {isOpen.professionalSummary && (
+                            <div onClick={toggleSummary} className='flex items-center gap-2 font-circular text-sm'>
+                                {hideSummary ? <FaRegEyeSlash /> : <GoEye />}
+
+                                <div className='sm:block hidden'>
+                                    {hideSummary ? "Show Summary" : "Hide Summary"}
+                                </div>
+
+
+                                <div className='sm:hidden block'>
+                                    {hideSummary ? "Show" : "Hide"}
+                                </div>
+                            </div>
+                        )}
+                        <div className={`p-1 border  border-gray-100 rounded-md bg-gray-50 transition-transform ${isOpen.professionalSummary ? "rotate-0" : "-rotate-180"}`}>
                             <ChevronUp className='text-gray-500' strokeWidth={1} />
                         </div>
                     </div>
@@ -193,26 +232,27 @@ const UpdatePersonalInfo = ({ resum, setResume }) => {
                     <div className='flex flex-col gap-4'>
                         <TipTapEditor
 
-                            content={resum?.parsedPersonalInfo?.professionalSummary || ""}
+                            content={resum?.parsedPersonalInfo?.summary || ""}
                             onContentChange={(content) => setResume((prev) => ({
                                 ...prev,
                                 parsedPersonalInfo: {
                                     ...prev.parsedPersonalInfo,
-                                    professionalSummary: content,
+                                    summary: content,
                                 },
                             }))}
-                            className="min-h-[150px]"
                         />
 
-                        <div className='flex justify-end items-center gap-2'>
-                            <div className='px-4 py-1.5 text-primary-blue text-sm rounded-md border border-primary-blue flex items-center gap-1'>
-                                <BsStars />
+                        {resum?.parsedPersonalInfo?.summary && (
+                            <div onClick={handleRewrite} className='flex cursor-pointer justify-end items-center gap-2'>
+                                <div className='px-4 py-1.5 text-primary-blue text-sm rounded-md border border-primary-blue flex items-center gap-1'>
+                                    <BsStars />
 
-                                <div className='font-circular'>
-                                    Rewrite with AI
+                                    <div className='font-circular'>
+                                        Rewrite with AI
+                                    </div>
                                 </div>
                             </div>
-                        </div>
+                        )}
                     </div>
                 </div>
             </div>

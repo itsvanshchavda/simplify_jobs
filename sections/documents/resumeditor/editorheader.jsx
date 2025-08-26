@@ -26,7 +26,6 @@ import { IoTrashOutline } from "react-icons/io5";
 
 
 const EditorHeader = ({ savedtime }) => {
-    console.log("🚀 ~ EditorHeader ~ savedtime:", savedtime)
 
     const getTimeAgo = (timestamp) => {
         const postTime = new Date(timestamp);
@@ -43,17 +42,22 @@ const EditorHeader = ({ savedtime }) => {
     };
 
 
+    const handleBack = () => {
+        window.history.back();
+    }
+
+
 
     return (
-        <div className='w-full flex px-[1rem] xl:px-[2.5rem] justify-between items-center z-50 sticky top-0 bg-white shadow-sm '>
+        <div className='w-full  flex px-[1rem] xl:px-[2.5rem] justify-between lg:items-center z-50 sticky top-0 bg-white shadow-sm '>
             <div className='flex gap-9 items-center'>
-                <Link href={"/dashboard"}>
+                <div className='cursor-pointer' onClick={handleBack}>
                     <div style={{ outline: 'none', boxShadow: 'none' }} className='flex h-[60px]  items-center gap-3'>
                         <Logo size='115' />
 
                     </div>
 
-                </Link>
+                </div>
 
 
 
@@ -75,7 +79,7 @@ const EditorHeader = ({ savedtime }) => {
 
                         <div className='flex border text-sm px-4 py-1.5 border-primary-blue text-primary-blue font-circular font-medium rounded-md items-center gap-2'>
                             <HiOutlineUsers className='' />
-                            Share
+                            <span className='hidden sm:block'>Share</span>
                         </div>
 
                     </DropdownMenuTrigger>
@@ -91,7 +95,7 @@ const EditorHeader = ({ savedtime }) => {
                 </DropdownMenu>
 
 
-                <div className='flex border text-sm px-4 py-1.5 bg-primary-blue text-white font-circular font-medium rounded-md items-center gap-2'>
+                <div className='hidden sm:flex border text-sm px-4 py-1.5 bg-primary-blue text-white font-circular font-medium rounded-md items-center gap-2'>
                     <MdOutlineFileDownload className='size-4' />
                     Export
                 </div>
@@ -102,7 +106,7 @@ const EditorHeader = ({ savedtime }) => {
                     <DropdownMenuTrigger>
                         <div className='flex border text-sm px-2 py-1.5 bg-white  text-primary-blue border-primary-blue font-circular font-medium rounded-md items-center gap-2'>
                             <IoMenu className='size-4' />
-                            Menu
+                            <span className='sm:block hidden'>Menu</span>
                         </div>
                     </DropdownMenuTrigger>
                     <DropdownMenuContent className={"w-[200px] fkex flex-col gap-4 font-circular mx-5"}>
@@ -119,6 +123,11 @@ const EditorHeader = ({ savedtime }) => {
                         <DropdownMenuItem>
                             <IoTrashOutline />
                             Delete Resume
+                        </DropdownMenuItem>
+
+                        <DropdownMenuItem>
+                            <MdOutlineFileDownload />
+                            Download Resume
                         </DropdownMenuItem>
 
                     </DropdownMenuContent>
