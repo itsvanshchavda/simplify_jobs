@@ -23,6 +23,7 @@ import { FaFileImport } from "react-icons/fa6";
 import ResumeFromScratch from '@/apis/resume/ResumeScratchApi';
 import { useRouter } from 'next/navigation';
 import { AiOutlineLoading } from 'react-icons/ai';
+import SaveResumeApi from '@/apis/resume/SaveResumeApi';
 
 
 
@@ -36,10 +37,9 @@ const ChooseOption = () => {
     const [selectedResume, setSelectedResume] = useState(null);
     const [search, setSearch] = useState("")
     const [filteredResumes, setFilteredResumes] = useState([])
-    const [option, setOption] = useState(null) // scratch or existing
     const router = useRouter()
     const [resumeScratchLoading, setResumeScratchLoading] = useState(false);
-
+    const [baseResumeLoading, setBaseResumeLoading] = useState(false);
 
     useEffect(() => {
         if (search) {
@@ -107,30 +107,54 @@ const ChooseOption = () => {
     };
 
 
-    const handleSelectOption = async (opt) => {
+    const handleScratchResume = async () => {
         setResumeScratchLoading(true)
-        setOption(opt)
 
-        if (opt === "scratch") {
 
-            const res = await ResumeFromScratch();
+        const res = await ResumeFromScratch();
 
-            if (res.error) {
-                toast.error(res.error)
-                setResumeScratchLoading(false)
+        if (res.error) {
+            toast.error(res.error)
+            setResumeScratchLoading(false)
 
-                return
-            }
-
-            if (res.resume?._id) {
-                setResumeScratchLoading(false)
-                toast.success("Your resume is created successfully!!")
-                router.push(`/dashboard/resume/editor?id=${res?.resume?._id}`)
-            }
-
-        } else {
-            // navigate to existing page
+            return
         }
+
+        if (res.resume?._id) {
+            setResumeScratchLoading(false)
+            toast.success("Your resume is created successfully!!")
+            router.push(`/dashboard/resume/editor?id=${res?.resume?._id}`)
+        }
+
+
+    }
+
+
+    const handleBaseResume = async (resume) => {
+        setBaseResumeLoading(true)
+
+        const body = {
+            filename: resume?.filename + "_scratch",
+            json: resume?.json,
+            resume_type: 1,
+
+        }
+        const res = await SaveResumeApi(body);
+
+        if (res.error) {
+            setBaseResumeLoading(false)
+            toast.error(res.error)
+            return
+
+
+        }
+
+        if (res.resume?._id) {
+            setBaseResumeLoading(false)
+            toast.success("Your resume is created successfully!!")
+            router.push(`/dashboard/resume/editor?id=${res?.resume?._id}`)
+        }
+
     }
 
 
@@ -199,7 +223,7 @@ const ChooseOption = () => {
 
                 <div className='flex items-center justify-center flex-col gap-8'>
                     <div className='w-full mx-auto max-w-4xl border  rounded-md p-4'>
-                        <div onClick={() => handleSelectOption("scratch")} className="flex cursor-pointer flex-col gap-1">
+                        <div onClick={handleScratchResume} className="flex cursor-pointer flex-col gap-1">
                             {resumeScratchLoading ? (
                                 <div className="flex flex-col gap-1 animate-pulse">
                                     <div className="flex items-center gap-2">
@@ -322,8 +346,12 @@ const ChooseOption = () => {
                                                 <div className='flex items-center gap-2'>
                                                     <MdRemoveRedEye onClick={() => handleOpenPreview(resume)} size={20} className='cursor-pointer' color='gray' />
 
-                                                    <button className='bg-gray-100 text-gray-600  text-[13px] font-circular px-8 py-1 rounded-md'>
-                                                        Select
+                                                    <button onClick={() => handleBaseResume(resume)} className='bg-gray-100 text-gray-600  text-[13px] font-circular px-8 py-1 rounded-md'>
+                                                        {baseResumeLoading ? (<div>
+
+                                                            <AiOutlineLoading className='animate-spin text-primary-blue inline ' />
+                                                        </div>) : "Select"}
+
                                                     </button>
 
                                                 </div>

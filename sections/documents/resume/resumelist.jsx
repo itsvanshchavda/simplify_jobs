@@ -395,7 +395,7 @@ const ResumeList = ({ setTab, tab }) => {
 
 
                                                             {item?.primary ? (
-                                                                <DropdownMenuItem disabled onClick={() => handleOpen(item)} className={"hover:bg-primary-lighter duration-300 py-2"}>
+                                                                <DropdownMenuItem disabled className={"hover:bg-primary-lighter duration-300 py-2"}>
                                                                     <IoMdTrash />
                                                                     Delete
                                                                 </DropdownMenuItem>

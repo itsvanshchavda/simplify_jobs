@@ -32,12 +32,14 @@ export const ResumeTemplate1 = ({ userResume }) => {
         achievementsAndCertifications:
             userResume?.parsedAchievementsAndCertifications,
         languages: userResume?.parsedLanguages,
+        customSections: userResume?.parsedCustomSections,
+
     };
 
     return (
-        <div className=" h-full">
+        <div className="pb-4 h-full">
             {resume?.personalInfo && (
-                <div className="p-5 hide-scrollbar h-full bg-white text-black overflow-y-auto">
+                <div className="p-3  bg-white text-black">
                     <style jsx="true" global="true">
                         {`
               .safe-html-content ul {
@@ -222,8 +224,11 @@ export const ResumeTemplate1 = ({ userResume }) => {
                         {resume?.languages?.length > 0 ? (
                             <ResumeSection title="Languages">
                                 {resume.languages.map((lang, index) => (
-                                    <div key={index} className="text-sm ">
-                                        <span className="font-semibold">{lang?.language}</span> {lang?.proficiency ? `- ${lang.proficiency}` : ""}
+                                    <div key={index} className="text-sm flex flex-col mb-2 ">
+                                        <span className="font-semibold">{lang?.language}</span>
+                                        <div>
+                                            {lang?.proficiency && `  ${lang.proficiency}`}
+                                        </div>
                                     </div>
                                 ))}
                             </ResumeSection>
@@ -257,7 +262,9 @@ export const ResumeTemplate1 = ({ userResume }) => {
                                                 </p>
                                             </h3>
                                             <p className="text-sm">
-                                                {proj?.link && proj.link !== undefined && (
+
+
+                                                {proj?.link && proj.link !== "" && (
                                                     <a
                                                         href={
                                                             proj?.link.startsWith("http")
@@ -313,6 +320,23 @@ export const ResumeTemplate1 = ({ userResume }) => {
                                 </ul>
                             </ResumeSection>
                         ) : null}
+
+
+
+
+
+                        {resume?.customSections?.length > 0 &&
+                            resume.customSections.map((section, index) =>
+                                section?.title ? (
+                                    <ResumeSection key={index} title={section.title}>
+                                        <SafeHTML html={section.content} />
+                                    </ResumeSection>
+                                ) : null
+                            )}
+
+
+
+
                     </div>
                 </div>
             )}

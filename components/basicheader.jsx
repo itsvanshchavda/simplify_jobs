@@ -1,12 +1,17 @@
 "use client"
 import React, { useState } from 'react'
-import { SidebarTrigger } from './ui/sidebar'
-import Logo from '@/public/icons/logo'
 
-import { usePathname } from 'next/navigation'
+import Logo from '@/public/icons/logo'
 import Link from 'next/link'
+import { useUser } from '@/context/userContext'
+import { useRouter } from 'next/navigation'
+import { LuMoveLeft } from 'react-icons/lu'
 
 const BasicHeader = () => {
+
+    const { state } = useUser()
+    const user = state?.user
+    const router = useRouter()
 
 
 
@@ -24,6 +29,20 @@ const BasicHeader = () => {
 
 
             </div>
+
+            {user ? (
+                <div onClick={() => router.back()} className='py-1.5 flex items-center gap-3 cursor-pointer px-4 text-white bg-primary-blue font-circular rounded-md'>
+                    <LuMoveLeft />
+                    Back
+                </div>
+            ) : (
+                <Link href={"/auth/login"} className='py-1.5 px-4 text-white font-circular bg-primary-blue rounded-md'>
+                    Log in
+                </Link>
+            )}
+
+
+
 
 
 

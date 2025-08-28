@@ -97,6 +97,21 @@ const Skills = ({ setResume, resume }) => {
                                 />
                             </div>
 
+
+                            <input
+                                type="text"
+                                placeholder="Add a skill and press Enter"
+                                className="p-3 font-circular h-10 block w-full rounded-sm text-sm leading-5 text-secondary-400 shadow transition placeholder:text-gray-400 focus:outline-none focus:ring-4 disabled:bg-[#F2F2F2] disabled:opacity-90 border border-gray-200 focus:border-[#3EC0DD] focus:ring-[#3EC0DD]/10"
+                                onKeyDown={(e) => {
+                                    if (e.key === "Enter") {
+                                        e.preventDefault()
+                                        handleAddSkill(gIndex, e.target.value)
+                                        e.target.value = ""
+                                    }
+                                }}
+                            />
+
+
                             {/* Skills list */}
                             <div className="flex px-10 bg-gray-50 border p-4 border-dashed rounded-md justify-center items-center mx-auto flex-wrap gap-2 min-h-[40px] w-full">
                                 {group?.skills?.length > 0 ? (
@@ -123,18 +138,7 @@ const Skills = ({ setResume, resume }) => {
                             </div>
 
                             {/* Add new skill input */}
-                            <input
-                                type="text"
-                                placeholder="Add a skill and press Enter"
-                                className="p-3 font-circular h-10 block w-full rounded-sm text-sm leading-5 text-secondary-400 shadow transition placeholder:text-gray-400 focus:outline-none focus:ring-4 disabled:bg-[#F2F2F2] disabled:opacity-90 border border-gray-200 focus:border-[#3EC0DD] focus:ring-[#3EC0DD]/10"
-                                onKeyDown={(e) => {
-                                    if (e.key === "Enter") {
-                                        e.preventDefault()
-                                        handleAddSkill(gIndex, e.target.value)
-                                        e.target.value = ""
-                                    }
-                                }}
-                            />
+
                         </div>
                     ))}
 

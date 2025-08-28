@@ -5,6 +5,7 @@ import { Label } from '@/components/ui/label';
 import { ChevronUp } from 'lucide-react';
 import React, { useEffect, useState } from 'react';
 import toast from 'react-hot-toast';
+import { AiOutlineLoading } from 'react-icons/ai';
 import { BsStars } from 'react-icons/bs';
 import { FaRegEyeSlash } from 'react-icons/fa';
 import { GoEye } from "react-icons/go";
@@ -24,7 +25,6 @@ const UpdatePersonalInfo = ({ setResume, resum }) => {
         const { name, value } = e.target;
         const trimmedValue = value.trim(); // trim spaces
 
-        console.log(name, trimmedValue);
         setResume((prev) => ({
             ...prev,
             parsedPersonalInfo: {
@@ -243,15 +243,30 @@ const UpdatePersonalInfo = ({ setResume, resum }) => {
                         />
 
                         {resum?.parsedPersonalInfo?.summary && (
-                            <div onClick={handleRewrite} className='flex cursor-pointer justify-end items-center gap-2'>
-                                <div className='px-4 py-1.5 text-primary-blue text-sm rounded-md border border-primary-blue flex items-center gap-1'>
-                                    <BsStars />
+                            <>
+                                {summaryLoading ? (
+                                    <div className='flex cursor-pointer justify-end items-center gap-2'>
+                                        <div className='px-4  py-1.5 text-primary-blue text-sm rounded-md border border-primary-blue flex items-center gap-3'>
+                                            {summaryLoading && <AiOutlineLoading className="animate-spin w-4 h-4" />}
 
-                                    <div className='font-circular'>
-                                        Rewrite with AI
+
+                                            <div className='font-circular'>
+                                                Rewriting...
+                                            </div>
+                                        </div>
                                     </div>
-                                </div>
-                            </div>
+                                ) : (
+                                    <div onClick={handleRewrite} className='flex cursor-pointer justify-end items-center gap-2'>
+                                        <div className='px-4 py-1.5 text-primary-blue text-sm rounded-md border border-primary-blue flex items-center gap-1'>
+                                            <BsStars />
+
+                                            <div className='font-circular'>
+                                                Rewrite with AI
+                                            </div>
+                                        </div>
+                                    </div>
+                                )}
+                            </>
                         )}
                     </div>
                 </div>

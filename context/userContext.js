@@ -45,7 +45,10 @@ export const UserProvider = ({ children }) => {
   ];
 
   const isPublicPage = useMemo(
-    () => publicPages.includes(pathname) || pathname.startsWith("/success"),
+    () =>
+      publicPages.includes(pathname) ||
+      pathname.startsWith("/success") ||
+      (pathname.startsWith("/resume/") && pathname.endsWith("/share")),
     [pathname]
   );
 
