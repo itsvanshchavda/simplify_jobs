@@ -91,15 +91,28 @@ const UpdateProject = ({ setResume, resume, projectIndex }) => {
     return (
         <div className='px-[2rem] font-circular flex flex-col gap-6 py-2 w-full'>
             {/* Project Title */}
-            <div className='flex flex-col gap-2'>
-                <Label>Project Title</Label>
-                <input
-                    type="text"
-                    value={projectData.name || ''}
-                    onChange={(e) => handleFieldChange('name', e.target.value)}
-                    placeholder="e.g., Portfolio Website"
-                    className="p-3 font-circular h-10 block w-full rounded-sm text-sm leading-5 text-secondary-400 shadow transition placeholder:text-gray-400 focus:outline-none focus:ring-4 disabled:bg-[#F2F2F2] disabled:opacity-90 border border-gray-200 focus:border-[#3EC0DD] focus:ring-[#3EC0DD]/10"
-                />
+            <div className='grid grid-cols-2 gap-4'>
+                <div className='flex flex-col gap-2'>
+                    <Label>Project Title</Label>
+                    <input
+                        type="text"
+                        value={projectData.name || ''}
+                        onChange={(e) => handleFieldChange('name', e.target.value)}
+                        placeholder="e.g., Project name"
+                        className="p-3 font-circular h-10 block w-full rounded-sm text-sm leading-5 text-secondary-400 shadow transition placeholder:text-gray-400 focus:outline-none focus:ring-4 disabled:bg-[#F2F2F2] disabled:opacity-90 border border-gray-200 focus:border-[#3EC0DD] focus:ring-[#3EC0DD]/10"
+                    />
+                </div>
+
+                <div className='flex flex-col gap-2'>
+                    <Label>Project Link</Label>
+                    <input
+                        type="text"
+                        value={projectData.link || ''}
+                        onChange={(e) => handleFieldChange('link', e.target.value)}
+                        placeholder="e.g., Live Link"
+                        className="p-3 font-circular h-10 block w-full rounded-sm text-sm leading-5 text-secondary-400 shadow transition placeholder:text-gray-400 focus:outline-none focus:ring-4 disabled:bg-[#F2F2F2] disabled:opacity-90 border border-gray-200 focus:border-[#3EC0DD] focus:ring-[#3EC0DD]/10"
+                    />
+                </div>
             </div>
 
             {/* Project Description */}
@@ -146,6 +159,9 @@ const UpdateProject = ({ setResume, resume, projectIndex }) => {
                     </div>
                 )}
             </div>
+
+
+
 
 
             {/* Dates */}

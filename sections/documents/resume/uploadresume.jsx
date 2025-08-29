@@ -17,6 +17,8 @@ import FileIcon from '@/public/icons/fileicon';
 import { Button } from '@/components/ui/button';
 import { MdArrowRightAlt } from 'react-icons/md';
 import Link from 'next/link';
+import toast from 'react-hot-toast';
+import { useRouter } from 'next/navigation';
 
 const UploadResume = ({ open, setOpen, setResumes, resumes }) => {
 
@@ -26,13 +28,12 @@ const UploadResume = ({ open, setOpen, setResumes, resumes }) => {
     const [loading, setLoading] = useState(false);
     const [uploadComplete, setUploadComplete] = useState(false);
     const [loadingStep, setLoadingStep] = useState(0);
-
+    const router = useRouter();
 
 
     const loadingSteps = [
         "Uploading your resume…",
         "Parsing your resume…",
-        "Filling in your profile…",
         "Understanding your skills…",
         "Almost there…",
     ];
@@ -62,7 +63,14 @@ const UploadResume = ({ open, setOpen, setResumes, resumes }) => {
         setUploadComplete(true);
 
         setOpen(false);
-        window.location.reload();
+
+
+        // Update resumes list
+        setTimeout(() => {
+            setResumes([...resumes, res?.resume]);
+        }, 1500);
+
+        toast.success(`${res?.resume}`)
 
 
 
@@ -105,6 +113,11 @@ const UploadResume = ({ open, setOpen, setResumes, resumes }) => {
             setLoadingStep(0); // reset for next upload
         }
     }, [loading]);
+
+
+    const handleRedirect = () => {
+        router.push('/dashboard/resume/new')
+    }
 
 
     return (
@@ -166,8 +179,8 @@ const UploadResume = ({ open, setOpen, setResumes, resumes }) => {
                                 {/* Upload text */}
                                 <div className='flex items-center gap-2'>
                                     <div className='font-medium max-w-[600px] truncate text-xs sm:text-base text-center font-circular text-primary-blue'>
-                                        {loading ? (
-                                            loadingSteps[loadingStep]
+                                        {!loading ? (
+                                            !loadingSteps[loadingStep]
                                         ) : uploadComplete ? (
                                             "Upload Completed"
                                         ) : file ? (
@@ -208,7 +221,7 @@ const UploadResume = ({ open, setOpen, setResumes, resumes }) => {
 
                     </div>
 
-                    <Link href={"/dashboard/resume/new"} className="flex cursor-pointer items-center text-primary-blue justify-center gap-2">
+                    <button disabled={loading} onClick={handleRedirect} className="flex cursor-pointer items-center text-primary-blue justify-center gap-2">
                         <div className='text-center text-sm font-circular'>
                             Or easily Tailor for Any Job, ATS Friendly
 
@@ -216,7 +229,7 @@ const UploadResume = ({ open, setOpen, setResumes, resumes }) => {
 
                         <MdArrowRightAlt />
 
-                    </Link>
+                    </button>
                 </div>
             </DialogContent>
         </Dialog >

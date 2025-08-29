@@ -10,7 +10,6 @@ const UpdateExperience = ({ setResume, resume, experienceIndex }) => {
 
 
     const experienceData = resume?.parsedExperience?.[experienceIndex] || [];
-    console.log("🚀 ~ UpdateExperience ~ experienceData:", experienceData)
 
     const handleFieldChange = (field, value) => {
         setResume((prevResume) => {

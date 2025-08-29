@@ -27,6 +27,7 @@ const Experience = ({ setResume, resume }) => {
     const [currentIndex, setCurrentIndex] = useState(null);
     const [hideExp, setHideExp] = useState(false);
 
+
     const handleEditExp = (index) => {
         setSelectedExpIndex(index);
         setOpen(true);
@@ -139,6 +140,7 @@ const Experience = ({ setResume, resume }) => {
                     </SheetHeader>
 
                     <UpdateExperience
+
                         setResume={setResume}
                         resume={resume}
                         experienceIndex={selecteExpIndex}

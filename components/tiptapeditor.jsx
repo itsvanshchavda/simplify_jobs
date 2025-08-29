@@ -272,10 +272,10 @@ const TipTapEditor = ({ content, onChange, label, className }) => {
 
                 {/* Editor Content */}
                 <div className="">
-                    <ScrollArea className="max-h-[500px]">
+                    <ScrollArea className="h-[140px]">
                         <EditorContent
                             editor={editor}
-                            className="w-full p-3 min-h-[100px] max-h-[500px] overflow-y-auto focus:outline-none"
+                            className="min-h-[140px] p-3 overflow-auto focus:outline-none"
                         />
                     </ScrollArea>
                 </div>

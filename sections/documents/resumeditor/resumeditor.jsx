@@ -402,7 +402,7 @@ const ResumeEditor = () => {
                 <DialogContent className="w-[90%] max-w-sm flex flex-col gap-5" zIndex={100}>
                     <DialogHeader>
                         <DialogTitle className="font-circular font-semibold">
-                            Edit Title
+                            Edit Filename
                         </DialogTitle>
                     </DialogHeader>
 

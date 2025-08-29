@@ -40,25 +40,8 @@ export const ResumeTemplate1 = ({ userResume }) => {
         <div className="pb-4 h-full">
             {resume?.personalInfo && (
                 <div className="p-3  bg-white text-black">
-                    <style jsx="true" global="true">
-                        {`
-              .safe-html-content ul {
-                list-style-type: disc;
-                padding-left: 1.5em;
-                text-align: justify;
-              }
-              .safe-html-content li {
-                margin-bottom: 0.25em;
-                text-align: justify;
-              }
-              .safe-html-content ol {
-                list-style-type: decimal;
-                margin-left: 20px;
-                padding-left: 0;
-                text-align: justify;
-              }
-            `}
-                    </style>
+
+
                     <div className="w-full font-tinos leading-[1.3] resume-content mx-auto">
                         <header className="text-center mb-4"></header>
                         <header className="text-center  mb-4">

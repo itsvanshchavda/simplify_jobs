@@ -282,7 +282,7 @@ const ChooseOption = () => {
                                 </div>
                                 <div>
                                     <div className='font-circular font-medium text-gray-600'>
-                                        Select a resume (default resume is preselected) as the base.
+                                        Choose a resume (default user details are included)
                                     </div>
 
 

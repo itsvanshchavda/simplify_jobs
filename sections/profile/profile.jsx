@@ -1,36 +1,25 @@
 "use client"
 
 import { useUser } from '@/context/userContext'
-import React, { useState } from 'react'
+import { useRouter } from 'next/navigation'
+import React, { useEffect, useRef, useState } from 'react'
 import { FaCheckCircle } from 'react-icons/fa'
-import { MdOutlineArrowRightAlt } from 'react-icons/md'
 import { PiFiles } from 'react-icons/pi'
 import { RiPencilFill } from 'react-icons/ri'
+import ResumeSection from './resumesection'
+import ExperienceSection from './experience/experiencesection'
+import EducationSection from './education/educationsection'
+import ProjectSection from './projects/projectsection'
+import Socials from './socials/socials'
+
+
 
 const Profile = () => {
     const { state } = useUser()
+
+    const router = useRouter()
     const user = state?.user
 
-    const getTimeAgo = (timestamp) => {
-        const postTime =
-            typeof timestamp === "string"
-                ? new Date(timestamp.replace(" ", "T"))
-                : new Date(timestamp);
-
-        if (isNaN(postTime.getTime())) return "";
-
-        const day = postTime.getDate().toString().padStart(2, "0");
-        const month = (postTime.getMonth() + 1).toString().padStart(2, "0");
-        const year = postTime.getFullYear();
-
-        let hours = postTime.getHours();
-        const minutes = postTime.getMinutes().toString().padStart(2, "0");
-        const ampm = hours >= 12 ? "PM" : "AM";
-
-        hours = hours % 12 || 12; // convert 0 to 12-hour format
-
-        return `${day} / ${month} / ${year} , ${hours}:${minutes} ${ampm}`;
-    };
 
     const [completedProfile, setCompletedProfile] = useState([
         { id: 1, title: 'Add your contact info', completed: true, points: 10 },
@@ -42,8 +31,13 @@ const Profile = () => {
 
         { id: 3, title: 'Add skills', completed: false, points: 10 },
     ])
+
+
+
+
+
     return (
-        <div className='w-full pt-[2.5rem] max-w-hero mx-auto grid grid-cols-4 gap-4'>
+        <div className='w-full pt-[2.5rem] max-w-hero mx-auto grid grid-cols-1 sm:grid-cols-4 gap-4'>
             <div className='flex col-span-1 flex-col gap-4'>
                 <div className='flex itme-start'>
                     <div className='bg-white p-6  w-full max-w-sm border border-gray-200 rounded-md'>
@@ -99,7 +93,7 @@ const Profile = () => {
 
 
                         <div className='flex items-center gap-2 justify-between'>
-                            <div className="w-full h-4 rounded-xl bg-primary-lighter overflow-hidden">
+                            <div className="w-full h-3 rounded-xl bg-primary-lighter overflow-hidden">
                                 <div className="h-full w-10 bg-primary-blue"></div>
                             </div>
 
@@ -133,27 +127,17 @@ const Profile = () => {
             </div>
 
 
-            <div className='bg-white col-span-3 p-6 flex flex-col gap-4  max-w-hero h-fit rounded-md border border-gray-200'>
-                <div className='font-medium font-circular text-lg'>
-                    Resume
-                </div>
+            {/* All sections  */}
 
-                <div className='flex items-center gap-4'>
-                    <div className='rounded-lg w-fit p-3 bg-gradient-to-r from-[#84BFF6] to-[#84DCF6]'>
-                        <PiFiles className='size-8 text-white' />
-                    </div>
-
-                    <div className='flex font-circular  flex-col gap-0'>
-                        <div className='font-medium text-base'>
-                            {user?.default_resume?.filename || 'No resume uploaded'}
-                        </div>
-
-                        <div className='text-sm text-gray-500 font-normal'>
-                            Last updated {user?.default_resume ? getTimeAgo(user?.default_resume?.updatedAt) : 'N/A'}
-                        </div>
-                    </div>
-                </div>
+            <div className='col-span-3 flex flex-col gap-4'>
+                <ResumeSection />
+                <ExperienceSection />
+                <EducationSection />
+                <ProjectSection />
+                <Socials />
             </div>
+
+
         </div>
     )
 }

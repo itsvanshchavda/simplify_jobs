@@ -56,7 +56,7 @@ const Header = ({ title }) => {
         <div className='w-full flex px-[1rem] xl:px-[2.5rem] justify-between items-center z-40 sticky top-0 bg-white shadow-sm '>
             <div className='flex gap-9 items-center'>
                 <Link href={"/dashboard"}>
-                    <div style={{ outline: 'none', boxShadow: 'none' }} className='flex h-[60px] overflow-hidden items-center gap-3'>
+                    <div style={{ outline: 'none', boxShadow: 'none', border: 'none' }} className='flex h-[60px] overflow-hidden items-center gap-3'>
                         <Logo size='115' />
 
                     </div>
@@ -170,10 +170,14 @@ const Header = ({ title }) => {
                         </div>
                     </DropdownMenuTrigger>
                     <DropdownMenuContent className={"w-[150px]  mt-1 flex flex-col gap-1 mx-10"} align="start">
-                        <DropdownMenuItem className={"flex hover:bg-gray-100 duration-300 cursor-pointer rounded-md items-center gap-2 text-base font-circular font-normal text-gray-700"}>
-                            <User fill='black' stroke='black' className='size-6' />
-                            Profile
-                        </DropdownMenuItem>
+
+                        <Link href={"/dashboard/profile"}>
+
+                            <DropdownMenuItem className={"flex hover:bg-gray-100 duration-300 cursor-pointer rounded-md items-center gap-2 text-base font-circular font-normal text-gray-700"}>
+                                <User fill='black' stroke='black' className='size-6' />
+                                Profile
+                            </DropdownMenuItem>
+                        </Link>
 
 
                         <DropdownMenuItem className={"flex hover:bg-gray-100 duration-300 cursor-pointer rounded-md items-center gap-2 text-base font-circular font-normal text-gray-700 "}>
