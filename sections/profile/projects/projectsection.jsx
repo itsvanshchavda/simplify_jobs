@@ -150,14 +150,14 @@ const ProjectSection = () => {
 
                         <div key={index} className='flex  flex-col gap-4'>
 
-                            <div className='flex justify-between items-start gap-4'>
+                            <div className='flex justify-between items-start gap-1.5 md:gap-4'>
                                 <div className='flex items-center gap-4'>
                                     <img src='/images/project.png' className='size-14' />
 
                                     <div className='flex flex-col gap-1'>
                                         <div className='flex items-center gap-2'>
                                             <div className='font-circular
-                                 font-medium text-base'>
+                                 font-medium line-clamp-1 text-base'>
                                                 {item?.name || "Project name not specified"}
 
                                             </div>

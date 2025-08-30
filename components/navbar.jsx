@@ -121,9 +121,10 @@ const Navbar = () => {
                                         <div className="flex flex-col gap-4 px-[2rem]">
                                             {links.map((item, index) => (
                                                 <Link
+
                                                     key={index}
                                                     href={item.href}
-                                                    onClick={() => setOpen(false)}
+                                                    onClick={() => setOpen(!open)}
                                                     className="font-[400] rounded-sm p-2 hover:bg-gray-100 text-black font-circular text-base"
                                                 >
                                                     {item.title}

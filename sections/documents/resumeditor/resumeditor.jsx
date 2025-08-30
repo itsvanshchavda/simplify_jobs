@@ -356,7 +356,7 @@ const ResumeEditor = () => {
                                     value={selectedJob?.job_title || ""}
                                     type="text"
                                     placeholder="e.g. Software Engineer"
-                                    className="p-3 font-circular h-11 w-full rounded-sm text-sm border border-gray-200 focus:border-primary-blue focus:outline-none"
+                                    className="p-3 font-circular h-10 block w-full rounded-sm text-sm leading-5 text-secondary-400 shadow transition placeholder:text-gray-400 focus:outline-none border border-gray-200 focus:border-[#3EC0DD] focus:ring-[#3EC0DD]/10 focus:ring-4 disabled:bg-[#F2F2F2] disabled:opacity-90"
 
                                 />
 

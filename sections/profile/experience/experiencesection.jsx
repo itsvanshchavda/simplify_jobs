@@ -27,7 +27,6 @@ const ExperienceSection = () => {
     const { state, dispatch } = useUser()
     const user = state?.user
     const [work, setWork] = useState(user?.work || []);
-    console.log("🚀 ~ ExperienceSection ~ work:", work)
     const [currentIndex, setCurrentIndex] = useState(null);
     const [mode, setMode] = useState('')
     const [openDelete, setOpenDelete] = useState(false);
@@ -158,7 +157,7 @@ const ExperienceSection = () => {
                                     <div className='flex flex-col gap-1'>
                                         <div className='flex items-center gap-2'>
                                             <div className='font-circular
-                                 font-medium text-base'>
+                                 font-medium line-clamp-1 text-base'>
                                                 {item?.title || "Title not specified"}
 
                                             </div>
@@ -166,7 +165,7 @@ const ExperienceSection = () => {
                                             <span className='text-gray-700 text-sm'>•</span>
 
                                             <div className='font-circular
-                                 font-medium text-gray-600 text-base'>
+                                 font-medium text-gray-600 line-clamp-1 text-base'>
                                                 {item?.company || "Company not specified"}
 
                                             </div>

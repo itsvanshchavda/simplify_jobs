@@ -347,7 +347,7 @@ const ResumeSection = () => {
                 <div className='rounded-lg w-fit p-3 bg-gradient-to-r from-[#84BFF6] to-[#84DCF6]'>
                     <PiFiles className='size-8 text-white' />
                 </div>
-                <div className='flex justify-between items-center w-full'>
+                <div className='flex md:flex-row flex-col items-start gap-2 justify-between md:items-center w-full'>
 
                     <div className='flex font-circular  flex-col gap-2'>
                         <div className='flex items-center gap-2'>

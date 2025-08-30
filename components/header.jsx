@@ -26,6 +26,7 @@ import {
 } from "@/components/ui/dropdown-menu"
 import { usePathname } from 'next/navigation'
 import Link from 'next/link'
+import { FaUserAlt } from 'react-icons/fa'
 
 const Header = ({ title }) => {
 
@@ -126,12 +127,16 @@ const Header = ({ title }) => {
                         <div className='border-t px-4 flex items-center justify-between py-2'>
                             <div className='flex items-center gap-3'>
                                 <div className='flex cursor-pointer items-center gap-2'>
-                                    <div className='p-2 rounded-md bg-primary-light'>
-                                        <div className='font-circular text-white font-medium text-base'>
-                                            {user?.firstName.charAt(0).toUpperCase()}
-                                            {user?.lastName.charAt(0).toUpperCase()}
+                                    {user?.profilePicture ? (
+                                        <img src={user?.profilePicture} alt='profile' className='w-10 h-10 object-center rounded-md' />
+                                    ) : (
+                                        <div className='w-10 h-10 flex items-center justify-center rounded-md bg-primary-light'>
+                                            <div className='font-circular text-white font-medium text-base'>
+                                                {user?.firstName.charAt(0).toUpperCase()}
+                                                {user?.lastName.charAt(0).toUpperCase()}
+                                            </div>
                                         </div>
-                                    </div>
+                                    )}
 
                                 </div>
 
@@ -159,12 +164,17 @@ const Header = ({ title }) => {
                     <DropdownMenuTrigger style={{ outline: "none", boxShadow: "none" }}>
 
                         <div className=' hidden lg:flex cursor-pointer items-center gap-2'>
-                            <div className='p-2 rounded-md bg-primary-blue/80'>
-                                <div className='font-circular text-white font-medium text-base'>
-                                    {user?.firstName.charAt(0).toUpperCase()}
-                                    {user?.lastName.charAt(0).toUpperCase()}
+
+                            {user?.profilePicture ? (
+                                <img src={user?.profilePicture} alt='profile' className='w-10 h-10 object-center rounded-md' />
+                            ) : (
+                                <div className='w-10 h-10 flex items-center justify-center rounded-md bg-primary-light'>
+                                    <div className='font-circular text-white font-medium text-base'>
+                                        {user?.firstName.charAt(0).toUpperCase()}
+                                        {user?.lastName.charAt(0).toUpperCase()}
+                                    </div>
                                 </div>
-                            </div>
+                            )}
 
                             <ChevronDown strokeWidth={0.8} size={23} className={`cursor-pointer duration-300 ${open ? "rotate-180" : ""}`} />
                         </div>
@@ -174,19 +184,19 @@ const Header = ({ title }) => {
                         <Link href={"/dashboard/profile"}>
 
                             <DropdownMenuItem className={"flex hover:bg-gray-100 duration-300 cursor-pointer rounded-md items-center gap-2 text-base font-circular font-normal text-gray-700"}>
-                                <User fill='black' stroke='black' className='size-6' />
+                                <FaUserAlt fill='black' stroke='black' className='size-5' />
                                 Profile
                             </DropdownMenuItem>
                         </Link>
 
 
                         <DropdownMenuItem className={"flex hover:bg-gray-100 duration-300 cursor-pointer rounded-md items-center gap-2 text-base font-circular font-normal text-gray-700 "}>
-                            <Cog className='size-6' stroke='black' />
+                            <Cog className='size-5' stroke='black' />
                             Settings
                         </DropdownMenuItem>
 
                         <DropdownMenuItem onClick={handleLogout} className={"flex hover:bg-gray-100 duration-300 cursor-pointer rounded-md items-center gap-2 text-base font-circular font-normal text-gray-700"}>
-                            <LogOut className='size-6' stroke='black' />
+                            <LogOut className='size-5' stroke='black' />
                             Sign out
                         </DropdownMenuItem>
                     </DropdownMenuContent>

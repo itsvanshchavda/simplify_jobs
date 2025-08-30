@@ -135,16 +135,16 @@ const EducationSection = () => {
                                     <img src='/images/education.png' className='size-14' />
 
                                     <div className='flex flex-col gap-1'>
-                                        <div className='font-circular font-medium text-base'>
+                                        <div className='font-circular line-clamp-1 font-medium text-base'>
                                             {item?.school}
                                         </div>
 
-                                        <div className='flex items-center gap-2 text-sm text-gray-600'>
+                                        <div className='flex line-clamp-1 items-center gap-2 text-sm text-gray-600'>
                                             <div>{item?.degree}</div>
                                             {item?.fieldOfStudy && <span>• {item?.fieldOfStudy}</span>}
                                         </div>
 
-                                        <div className='flex items-center gap-2 mt-1'>
+                                        <div className='flex line-clamp-1 items-center gap-2 mt-1'>
                                             {item?.location && (
                                                 <div className="bg-gray-50 border px-4 text-xs py-1.5 font-circular rounded-4xl">
                                                     {item.location}
