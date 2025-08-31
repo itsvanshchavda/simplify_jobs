@@ -25,23 +25,32 @@ import {
 } from "@/components/ui/dialog"
 import FileIcon from '@/public/icons/fileicon'
 import { FiFileText, FiLink } from 'react-icons/fi'
+import downloadPdf from '@/utils/downloadpdf'
 
 
-const EditorHeader = ({ unSaved, savedtime, handleSave, saveLoading }) => {
+const EditorHeader = ({ unsaved, savedtime, handleSave, updateLoading, url, filename }) => {
     const [openDialog, setOpenDialog] = useState(false)
     const [openPreview, setOpenPreview] = useState(false)
-    const [open, setOpen] = useState(false)
     const [search, setSearch] = useState("")
-    const router = useRouter()
 
     const handleBack = () => {
         window.history.back();
     }
 
     const getTimeAgo = (timestamp) => {
-        if (!timestamp) return "Just now"
-        return "2 min ago"
-    }
+        const postTime = new Date(timestamp);
+        const now = new Date();
+
+        const diff = Math.floor((now - postTime) / 1000); // seconds
+
+        if (diff < 60) return `${diff} sec ago`;
+        if (diff < 3600) return `${Math.floor(diff / 60)} min ago`;
+        if (diff < 86400) return `${Math.floor(diff / 3600)} hr ago`;
+        if (diff < 2592000) return `${Math.floor(diff / 86400)} day ago`;
+        if (diff < 31536000) return `${Math.floor(diff / 2592000)} month ago`;
+        return `${Math.floor(diff / 31536000)} yr ago`;
+    };
+
 
     return (
         <div>
@@ -141,14 +150,14 @@ const EditorHeader = ({ unSaved, savedtime, handleSave, saveLoading }) => {
                 </div>
 
                 <div className='flex items-center gap-4'>
-                    {saveLoading ? (
+                    {updateLoading ? (
                         <div className='flex items-center gap-2'>
                             <SlRefresh className='animate-spin' color='gray' />
                             <div className='font-circular text-gray-500 text-sm font-medium'>
                                 Saving...
                             </div>
                         </div>
-                    ) : unSaved ? (
+                    ) : unsaved ? (
                         <div onClick={handleSave} className='flex cursor-pointer items-center gap-2'>
                             <LuFileWarning color='gray' />
                             <div className='font-circular text-gray-500 text-[12px] sm:text-sm font-medium'>
@@ -164,67 +173,16 @@ const EditorHeader = ({ unSaved, savedtime, handleSave, saveLoading }) => {
                         </div>
                     )}
 
-                    {/* Share */}
-                    <DropdownMenu>
-                        <DropdownMenuTrigger>
-                            <div className='flex border cursor-pointer text-sm px-4 py-1.5 border-primary-blue text-primary-blue font-circular font-medium rounded-md items-center gap-2'>
-                                <HiOutlineUsers />
-                                <span className='hidden sm:block'>Share</span>
-                            </div>
-                        </DropdownMenuTrigger>
-                        <DropdownMenuContent className="w-[250px] font-circular">
-                            <DropdownMenuItem>
-                                <IoLockClosedOutline className="size-5 text-primary-blue" />
-                                <div className='flex flex-col text-sm'>
-                                    <div>Sharing off</div>
-                                    <div className='text-xs'>Only you can see this resume</div>
-                                </div>
-                            </DropdownMenuItem>
-                            <DropdownMenuItem className="flex flex-col gap-3">
-                                <div className="flex items-center gap-2">
-                                    <HiOutlineUsers className="size-5 text-primary-blue" />
-                                    <div className="flex flex-col text-sm text-primary-blue">
-                                        <div>Sharing on</div>
-                                        <div className='text-xs'>Anyone with the link can view</div>
-                                    </div>
-                                </div>
-                                <button className="p-2 mx-auto flex items-center gap-2 rounded-md border font-medium">
-                                    <FiLink />
-                                    Copy link to share
-                                </button>
-                            </DropdownMenuItem>
-                        </DropdownMenuContent>
-                    </DropdownMenu>
+
 
                     {/* Export */}
-                    <div className='hidden sm:flex border text-sm px-4 py-1.5 bg-primary-blue text-white font-circular font-medium rounded-md items-center gap-2 cursor-pointer'>
+                    <div onClick={async () => {
+                        await downloadPdf(url, filename)
+                    }} className='hidden sm:flex border text-sm px-4 py-1.5 bg-primary-blue text-white font-circular font-medium rounded-md items-center gap-2 cursor-pointer'>
                         <MdOutlineFileDownload className='size-4' />
                         Export
                     </div>
-
-                    {/* Menu */}
-                    <DropdownMenu>
-                        <DropdownMenuTrigger>
-                            <div className='flex border text-sm px-2 py-1.5 text-primary-blue border-primary-blue font-circular font-medium rounded-md items-center gap-2'>
-                                <IoMenu className='size-4' />
-                                <span className='sm:block hidden'>Menu</span>
-                            </div>
-                        </DropdownMenuTrigger>
-                        <DropdownMenuContent className="w-[200px] font-circular">
-                            <DropdownMenuItem onClick={() => router.push('/dashboard/documents/resume/new')}>
-                                <Plus /> Create Resume
-                            </DropdownMenuItem>
-                            <DropdownMenuItem onClick={() => setOpenDialog(true)}>
-                                <IoMdSearch /> Search Resumes
-                            </DropdownMenuItem>
-                            <DropdownMenuItem onClick={() => setOpen(true)}>
-                                <IoMdTrash /> Delete Resume
-                            </DropdownMenuItem>
-                            <DropdownMenuItem className="sm:hidden block">
-                                <MdOutlineFileDownload /> Download Resume
-                            </DropdownMenuItem>
-                        </DropdownMenuContent>
-                    </DropdownMenu>
+                    {/*  */}
                 </div>
             </div>
         </div>

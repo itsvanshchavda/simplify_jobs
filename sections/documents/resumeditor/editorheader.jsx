@@ -415,10 +415,10 @@ const EditorHeader = ({ unSaved, savedtime, handleSave, saveLoading, fullResume,
 
 
 
-                    <div onClick={download} className='hidden cursor-pointer sm:flex border text-sm px-4 py-1.5 bg-primary-blue text-white font-circular font-medium rounded-md items-center gap-2'>
+                    <button disabled={saveLoading} onClick={download} className='hidden cursor-pointer sm:flex border text-sm px-4 py-1.5 bg-primary-blue text-white font-circular font-medium rounded-md items-center gap-2'>
                         <MdOutlineFileDownload className='size-4' />
                         Export
-                    </div>
+                    </button>
 
 
 

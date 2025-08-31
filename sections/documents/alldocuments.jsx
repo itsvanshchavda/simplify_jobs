@@ -18,7 +18,7 @@ const AllDocuments = () => {
 
 
     return (
-        <div className='w-full  max-w-container mx-auto flex flex-col gap-6 px-[1.5rem] pb-10 sm:py-10'>
+        <div className='w-full  max-w-container mx-auto flex flex-col gap-6 px-[1.5rem] pb-10 sm:py-8'>
 
             <UploadResume open={open} setOpen={setOpen} />
 

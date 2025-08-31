@@ -47,7 +47,6 @@ const Header = ({ title }) => {
 
     const links = [
         { name: "Dashboard", href: "/dashboard", icon: Home },
-        { name: "Job Tracker", href: "/dashboard/job-tracker", icon: BriefcaseBusiness },
         { name: "Documents", href: "/dashboard/documents", icon: ClockFading },
         { name: "Saved Jobs", href: "/dashboard/saved-jobs", icon: BookmarkCheck },
         { name: "Profile", href: "/dashboard/profile", icon: User },
