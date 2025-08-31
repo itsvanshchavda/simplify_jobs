@@ -19,7 +19,7 @@ export default function DashboardWrapper({ children }) {
     }
 
     // Default: show normal header (all other dashboard pages)
-    if (pathname.startsWith("/dashboard") && !pathname.includes('/resume')) {
+    if (pathname.startsWith("/dashboard") && !pathname.includes('/resume') && !pathname.includes('/coverletter')) {
         return (
             <>
                 <Suspense fallback={<div />}>

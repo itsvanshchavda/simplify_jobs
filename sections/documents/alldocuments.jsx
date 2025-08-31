@@ -79,15 +79,14 @@ const AllDocuments = () => {
 
 
 
-                    <div className={`flex border  border-gray-100 hover:bg-gray-50 duration-300 cursor-pointer p-4 rounded-md gap-2 items-center justify-start`}>
+                    <Link href={'/dashboard/documents/coverletter/new'} className={`flex border  border-gray-100 hover:bg-gray-50 duration-300 cursor-pointer p-4 rounded-md gap-2 items-center justify-start`}>
                         <div className='w-14 aspect-square flex justify-center items-center rounded-full bg-primary-blue/10'>
                             <LetterIcon />
 
                         </div>
                         <div className='flex flex-col'>
 
-                            <div className='font-circular
-                         font-medium'>
+                            <div className='font-circular font-medium'>
                                 Cover Letter
                             </div>
 
@@ -96,7 +95,7 @@ const AllDocuments = () => {
                             </div>
                         </div>
 
-                    </div>
+                    </Link>
 
 
                     <div className='flex border border-gray-100 hover:bg-gray-50 duration-300 cursor-pointer p-4 rounded-md gap-2 items-center justify-start'>

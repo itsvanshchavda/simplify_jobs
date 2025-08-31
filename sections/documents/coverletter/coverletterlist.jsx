@@ -36,10 +36,10 @@ import DeleteCoverletterApi from '@/apis/coverletter/DeleteCoverletterApi';
 import DeletePopup from './deletepopup';
 import { AiOutlineLoading } from 'react-icons/ai';
 import downloadPdf from '@/utils/downloadpdf';
+import { useRouter } from 'next/navigation';
 
 
 const CoverletterList = ({ setTab, tab }) => {
-    console.log("🚀 ~ CoverletterList ~ tab:", tab)
 
     const [allCoverletters, setAllCoverletters] = useState([]); // for sorting 
     const [coverletters, setCoverletters] = useState(null)
@@ -51,6 +51,7 @@ const CoverletterList = ({ setTab, tab }) => {
     const [deleteLoading, setDeleteLoading] = useState(false)
     const [loading, setLoading] = useState(false)
     const effectRun = useRef(false)
+    const router = useRouter();
 
 
     const handleOpenPreview = (coverletter) => {
@@ -305,7 +306,7 @@ const CoverletterList = ({ setTab, tab }) => {
                                                             <MdRemoveRedEye size={20} color='gray' />
                                                             Preview
                                                         </DropdownMenuItem>
-                                                        <DropdownMenuItem className={"hover:bg-primary-lighter duration-300 py-2"}>
+                                                        <DropdownMenuItem onClick={() => router.push(`/dashboard/documents/coverletter/editor?id=${item?._id}`)} className={"hover:bg-primary-lighter duration-300 py-2"}>
                                                             <HiPencil size={14} color='gray' />
                                                             Edit
                                                         </DropdownMenuItem>

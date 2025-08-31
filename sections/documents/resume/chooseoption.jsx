@@ -123,7 +123,7 @@ const ChooseOption = () => {
         if (res.resume?._id) {
             setResumeScratchLoading(false)
             toast.success("Your resume is created successfully!!")
-            router.push(`/dashboard/resume/editor?id=${res?.resume?._id}`)
+            router.push(`/dashboard/documents/resume/editor?id=${res?.resume?._id}`)
         }
 
 
@@ -152,7 +152,7 @@ const ChooseOption = () => {
         if (res.resume?._id) {
             setBaseResumeLoading(false)
             toast.success("Your resume is created successfully!!")
-            router.push(`/dashboard/resume/editor?id=${res?.resume?._id}`)
+            router.push(`/dashboard/documents/resume/editor?id=${res?.resume?._id}`)
         }
 
     }

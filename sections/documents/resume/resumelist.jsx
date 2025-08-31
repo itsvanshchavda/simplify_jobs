@@ -197,7 +197,7 @@ const ResumeList = ({ setTab, tab }) => {
 
 
     const handleEdit = (id) => {
-        router.push(`/dashboard/resume/editor?id=${id}`)
+        router.push(`/dashboard/documents/resume/editor?id=${id}`)
     }
 
 

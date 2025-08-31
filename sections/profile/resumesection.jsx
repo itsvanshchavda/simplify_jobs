@@ -156,7 +156,7 @@ const ResumeSection = () => {
 
     const handleEdit = (id) => {
         setOpenDialog(false)
-        router.push(`/dashboard/resume/editor?id=${id}`)
+        router.push(`/dashboard/documents/resume/editor?id=${id}`)
 
     }
 
