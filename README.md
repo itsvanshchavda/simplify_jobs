@@ -24,7 +24,7 @@ I’m rebuilding features like job listings, filters, and an autofill assistant.
 ## 🚀 Run Locally
 
 ```bash
-git clone https://github.com/vanshchavda/simplify-jobs-clone.git
-cd simplify-jobs-clone
+git clone https://github.com/itsvanshchavda/simplify_jobs.git
+cd simplify_jobs
 npm install
 npm run dev
